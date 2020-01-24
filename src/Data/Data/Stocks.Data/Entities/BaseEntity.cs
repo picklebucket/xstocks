@@ -7,6 +7,6 @@ namespace Stocks.Data.Entities
 {
     public class BaseEntity
     {
-        public ObjectId Id { get; set; }
+        public ObjectId Id { get; private set; }
     }
 }

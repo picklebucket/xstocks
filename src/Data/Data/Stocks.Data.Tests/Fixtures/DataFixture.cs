@@ -13,13 +13,8 @@ namespace Stocks.Data.Tests.Fixtures
 
         public DataFixture()
         {
-            var configuration = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json")
-                .AddJsonFile("appsettings.json.user", true)
-                .Build();
-            string connectionString = configuration.GetSection("ConnectionStrings").GetSection("Stocks").Value;
-
-            var stocksContext = new StocksContext(connectionString);
+            var dataSettings = DataSettings.GetSettings();
+            var stocksContext = new StocksContext(dataSettings.Stocks);
             PriceHistoryRepository = new PriceHistoryRepository(stocksContext);
         }
     }

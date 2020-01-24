@@ -4,4 +4,9 @@
     <TargetFramework>netstandard2.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Data\Data\Stocks.Data\Stocks.Data.csproj" />
+    <ProjectReference Include="..\..\Ameritrade\Stocks.Ameritrade\Stocks.Ameritrade.csproj" />
+  </ItemGroup>
+
 </Project>

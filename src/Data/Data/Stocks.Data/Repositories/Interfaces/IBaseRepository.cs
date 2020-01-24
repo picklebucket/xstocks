@@ -11,6 +11,7 @@ namespace Stocks.Data.Repositories.Interfaces
         where T: BaseEntity
     {
         Task CreateAsync(T entity);
+        Task CreateManyAsync(params T[] entities);
         Task<T> GetByIdAsync(ObjectId id);
         Task DeleteAsync(ObjectId id);
     }

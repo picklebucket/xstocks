@@ -27,6 +27,12 @@ namespace Stocks.Data.Repositories
             await collection.InsertOneAsync(entity);
         }
 
+        public async Task CreateManyAsync(params T[] entities)
+        {
+            IMongoCollection<T> collection = Context.GetCollection<T>(CollectionName);
+            await collection.InsertManyAsync(entities);
+        }
+
         public async Task<T> GetByIdAsync(ObjectId id)
         {
             var filter = Builders<T>.Filter.Eq(x => x.Id, id);
