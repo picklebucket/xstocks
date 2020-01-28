@@ -1,4 +1,6 @@
-﻿using Stocks.Ameritrade.Services;
+﻿using Microsoft.Extensions.Configuration;
+using Stocks.Ameritrade.Models;
+using Stocks.Ameritrade.Services;
 using Stocks.Ameritrade.Services.Interfaces;
 
 namespace Stocks.Ameritrade.Tests.Fixtures
@@ -8,7 +10,14 @@ namespace Stocks.Ameritrade.Tests.Fixtures
         public IAmeritradeApiService AmeritradeApiService;
         public AmeritradeFixture()
         {
-            var apiSettings = AmeritradeSettings.GetSettings();
+            var configuration = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json")
+                .AddJsonFile("appsettings.json.user", true)
+                .Build();
+            var ameritradeSection = configuration.GetSection("Ameritrade");
+            var apiSettings = new ApiSettings();
+            ameritradeSection.Bind(apiSettings);
+
             AmeritradeApiService = new AmeritradeApiService(apiSettings);
         }
     }

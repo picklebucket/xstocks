@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using Stocks.Data.Models;
 using Stocks.Data.Repositories;
 using Stocks.Data.Repositories.Interfaces;
 using System;
@@ -13,8 +14,15 @@ namespace Stocks.Data.Tests.Fixtures
 
         public DataFixture()
         {
-            var dataSettings = DataSettings.GetSettings();
-            var stocksContext = new StocksContext(dataSettings.Stocks);
+            var configuration = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json")
+                .AddJsonFile("appsettings.json.user", true)
+                .Build();
+            var connectionStringsSection = configuration.GetSection("ConnectionStrings");
+            var connectionStrings = new ConnectionStrings();
+            connectionStringsSection.Bind(connectionStrings);
+
+            var stocksContext = new StocksContext(connectionStrings.Stocks);
             PriceHistoryRepository = new PriceHistoryRepository(stocksContext);
         }
     }

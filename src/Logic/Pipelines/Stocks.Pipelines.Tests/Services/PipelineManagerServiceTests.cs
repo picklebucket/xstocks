@@ -26,6 +26,7 @@ namespace Stocks.Pipelines.Tests.Services
             var args = new CustomPipelineArgs();
             _pipelineManagerService.Run("custom", args);
             Assert.Equal(Messages.CustomMessage, args.ResponseMessage);
+            Assert.False(args.Aborted);
             _testOutputHelper.WriteLine(args.ResponseMessage);
         }
 
@@ -35,6 +36,7 @@ namespace Stocks.Pipelines.Tests.Services
             var args = new CustomPipelineArgs();
             _pipelineManagerService.Run("abort", args);
             Assert.Equal(Messages.AbortMessage, args.ResponseMessage);
+            Assert.True(args.Aborted);
             _testOutputHelper.WriteLine(args.ResponseMessage);
         }
     }

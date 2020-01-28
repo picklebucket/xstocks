@@ -19,13 +19,17 @@ namespace Stocks.Pipelines
             {
                 var processorInstance = Activator.CreateInstance(processor.ProcessorType);
                 var methodInfo = processor.ProcessorType.GetMethod(processor.MethodName);
+                if(methodInfo == null)
+                {
+                    throw new Exception($"Type {processor.ProcessorType} doesn't have {processor.MethodName} method");
+                }
                 pipelineMethods.Add(new PipelineMethodInfo(processorInstance, methodInfo));
             }
 
             foreach (var pipelineMethod in pipelineMethods)
             {
                 pipelineMethod.Invoke(new[] { pipelineArgs});
-                if(pipelineArgs.Abort)
+                if(pipelineArgs.Aborted)
                 {
                     break;
                 }

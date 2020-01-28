@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pipelines>
+  <processSymbol>
+    <processor type="Stocks.Tests.Fixtures.Pipelines.ProcessSymbol.WipeDataProcessor, Stocks.Tests"></processor>
+  </processSymbol>
+</pipelines> 

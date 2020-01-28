@@ -6,6 +6,6 @@ namespace Stocks.Pipelines
 {
     public class PipelineArgs
     {
-        public bool Abort { get; set; }
+        public bool Aborted { get; set; }
     }
 }

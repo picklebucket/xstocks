@@ -9,7 +9,7 @@ namespace Stocks.Pipelines.Tests.Fixtures.Pipelines
         public void Execute(CustomPipelineArgs pipelineArgs)
         {
             pipelineArgs.ResponseMessage = Messages.AbortMessage;
-            pipelineArgs.Abort = true;
+            pipelineArgs.Aborted = true;
         }
     }
 }

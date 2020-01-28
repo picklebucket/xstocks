@@ -1,4 +1,6 @@
-﻿using Stocks.Pipelines.Services;
+﻿using Microsoft.Extensions.Configuration;
+using Stocks.Pipelines.Models;
+using Stocks.Pipelines.Services;
 using Stocks.Pipelines.Services.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -12,8 +14,14 @@ namespace Stocks.Pipelines.Tests.Fixtures
 
         public PipelinesFixture()
         {
-            var settings = PipelinesSettings.GetSettings();
-            PipelineManagerService = new PipelineManagerService(settings);
+            var configuration = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json")
+                .AddJsonFile("appsettings.json.user", true)
+                .Build();
+            var pipelinesSection = configuration.GetSection("Pipelines");
+            var pipelineSettings = new PipelineSettings();
+            pipelinesSection.Bind(pipelineSettings);
+            PipelineManagerService = new PipelineManagerService(pipelineSettings);
         }
     }
 }
