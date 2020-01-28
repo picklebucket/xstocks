@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pipelines>
+  <custom>
+    <processor type="Stocks.Pipelines.Tests.Fixtures.Pipelines.CustomProcessor, Stocks.Pipelines.Tests"></processor>
+  </custom>
+  <abort>
+    <processor type="Stocks.Pipelines.Tests.Fixtures.Pipelines.CustomProcessor, Stocks.Pipelines.Tests"></processor>
+    <processor type="Stocks.Pipelines.Tests.Fixtures.Pipelines.AbortProcessor, Stocks.Pipelines.Tests"></processor>
+    <processor type="Stocks.Pipelines.Tests.Fixtures.Pipelines.AfterAbortProcessor, Stocks.Pipelines.Tests"></processor>
+  </abort>
+</pipelines> 
