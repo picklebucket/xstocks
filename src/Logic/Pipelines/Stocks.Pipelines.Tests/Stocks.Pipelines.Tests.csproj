@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\Logic\Pipelines\Stocks.Pipelines\Stocks.Pipelines.csproj" />
+    <ProjectReference Include="..\Stocks.Pipelines\Stocks.Pipelines.csproj" />
   </ItemGroup>
 
   <ItemGroup>
