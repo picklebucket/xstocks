@@ -7,6 +7,7 @@ using Stocks.Tests.Fixtures.Pipelines.ProcessSymbol;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Stocks.Tests.Pipelines
@@ -23,7 +24,7 @@ namespace Stocks.Tests.Pipelines
         }
 
         [Fact]
-        public void Run()
+        public async Task Run()
         {
             var args = new ProcessSymbolPipelineArgs()
             {
@@ -35,9 +36,9 @@ namespace Stocks.Tests.Pipelines
                     Period = 1
                 }
             };
-            _pipelineManagerService.RunAsync("processSymbol", args);
+            await _pipelineManagerService.RunAsync("processSymbol", args);
 
-            PriceHistory priceHistory = _priceHistoryRepository.GetAsync(args.Symbol).Result;
+            PriceHistory priceHistory = await _priceHistoryRepository.GetAsync(args.Symbol);
             Assert.NotNull(priceHistory);
             Assert.NotEmpty(priceHistory.Candles);
         }

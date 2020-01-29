@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Stocks.Tests.Fixtures.Pipelines.ProcessSymbol
 {
@@ -14,9 +15,9 @@ namespace Stocks.Tests.Fixtures.Pipelines.ProcessSymbol
             _collectingService = collectingService;
         }
 
-        public void Execute(ProcessSymbolPipelineArgs args)
+        public async Task ExecuteAsync(ProcessSymbolPipelineArgs args)
         {
-            _collectingService.CollectDataAsync(args.Symbol, args.PriceHistoryRequest).Wait();
+            await _collectingService.CollectDataAsync(args.Symbol, args.PriceHistoryRequest);
         }
     }
 }

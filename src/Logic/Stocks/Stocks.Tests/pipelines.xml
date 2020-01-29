@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <pipelines>
   <processSymbol>
-    <processor type="Stocks.Tests.Fixtures.Pipelines.ProcessSymbol.WipeDataProcessor, Stocks.Tests" resolve="true"></processor>
-    <processor type="Stocks.Tests.Fixtures.Pipelines.ProcessSymbol.CollectDataProcessor, Stocks.Tests" resolve="true"></processor>
+    <processor type="Stocks.Tests.Fixtures.Pipelines.ProcessSymbol.WipeDataProcessor, Stocks.Tests" async="true" resolve="true"></processor>
+    <processor type="Stocks.Tests.Fixtures.Pipelines.ProcessSymbol.CollectDataProcessor, Stocks.Tests" async="true" resolve="true"></processor>
   </processSymbol>
 </pipelines> 
