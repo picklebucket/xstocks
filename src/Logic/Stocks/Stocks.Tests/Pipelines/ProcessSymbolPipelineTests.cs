@@ -35,7 +35,7 @@ namespace Stocks.Tests.Pipelines
                     Period = 1
                 }
             };
-            _pipelineManagerService.Run("processSymbol", args);
+            _pipelineManagerService.RunAsync("processSymbol", args);
 
             PriceHistory priceHistory = _priceHistoryRepository.GetAsync(args.Symbol).Result;
             Assert.NotNull(priceHistory);

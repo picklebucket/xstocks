@@ -39,13 +39,20 @@ namespace Stocks.Pipelines.Providers
                 string typeName = typeAttribute.Value;
                 var processorType = Type.GetType(typeName) ?? throw new Exception($"'processor' XML element contains invalid type name in 'type' attribute: {typeName}");
 
+                var asyncAttribute = processorNode.Attributes["async"];
+                bool async = false;
+                if(asyncAttribute != null)
+                {
+                    bool.TryParse(asyncAttribute.Value, out async);
+                }
+
                 var resolveAttribute = processorNode.Attributes["resolve"];
                 bool resolve = false;
                 if(resolveAttribute != null)
                 {
                     bool.TryParse(resolveAttribute.Value, out resolve);
                 }
-                processors.Add(new ProcessorInfo(processorType, resolve));
+                processors.Add(new ProcessorInfo(processorType, async, resolve));
             }
             return processors;
         }

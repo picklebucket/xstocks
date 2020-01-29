@@ -3,6 +3,7 @@ using Stocks.Pipelines.Providers;
 using Stocks.Pipelines.Services.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Stocks.Pipelines.Services
 {
@@ -19,11 +20,11 @@ namespace Stocks.Pipelines.Services
             _serviceProvider = serviceProvider;
         }
 
-        public void Run(string pipelineName, PipelineArgs args)
+        public async Task RunAsync(string pipelineName, PipelineArgs args)
         {
             var pipeline = GetPipeline(pipelineName);
             var pipelineMethods = new List<PipelineMethodInfo>();
-            foreach (var processor in pipeline.Processors)
+            foreach (ProcessorInfo processor in pipeline.Processors)
             {
                 var processorInstance = processor.Resolve ? _serviceProvider.GetService(processor.ProcessorType) : Activator.CreateInstance(processor.ProcessorType);
                 var methodInfo = processor.ProcessorType.GetMethod(processor.MethodName);
@@ -31,12 +32,20 @@ namespace Stocks.Pipelines.Services
                 {
                     throw new Exception($"Type {processor.ProcessorType} doesn't have {processor.MethodName} method");
                 }
-                pipelineMethods.Add(new PipelineMethodInfo(processorInstance, methodInfo));
+                pipelineMethods.Add(new PipelineMethodInfo(processorInstance, methodInfo, processor.Async));
             }
 
             foreach (var pipelineMethod in pipelineMethods)
             {
-                pipelineMethod.Invoke(new[] { args });
+                if(pipelineMethod.Async)
+                {
+                    await pipelineMethod.InvokeAsync(args);
+                }
+                else
+                {
+                    pipelineMethod.Invoke(args);
+                }
+                
                 if (args.Aborted)
                 {
                     break;

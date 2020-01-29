@@ -5,6 +5,7 @@ using Stocks.Pipelines.Tests.Fixtures.Pipelines;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -24,31 +25,40 @@ namespace Stocks.Pipelines.Tests.Services
         }
 
         [Fact]
-        public void RunCustomPipeline()
+        public async Task RunCustomPipeline()
         {
             var args = new CustomPipelineArgs();
-            _pipelineManagerService.Run("custom", args);
+            await _pipelineManagerService.RunAsync("custom", args);
             Assert.Equal(Messages.CustomMessage, args.ResponseMessage);
             Assert.False(args.Aborted);
             _testOutputHelper.WriteLine(args.ResponseMessage);
         }
 
         [Fact]
-        public void RunAbortPipeline()
+        public async Task RunAbortPipeline()
         {
             var args = new CustomPipelineArgs();
-            _pipelineManagerService.Run("abort", args);
+            await _pipelineManagerService.RunAsync("abort", args);
             Assert.Equal(Messages.AbortMessage, args.ResponseMessage);
             Assert.True(args.Aborted);
             _testOutputHelper.WriteLine(args.ResponseMessage);
         }
 
         [Fact]
-        public void RunDIPipeline()
+        public async Task RunDIPipeline()
         {
             var args = new CustomPipelineArgs();
-            _pipelineManagerService.Run("di", args);
+            await _pipelineManagerService.RunAsync("di", args);
             Assert.Equal(_pipelineSettings.ConfigFilePath, args.ResponseMessage);
+            Assert.False(args.Aborted);
+        }
+
+        [Fact]
+        public async Task RunAsyncPipeline()
+        {
+            var args = new CustomPipelineArgs();
+            await _pipelineManagerService.RunAsync("async", args);
+            Assert.Equal(Messages.AsyncMessage, args.ResponseMessage);
             Assert.False(args.Aborted);
         }
     }

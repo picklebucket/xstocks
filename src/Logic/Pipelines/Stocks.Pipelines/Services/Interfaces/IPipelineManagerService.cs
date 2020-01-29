@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Stocks.Pipelines.Services.Interfaces
 {
     public interface IPipelineManagerService
     {
-        void Run(string pipelineName, PipelineArgs args);
+        Task RunAsync(string pipelineName, PipelineArgs args);
     }
 }

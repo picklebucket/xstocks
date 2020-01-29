@@ -11,4 +11,7 @@
   <di>
     <processor type="Stocks.Pipelines.Tests.Fixtures.Pipelines.DIProcessor, Stocks.Pipelines.Tests" resolve="true"></processor>
   </di>
+  <async>
+    <processor type="Stocks.Pipelines.Tests.Fixtures.Pipelines.AsyncProcessor, Stocks.Pipelines.Tests" async="true" resolve="true"></processor>
+  </async>
 </pipelines> 
