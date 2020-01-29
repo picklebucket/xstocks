@@ -14,6 +14,16 @@ namespace Stocks.Pipelines.Providers
             _configPath = configPath;
         }
 
+        public IEnumerable<ProcessorInfo> GetAllProcessors()
+        {
+            var processors = new List<ProcessorInfo>();
+            foreach (XmlNode pipelineNode in GetAllPipelines())
+            {
+                processors.AddRange(GetProcessors(pipelineNode.Name));
+            }
+            return processors;
+        }
+
         public IEnumerable<ProcessorInfo> GetProcessors(string pipelineName)
         {
             var pipelineNode = GetPipelineNode(pipelineName);
@@ -26,25 +36,43 @@ namespace Stocks.Pipelines.Providers
                 {
                     throw new Exception("'processor' XML element doesn't have 'type' attribute");
                 }
-
                 string typeName = typeAttribute.Value;
                 var processorType = Type.GetType(typeName) ?? throw new Exception($"'processor' XML element contains invalid type name in 'type' attribute: {typeName}");
-                processors.Add(new ProcessorInfo(processorType));
+
+                var resolveAttribute = processorNode.Attributes["resolve"];
+                bool resolve = false;
+                if(resolveAttribute != null)
+                {
+                    bool.TryParse(resolveAttribute.Value, out resolve);
+                }
+                processors.Add(new ProcessorInfo(processorType, resolve));
             }
             return processors;
         }
 
+        private XmlNodeList GetAllPipelines()
+        {
+            string pipelinesRootXpath = $"/pipelines";
+            var pipelinesRoot = GetNode(pipelinesRootXpath);
+            return pipelinesRoot.ChildNodes;
+        }
+
         private XmlNode GetPipelineNode(string nodeName)
+        {
+            string pipelineXpath = $"/pipelines/{nodeName}";
+            return GetNode(pipelineXpath);
+        }
+
+        private XmlNode GetNode(string xpath)
         {
             var doc = new XmlDocument();
             doc.Load(_configPath);
-            string pipelineXpath = $"/pipelines/{nodeName}";
-            var pipelineNode = doc.SelectSingleNode(pipelineXpath);
-            if (pipelineNode == null)
+            var node = doc.SelectSingleNode(xpath);
+            if (node == null)
             {
-                throw new Exception($"File {_configPath} doesn't have {pipelineXpath} section");
+                throw new Exception($"File {_configPath} doesn't have {xpath} section");
             }
-            return pipelineNode;
+            return node;
         }
     }
 }

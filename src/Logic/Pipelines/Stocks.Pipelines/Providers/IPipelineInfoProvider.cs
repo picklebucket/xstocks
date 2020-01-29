@@ -7,5 +7,6 @@ namespace Stocks.Pipelines.Providers
     interface IPipelineInfoProvider
     {
         IEnumerable<ProcessorInfo> GetProcessors(string pipelineName);
+        IEnumerable<ProcessorInfo> GetAllProcessors();
     }
 }

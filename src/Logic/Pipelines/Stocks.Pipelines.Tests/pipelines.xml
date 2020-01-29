@@ -8,4 +8,7 @@
     <processor type="Stocks.Pipelines.Tests.Fixtures.Pipelines.AbortProcessor, Stocks.Pipelines.Tests"></processor>
     <processor type="Stocks.Pipelines.Tests.Fixtures.Pipelines.AfterAbortProcessor, Stocks.Pipelines.Tests"></processor>
   </abort>
+  <di>
+    <processor type="Stocks.Pipelines.Tests.Fixtures.Pipelines.DIProcessor, Stocks.Pipelines.Tests" resolve="true"></processor>
+  </di>
 </pipelines> 

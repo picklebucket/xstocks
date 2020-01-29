@@ -1,4 +1,5 @@
-﻿using Stocks.Pipelines.Services.Interfaces;
+﻿using Stocks.Pipelines.Models;
+using Stocks.Pipelines.Services.Interfaces;
 using Stocks.Pipelines.Tests.Fixtures;
 using Stocks.Pipelines.Tests.Fixtures.Pipelines;
 using System;
@@ -12,11 +13,13 @@ namespace Stocks.Pipelines.Tests.Services
     public class PipelineManagerServiceTests : IClassFixture<PipelinesFixture>
     {
         private readonly IPipelineManagerService _pipelineManagerService;
+        private readonly PipelineSettings _pipelineSettings;
         private readonly ITestOutputHelper _testOutputHelper;
 
         public PipelineManagerServiceTests(PipelinesFixture pipelinesFixture, ITestOutputHelper testOutputHelper)
         {
             _pipelineManagerService = pipelinesFixture.PipelineManagerService;
+            _pipelineSettings = pipelinesFixture.PipelineSettings;
             _testOutputHelper = testOutputHelper;
         }
 
@@ -38,6 +41,15 @@ namespace Stocks.Pipelines.Tests.Services
             Assert.Equal(Messages.AbortMessage, args.ResponseMessage);
             Assert.True(args.Aborted);
             _testOutputHelper.WriteLine(args.ResponseMessage);
+        }
+
+        [Fact]
+        public void RunDIPipeline()
+        {
+            var args = new CustomPipelineArgs();
+            _pipelineManagerService.Run("di", args);
+            Assert.Equal(_pipelineSettings.ConfigFilePath, args.ResponseMessage);
+            Assert.False(args.Aborted);
         }
     }
 }

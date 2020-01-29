@@ -1,4 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Stocks.Pipelines.DI;
 using Stocks.Pipelines.Models;
 using Stocks.Pipelines.Services;
 using Stocks.Pipelines.Services.Interfaces;
@@ -11,6 +13,7 @@ namespace Stocks.Pipelines.Tests.Fixtures
     public class PipelinesFixture
     {
         public IPipelineManagerService PipelineManagerService { get; }
+        public PipelineSettings PipelineSettings { get; }
 
         public PipelinesFixture()
         {
@@ -21,7 +24,16 @@ namespace Stocks.Pipelines.Tests.Fixtures
             var pipelinesSection = configuration.GetSection("Pipelines");
             var pipelineSettings = new PipelineSettings();
             pipelinesSection.Bind(pipelineSettings);
-            PipelineManagerService = new PipelineManagerService(pipelineSettings);
+
+            var serviceCollection = new ServiceCollection();
+            serviceCollection.AddTransient<IPipelineManagerService, PipelineManagerService>();
+            serviceCollection.AddSingleton(pipelineSettings);
+            serviceCollection.AddPipelineProcessors(pipelineSettings);
+
+            ServiceProvider serviceProvider = serviceCollection.BuildServiceProvider();
+
+            PipelineSettings = pipelineSettings;
+            PipelineManagerService = serviceProvider.GetService<IPipelineManagerService>();
         }
     }
 }
