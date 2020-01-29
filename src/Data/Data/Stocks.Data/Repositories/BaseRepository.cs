@@ -37,7 +37,7 @@ namespace Stocks.Data.Repositories
         {
             var filter = Builders<T>.Filter.Eq(x => x.Id, id);
             IMongoCollection<T> collection = Context.GetCollection<T>(CollectionName);
-            return await collection.Find(filter).FirstAsync();
+            return await collection.Find(filter).FirstOrDefaultAsync();
         }
 
         public async Task DeleteAsync(ObjectId id)

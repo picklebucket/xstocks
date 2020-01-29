@@ -15,7 +15,7 @@ namespace Stocks.Ameritrade.Tests.Fixtures
                 .AddJsonFile("appsettings.json.user", true)
                 .Build();
             var ameritradeSection = configuration.GetSection("Ameritrade");
-            var apiSettings = new ApiSettings();
+            var apiSettings = new AmeritradeApiSettings();
             ameritradeSection.Bind(apiSettings);
 
             AmeritradeApiService = new AmeritradeApiService(apiSettings);

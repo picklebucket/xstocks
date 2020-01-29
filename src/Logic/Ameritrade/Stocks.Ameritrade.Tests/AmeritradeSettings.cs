@@ -8,14 +8,14 @@ namespace Stocks.Ameritrade.Tests
 {
     public static class AmeritradeSettings
     {
-        public static ApiSettings GetSettings()
+        public static AmeritradeApiSettings GetSettings()
         {
             var configuration = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json")
                 .AddJsonFile("appsettings.json.user", true)
                 .Build();
             var ameritradeSection = configuration.GetSection("Ameritrade");
-            var apiSettings = new ApiSettings();
+            var apiSettings = new AmeritradeApiSettings();
             ameritradeSection.Bind(apiSettings);
             return apiSettings;
         }

@@ -44,7 +44,7 @@ namespace Stocks.Ameritrade.Services
             }
         }
 
-        public AmeritradeApiService(ApiSettings apiSettings)
+        public AmeritradeApiService(AmeritradeApiSettings apiSettings)
         {
             _refreshToken = apiSettings.RefreshToken;
             _clientId = apiSettings.ClientId;

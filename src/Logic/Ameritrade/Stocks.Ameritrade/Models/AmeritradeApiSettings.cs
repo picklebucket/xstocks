@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Stocks.Ameritrade.Models
 {
-    public class ApiSettings
+    public class AmeritradeApiSettings
     {
         public string RefreshToken { get; set; }
         public string ClientId { get; set; }
