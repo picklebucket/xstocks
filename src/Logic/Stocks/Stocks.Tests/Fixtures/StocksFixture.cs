@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Stocks.Ameritrade.Models;
 using Stocks.Data;
 using Stocks.Data.Models;
+using Stocks.Data.Repositories.Interfaces;
 using Stocks.Pipelines.Models;
 using Stocks.Pipelines.Services.Interfaces;
 using Stocks.Services.Interfaces;
@@ -14,6 +15,8 @@ namespace Stocks.Tests.Fixtures
     {
         public ICollectingService CollectingService { get; }
         public IPipelineManagerService PipelineManagerService { get; }
+        public IPriceHistoryRepository PriceHistoryRepository { get; }
+
         public StocksFixture()
         {
             var configuration = new ConfigurationBuilder()
@@ -37,7 +40,7 @@ namespace Stocks.Tests.Fixtures
             var serviceProvider = DIConfiguration.GetServiceProvider(ameritradeApiSettings, stocksContext, pipelineSettings);
             PipelineManagerService = serviceProvider.GetService<IPipelineManagerService>();
             CollectingService = serviceProvider.GetService<ICollectingService>();
+            PriceHistoryRepository = serviceProvider.GetService<IPriceHistoryRepository>();
         }
-
     }
 }

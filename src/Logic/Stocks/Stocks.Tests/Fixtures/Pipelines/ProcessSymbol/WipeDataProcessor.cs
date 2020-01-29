@@ -16,7 +16,7 @@ namespace Stocks.Tests.Fixtures.Pipelines.ProcessSymbol
 
         public void Execute(ProcessSymbolPipelineArgs args)
         {
-            _priceHistoryRepository.DeleteAsync(args.Symbol);
+            _priceHistoryRepository.DeleteAsync(args.Symbol).Wait();
         }
     }
 }

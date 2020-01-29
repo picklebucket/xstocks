@@ -52,6 +52,32 @@ namespace Stocks.Data.Tests.Repositories
         }
 
         [Fact]
+        public async Task GetBySymbol()
+        {
+            var priceHistory = new PriceHistory()
+            {
+                Symbol = "NFLX",
+                Empty = true,
+                Candles = new List<Candle>()
+                {
+                    new Candle()
+                    {
+                        Open = 1.1,
+                        Close = 2.1,
+                        DateTimeUnixEpochMilliseconds = 1231,
+                        High = 1.3,
+                        Low = 0.9,
+                        Volume = 2
+                    }
+                }
+            };
+
+            await _priceHistoryRepository.CreateAsync(priceHistory);
+            var createdPriceHistory = await _priceHistoryRepository.GetAsync(priceHistory.Symbol);
+            Assert.NotNull(createdPriceHistory);
+        }
+
+        [Fact]
         public async Task DeleteBySymbol()
         {
             var priceHistory = new PriceHistory()

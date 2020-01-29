@@ -2,5 +2,6 @@
 <pipelines>
   <processSymbol>
     <processor type="Stocks.Tests.Fixtures.Pipelines.ProcessSymbol.WipeDataProcessor, Stocks.Tests" resolve="true"></processor>
+    <processor type="Stocks.Tests.Fixtures.Pipelines.ProcessSymbol.CollectDataProcessor, Stocks.Tests" resolve="true"></processor>
   </processSymbol>
 </pipelines> 

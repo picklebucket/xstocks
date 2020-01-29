@@ -17,6 +17,7 @@ namespace Stocks.Pipelines
 
         public void Invoke(object[] parameters)
         {
+            //TODO::add posibility for async pipeline methods
             _methodInfo.Invoke(_instance, parameters);
         }
     }

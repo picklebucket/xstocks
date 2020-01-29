@@ -20,5 +20,12 @@ namespace Stocks.Data.Repositories
             var filter = Builders<PriceHistory>.Filter.Eq(x => x.Symbol, symbol);
             await collection.DeleteOneAsync(filter);
         }
+
+        public async Task<PriceHistory> GetAsync(string symbol)
+        {
+            IMongoCollection<PriceHistory> collection = Context.GetCollection<PriceHistory>(CollectionName);
+            var filter = Builders<PriceHistory>.Filter.Eq(x => x.Symbol, symbol);
+            return await collection.Find(filter).FirstOrDefaultAsync();
+        }
     }
 }
