@@ -5,6 +5,7 @@ using Stocks.Services.Interfaces;
 using Stocks.Tests.Fixtures;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
@@ -34,9 +35,22 @@ namespace Stocks.Tests.Services
             };
             await _collectingService.CollectDataAsync(symbol, priceHistoryRequest);
 
-            PriceHistory priceHistory = _priceHistoryRepository.GetAsync(symbol).Result;
+            PriceHistory priceHistory = await _priceHistoryRepository.GetAsync(symbol);
             Assert.NotNull(priceHistory);
             Assert.NotEmpty(priceHistory.Candles);
+        }
+
+        [Fact]
+        public async Task ExportToCsv()
+        {
+            string symbol = "NFLX";
+            PriceHistory priceHistory = await _priceHistoryRepository.GetAsync(symbol);
+            using var file = new StreamWriter("candles.csv");
+            file.WriteLine("Date, Open, High, Low, Close, Volume");
+            foreach (var candle in priceHistory.Candles)
+            {
+                file.WriteLine($"{DateTimeOffset.FromUnixTimeMilliseconds(candle.DateTimeUnixEpochMilliseconds)}, {candle.Open}, {candle.High}, {candle.Low}, {candle.Close}, {candle.Volume}");
+            }
         }
     }
 }
