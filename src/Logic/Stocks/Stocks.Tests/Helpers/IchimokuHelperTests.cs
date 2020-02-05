@@ -14,19 +14,20 @@ using Xunit.Abstractions;
 
 namespace Stocks.Tests.Helpers
 {
-    public class IchimokuHelperTests : IClassFixture<StocksFixture>
+    [Collection(Constants.CollectionName)]
+    public class IchimokuHelperTests 
     {
         private readonly ITestOutputHelper _testOutputHelper;
         private readonly IPriceHistoryRepository _priceHistoryRepository;
 
-        public IchimokuHelperTests(StocksFixture stocksFixture, ITestOutputHelper testOutputHelper)
+        public IchimokuHelperTests(HelpersFixture helpersFixture, ITestOutputHelper testOutputHelper)
         {
-            _priceHistoryRepository = stocksFixture.PriceHistoryRepository;
+            _priceHistoryRepository = helpersFixture.PriceHistoryRepository;
             _testOutputHelper = testOutputHelper;
         }
 
         [Fact]
-        public async Task Calculate()
+        public async Task BuildIchimokuCloud()
         {
             string symbol = "NFLX";
             PriceHistory priceHistory = await _priceHistoryRepository.GetAsync(symbol);

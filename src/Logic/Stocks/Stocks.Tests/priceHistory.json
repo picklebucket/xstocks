@@ -1,0 +1,2032 @@
+[
+  {
+    "Symbol": "NFLX",
+    "Empty": false,
+    "Candles": [
+      {
+        "Open": 334.7,
+        "Close": 335.66,
+        "High": 336.3,
+        "Low": 328.88,
+        "DateTimeUnixEpochMilliseconds": 1548655200000,
+        "Volume": 8652082
+      },
+      {
+        "Open": 335.87,
+        "Close": 328.9,
+        "High": 338.22,
+        "Low": 328.151,
+        "DateTimeUnixEpochMilliseconds": 1548741600000,
+        "Volume": 7655189
+      },
+      {
+        "Open": 332.75,
+        "Close": 340.66,
+        "High": 341.78,
+        "Low": 330.8,
+        "DateTimeUnixEpochMilliseconds": 1548828000000,
+        "Volume": 9234530
+      },
+      {
+        "Open": 339.68,
+        "Close": 339.5,
+        "High": 345.99,
+        "Low": 338.0919,
+        "DateTimeUnixEpochMilliseconds": 1548914400000,
+        "Volume": 8535517
+      },
+      {
+        "Open": 337.18,
+        "Close": 339.85,
+        "High": 346.84,
+        "Low": 336.5,
+        "DateTimeUnixEpochMilliseconds": 1549000800000,
+        "Volume": 9827760
+      },
+      {
+        "Open": 342.6,
+        "Close": 351.34,
+        "High": 352.0,
+        "Low": 341.3,
+        "DateTimeUnixEpochMilliseconds": 1549260000000,
+        "Volume": 9051387
+      },
+      {
+        "Open": 353.2,
+        "Close": 355.81,
+        "High": 360.0,
+        "Low": 352.9,
+        "DateTimeUnixEpochMilliseconds": 1549346400000,
+        "Volume": 9046623
+      },
+      {
+        "Open": 357.0,
+        "Close": 352.19,
+        "High": 357.04,
+        "Low": 347.19,
+        "DateTimeUnixEpochMilliseconds": 1549432800000,
+        "Volume": 6717662
+      },
+      {
+        "Open": 347.9,
+        "Close": 344.71,
+        "High": 348.75,
+        "Low": 339.02,
+        "DateTimeUnixEpochMilliseconds": 1549519200000,
+        "Volume": 7864529
+      },
+      {
+        "Open": 338.0,
+        "Close": 347.57,
+        "High": 348.0,
+        "Low": 338.0,
+        "DateTimeUnixEpochMilliseconds": 1549605600000,
+        "Volume": 7561391
+      },
+      {
+        "Open": 350.0,
+        "Close": 345.73,
+        "High": 352.87,
+        "Low": 344.81,
+        "DateTimeUnixEpochMilliseconds": 1549864800000,
+        "Volume": 5454863
+      },
+      {
+        "Open": 348.09,
+        "Close": 359.97,
+        "High": 360.0,
+        "Low": 346.52,
+        "DateTimeUnixEpochMilliseconds": 1549951200000,
+        "Volume": 10429399
+      },
+      {
+        "Open": 357.3,
+        "Close": 351.77,
+        "High": 359.6,
+        "Low": 350.28,
+        "DateTimeUnixEpochMilliseconds": 1550037600000,
+        "Volume": 10559146
+      },
+      {
+        "Open": 351.75,
+        "Close": 359.07,
+        "High": 360.45,
+        "Low": 348.33,
+        "DateTimeUnixEpochMilliseconds": 1550124000000,
+        "Volume": 9295338
+      },
+      {
+        "Open": 358.47,
+        "Close": 356.87,
+        "High": 364.4,
+        "Low": 355.5,
+        "DateTimeUnixEpochMilliseconds": 1550210400000,
+        "Volume": 9229980
+      },
+      {
+        "Open": 355.8,
+        "Close": 361.92,
+        "High": 365.0,
+        "Low": 355.32,
+        "DateTimeUnixEpochMilliseconds": 1550556000000,
+        "Volume": 7396559
+      },
+      {
+        "Open": 364.85,
+        "Close": 359.91,
+        "High": 366.71,
+        "Low": 356.7,
+        "DateTimeUnixEpochMilliseconds": 1550642400000,
+        "Volume": 8110741
+      },
+      {
+        "Open": 360.03,
+        "Close": 356.97,
+        "High": 362.85,
+        "Low": 353.88,
+        "DateTimeUnixEpochMilliseconds": 1550728800000,
+        "Volume": 6227897
+      },
+      {
+        "Open": 360.34,
+        "Close": 363.02,
+        "High": 366.13,
+        "Low": 360.05,
+        "DateTimeUnixEpochMilliseconds": 1550815200000,
+        "Volume": 7088214
+      },
+      {
+        "Open": 367.01,
+        "Close": 363.91,
+        "High": 371.49,
+        "Low": 363.79,
+        "DateTimeUnixEpochMilliseconds": 1551074400000,
+        "Volume": 7569320
+      },
+      {
+        "Open": 362.98,
+        "Close": 364.97,
+        "High": 365.7,
+        "Low": 359.33,
+        "DateTimeUnixEpochMilliseconds": 1551160800000,
+        "Volume": 4944593
+      },
+      {
+        "Open": 363.5,
+        "Close": 362.87,
+        "High": 368.03,
+        "Low": 359.8,
+        "DateTimeUnixEpochMilliseconds": 1551247200000,
+        "Volume": 5629945
+      },
+      {
+        "Open": 362.47,
+        "Close": 358.1,
+        "High": 366.39,
+        "Low": 357.709,
+        "DateTimeUnixEpochMilliseconds": 1551333600000,
+        "Volume": 6186763
+      },
+      {
+        "Open": 362.26,
+        "Close": 357.32,
+        "High": 362.87,
+        "Low": 354.6915,
+        "DateTimeUnixEpochMilliseconds": 1551420000000,
+        "Volume": 5526539
+      },
+      {
+        "Open": 359.72,
+        "Close": 351.04,
+        "High": 362.25,
+        "Low": 348.0436,
+        "DateTimeUnixEpochMilliseconds": 1551679200000,
+        "Volume": 7486996
+      },
+      {
+        "Open": 351.46,
+        "Close": 354.3,
+        "High": 356.17,
+        "Low": 348.25,
+        "DateTimeUnixEpochMilliseconds": 1551765600000,
+        "Volume": 5937754
+      },
+      {
+        "Open": 353.6,
+        "Close": 359.61,
+        "High": 359.88,
+        "Low": 351.7,
+        "DateTimeUnixEpochMilliseconds": 1551852000000,
+        "Volume": 6211895
+      },
+      {
+        "Open": 360.16,
+        "Close": 352.6,
+        "High": 362.86,
+        "Low": 350.5,
+        "DateTimeUnixEpochMilliseconds": 1551938400000,
+        "Volume": 6151331
+      },
+      {
+        "Open": 345.75,
+        "Close": 349.6,
+        "High": 349.92,
+        "Low": 342.47,
+        "DateTimeUnixEpochMilliseconds": 1552024800000,
+        "Volume": 6898838
+      },
+      {
+        "Open": 352.0,
+        "Close": 358.86,
+        "High": 358.98,
+        "Low": 350.03,
+        "DateTimeUnixEpochMilliseconds": 1552280400000,
+        "Volume": 5387285
+      },
+      {
+        "Open": 359.37,
+        "Close": 356.27,
+        "High": 360.13,
+        "Low": 353.8,
+        "DateTimeUnixEpochMilliseconds": 1552366800000,
+        "Volume": 5164571
+      },
+      {
+        "Open": 355.81,
+        "Close": 361.21,
+        "High": 362.48,
+        "Low": 352.765,
+        "DateTimeUnixEpochMilliseconds": 1552453200000,
+        "Volume": 6444092
+      },
+      {
+        "Open": 360.5,
+        "Close": 358.82,
+        "High": 363.84,
+        "Low": 358.1008,
+        "DateTimeUnixEpochMilliseconds": 1552539600000,
+        "Volume": 5271429
+      },
+      {
+        "Open": 361.02,
+        "Close": 361.46,
+        "High": 364.0,
+        "Low": 358.89,
+        "DateTimeUnixEpochMilliseconds": 1552626000000,
+        "Volume": 8443210
+      },
+      {
+        "Open": 362.47,
+        "Close": 363.44,
+        "High": 370.9705,
+        "Low": 361.86,
+        "DateTimeUnixEpochMilliseconds": 1552885200000,
+        "Volume": 7194726
+      },
+      {
+        "Open": 366.4,
+        "Close": 358.78,
+        "High": 366.96,
+        "Low": 356.8,
+        "DateTimeUnixEpochMilliseconds": 1552971600000,
+        "Volume": 7541425
+      },
+      {
+        "Open": 358.91,
+        "Close": 375.22,
+        "High": 375.9,
+        "Low": 357.01,
+        "DateTimeUnixEpochMilliseconds": 1553058000000,
+        "Volume": 10917165
+      },
+      {
+        "Open": 374.0,
+        "Close": 377.87,
+        "High": 379.0,
+        "Low": 370.61,
+        "DateTimeUnixEpochMilliseconds": 1553144400000,
+        "Volume": 8544017
+      },
+      {
+        "Open": 375.95,
+        "Close": 361.01,
+        "High": 376.43,
+        "Low": 360.04,
+        "DateTimeUnixEpochMilliseconds": 1553230800000,
+        "Volume": 8657169
+      },
+      {
+        "Open": 359.0,
+        "Close": 366.23,
+        "High": 367.0399,
+        "Low": 357.44,
+        "DateTimeUnixEpochMilliseconds": 1553490000000,
+        "Volume": 8473845
+      },
+      {
+        "Open": 367.87,
+        "Close": 359.97,
+        "High": 368.38,
+        "Low": 358.02,
+        "DateTimeUnixEpochMilliseconds": 1553576400000,
+        "Volume": 7666475
+      },
+      {
+        "Open": 361.0,
+        "Close": 353.37,
+        "High": 362.47,
+        "Low": 350.37,
+        "DateTimeUnixEpochMilliseconds": 1553662800000,
+        "Volume": 7852370
+      },
+      {
+        "Open": 354.485,
+        "Close": 354.61,
+        "High": 355.94,
+        "Low": 349.2,
+        "DateTimeUnixEpochMilliseconds": 1553749200000,
+        "Volume": 4360960
+      },
+      {
+        "Open": 357.16,
+        "Close": 356.56,
+        "High": 358.25,
+        "Low": 353.71,
+        "DateTimeUnixEpochMilliseconds": 1553835600000,
+        "Volume": 4705636
+      },
+      {
+        "Open": 359.0,
+        "Close": 366.96,
+        "High": 368.33,
+        "Low": 358.51,
+        "DateTimeUnixEpochMilliseconds": 1554094800000,
+        "Volume": 7036097
+      },
+      {
+        "Open": 366.25,
+        "Close": 367.72,
+        "High": 368.42,
+        "Low": 362.22,
+        "DateTimeUnixEpochMilliseconds": 1554181200000,
+        "Volume": 5158742
+      },
+      {
+        "Open": 369.26,
+        "Close": 369.75,
+        "High": 373.4105,
+        "Low": 366.19,
+        "DateTimeUnixEpochMilliseconds": 1554267600000,
+        "Volume": 5376623
+      },
+      {
+        "Open": 370.07,
+        "Close": 367.88,
+        "High": 372.05,
+        "Low": 362.4,
+        "DateTimeUnixEpochMilliseconds": 1554354000000,
+        "Volume": 4627305
+      },
+      {
+        "Open": 369.0,
+        "Close": 365.49,
+        "High": 369.8,
+        "Low": 364.66,
+        "DateTimeUnixEpochMilliseconds": 1554440400000,
+        "Volume": 3905493
+      },
+      {
+        "Open": 365.11,
+        "Close": 361.41,
+        "High": 365.94,
+        "Low": 359.93,
+        "DateTimeUnixEpochMilliseconds": 1554699600000,
+        "Volume": 4653810
+      },
+      {
+        "Open": 360.54,
+        "Close": 364.71,
+        "High": 366.74,
+        "Low": 359.0,
+        "DateTimeUnixEpochMilliseconds": 1554786000000,
+        "Volume": 5439228
+      },
+      {
+        "Open": 365.79,
+        "Close": 363.92,
+        "High": 368.8481,
+        "Low": 362.25,
+        "DateTimeUnixEpochMilliseconds": 1554872400000,
+        "Volume": 4545561
+      },
+      {
+        "Open": 365.0,
+        "Close": 367.65,
+        "High": 370.12,
+        "Low": 360.81,
+        "DateTimeUnixEpochMilliseconds": 1554958800000,
+        "Volume": 6526899
+      },
+      {
+        "Open": 360.69,
+        "Close": 351.14,
+        "High": 361.75,
+        "Low": 349.36,
+        "DateTimeUnixEpochMilliseconds": 1555045200000,
+        "Volume": 15646199
+      },
+      {
+        "Open": 350.71,
+        "Close": 348.87,
+        "High": 352.21,
+        "Low": 342.27,
+        "DateTimeUnixEpochMilliseconds": 1555304400000,
+        "Volume": 8842344
+      },
+      {
+        "Open": 355.0,
+        "Close": 359.46,
+        "High": 364.4787,
+        "Low": 352.72,
+        "DateTimeUnixEpochMilliseconds": 1555390800000,
+        "Volume": 18740232
+      },
+      {
+        "Open": 365.05,
+        "Close": 354.74,
+        "High": 368.764,
+        "Low": 350.6,
+        "DateTimeUnixEpochMilliseconds": 1555477200000,
+        "Volume": 18054101
+      },
+      {
+        "Open": 355.0,
+        "Close": 360.35,
+        "High": 360.41,
+        "Low": 351.64,
+        "DateTimeUnixEpochMilliseconds": 1555563600000,
+        "Volume": 8353165
+      },
+      {
+        "Open": 359.7,
+        "Close": 377.34,
+        "High": 377.69,
+        "Low": 359.0,
+        "DateTimeUnixEpochMilliseconds": 1555909200000,
+        "Volume": 11980534
+      },
+      {
+        "Open": 375.45,
+        "Close": 381.89,
+        "High": 384.8,
+        "Low": 374.7069,
+        "DateTimeUnixEpochMilliseconds": 1555995600000,
+        "Volume": 10089820
+      },
+      {
+        "Open": 381.07,
+        "Close": 374.23,
+        "High": 381.9,
+        "Low": 373.2698,
+        "DateTimeUnixEpochMilliseconds": 1556082000000,
+        "Volume": 6541872
+      },
+      {
+        "Open": 374.49,
+        "Close": 368.33,
+        "High": 374.76,
+        "Low": 365.7,
+        "DateTimeUnixEpochMilliseconds": 1556168400000,
+        "Volume": 6255496
+      },
+      {
+        "Open": 368.35,
+        "Close": 374.85,
+        "High": 375.14,
+        "Low": 366.24,
+        "DateTimeUnixEpochMilliseconds": 1556254800000,
+        "Volume": 5621901
+      },
+      {
+        "Open": 373.68,
+        "Close": 371.83,
+        "High": 374.5753,
+        "Low": 369.115,
+        "DateTimeUnixEpochMilliseconds": 1556514000000,
+        "Volume": 3821703
+      },
+      {
+        "Open": 369.56,
+        "Close": 370.54,
+        "High": 374.5,
+        "Low": 368.348,
+        "DateTimeUnixEpochMilliseconds": 1556600400000,
+        "Volume": 3870095
+      },
+      {
+        "Open": 374.0,
+        "Close": 378.81,
+        "High": 385.99,
+        "Low": 373.1746,
+        "DateTimeUnixEpochMilliseconds": 1556686800000,
+        "Volume": 9257284
+      },
+      {
+        "Open": 378.0,
+        "Close": 379.06,
+        "High": 383.5,
+        "Low": 374.51,
+        "DateTimeUnixEpochMilliseconds": 1556773200000,
+        "Volume": 5398167
+      },
+      {
+        "Open": 381.53,
+        "Close": 385.03,
+        "High": 385.03,
+        "Low": 378.2717,
+        "DateTimeUnixEpochMilliseconds": 1556859600000,
+        "Volume": 5130301
+      },
+      {
+        "Open": 377.69,
+        "Close": 378.67,
+        "High": 381.35,
+        "Low": 376.0,
+        "DateTimeUnixEpochMilliseconds": 1557118800000,
+        "Volume": 5793144
+      },
+      {
+        "Open": 377.0,
+        "Close": 370.46,
+        "High": 379.91,
+        "Low": 365.81,
+        "DateTimeUnixEpochMilliseconds": 1557205200000,
+        "Volume": 6974924
+      },
+      {
+        "Open": 367.92,
+        "Close": 364.37,
+        "High": 369.0,
+        "Low": 361.36,
+        "DateTimeUnixEpochMilliseconds": 1557291600000,
+        "Volume": 6571957
+      },
+      {
+        "Open": 360.9,
+        "Close": 362.75,
+        "High": 364.2,
+        "Low": 352.75,
+        "DateTimeUnixEpochMilliseconds": 1557378000000,
+        "Volume": 5882572
+      },
+      {
+        "Open": 361.62,
+        "Close": 361.04,
+        "High": 365.2578,
+        "Low": 353.06,
+        "DateTimeUnixEpochMilliseconds": 1557464400000,
+        "Volume": 5657123
+      },
+      {
+        "Open": 352.29,
+        "Close": 345.26,
+        "High": 354.26,
+        "Low": 343.1,
+        "DateTimeUnixEpochMilliseconds": 1557723600000,
+        "Volume": 8026697
+      },
+      {
+        "Open": 348.71,
+        "Close": 345.61,
+        "High": 349.95,
+        "Low": 342.5,
+        "DateTimeUnixEpochMilliseconds": 1557810000000,
+        "Volume": 5353029
+      },
+      {
+        "Open": 343.34,
+        "Close": 354.99,
+        "High": 356.5,
+        "Low": 341.39,
+        "DateTimeUnixEpochMilliseconds": 1557896400000,
+        "Volume": 6340118
+      },
+      {
+        "Open": 356.37,
+        "Close": 359.31,
+        "High": 364.0,
+        "Low": 353.935,
+        "DateTimeUnixEpochMilliseconds": 1557982800000,
+        "Volume": 6441463
+      },
+      {
+        "Open": 356.39,
+        "Close": 354.45,
+        "High": 359.62,
+        "Low": 353.785,
+        "DateTimeUnixEpochMilliseconds": 1558069200000,
+        "Volume": 4725448
+      },
+      {
+        "Open": 351.23,
+        "Close": 348.11,
+        "High": 352.418,
+        "Low": 345.4,
+        "DateTimeUnixEpochMilliseconds": 1558328400000,
+        "Volume": 4621515
+      },
+      {
+        "Open": 350.95,
+        "Close": 354.27,
+        "High": 356.425,
+        "Low": 349.93,
+        "DateTimeUnixEpochMilliseconds": 1558414800000,
+        "Volume": 4026369
+      },
+      {
+        "Open": 358.01,
+        "Close": 359.73,
+        "High": 370.46,
+        "Low": 357.3,
+        "DateTimeUnixEpochMilliseconds": 1558501200000,
+        "Volume": 6229389
+      },
+      {
+        "Open": 355.5,
+        "Close": 352.21,
+        "High": 357.42,
+        "Low": 347.7,
+        "DateTimeUnixEpochMilliseconds": 1558587600000,
+        "Volume": 5630443
+      },
+      {
+        "Open": 355.41,
+        "Close": 354.39,
+        "High": 359.44,
+        "Low": 353.791,
+        "DateTimeUnixEpochMilliseconds": 1558674000000,
+        "Volume": 3830963
+      },
+      {
+        "Open": 354.39,
+        "Close": 354.78,
+        "High": 361.2,
+        "Low": 353.64,
+        "DateTimeUnixEpochMilliseconds": 1559019600000,
+        "Volume": 4717144
+      },
+      {
+        "Open": 353.6,
+        "Close": 349.19,
+        "High": 353.8476,
+        "Low": 345.9,
+        "DateTimeUnixEpochMilliseconds": 1559106000000,
+        "Volume": 5658913
+      },
+      {
+        "Open": 350.55,
+        "Close": 351.85,
+        "High": 354.21,
+        "Low": 348.3,
+        "DateTimeUnixEpochMilliseconds": 1559192400000,
+        "Volume": 4008042
+      },
+      {
+        "Open": 347.22,
+        "Close": 343.28,
+        "High": 349.34,
+        "Low": 342.92,
+        "DateTimeUnixEpochMilliseconds": 1559278800000,
+        "Volume": 5023449
+      },
+      {
+        "Open": 343.56,
+        "Close": 336.63,
+        "High": 347.66,
+        "Low": 332.65,
+        "DateTimeUnixEpochMilliseconds": 1559538000000,
+        "Volume": 7849589
+      },
+      {
+        "Open": 345.0,
+        "Close": 353.4,
+        "High": 353.61,
+        "Low": 343.25,
+        "DateTimeUnixEpochMilliseconds": 1559624400000,
+        "Volume": 7891632
+      },
+      {
+        "Open": 354.38,
+        "Close": 355.73,
+        "High": 357.88,
+        "Low": 348.71,
+        "DateTimeUnixEpochMilliseconds": 1559710800000,
+        "Volume": 5020081
+      },
+      {
+        "Open": 354.84,
+        "Close": 357.13,
+        "High": 358.21,
+        "Low": 352.09,
+        "DateTimeUnixEpochMilliseconds": 1559797200000,
+        "Volume": 3709955
+      },
+      {
+        "Open": 357.39,
+        "Close": 360.87,
+        "High": 365.15,
+        "Low": 355.69,
+        "DateTimeUnixEpochMilliseconds": 1559883600000,
+        "Volume": 4777321
+      },
+      {
+        "Open": 363.65,
+        "Close": 352.01,
+        "High": 367.1,
+        "Low": 349.285,
+        "DateTimeUnixEpochMilliseconds": 1560142800000,
+        "Volume": 7810261
+      },
+      {
+        "Open": 355.0,
+        "Close": 351.27,
+        "High": 357.58,
+        "Low": 348.5,
+        "DateTimeUnixEpochMilliseconds": 1560229200000,
+        "Volume": 5396712
+      },
+      {
+        "Open": 351.82,
+        "Close": 345.56,
+        "High": 353.61,
+        "Low": 343.23,
+        "DateTimeUnixEpochMilliseconds": 1560315600000,
+        "Volume": 4584704
+      },
+      {
+        "Open": 347.23,
+        "Close": 343.43,
+        "High": 348.5,
+        "Low": 339.25,
+        "DateTimeUnixEpochMilliseconds": 1560402000000,
+        "Volume": 6209347
+      },
+      {
+        "Open": 341.63,
+        "Close": 339.73,
+        "High": 343.4,
+        "Low": 336.155,
+        "DateTimeUnixEpochMilliseconds": 1560488400000,
+        "Volume": 5019011
+      },
+      {
+        "Open": 342.69,
+        "Close": 350.62,
+        "High": 351.77,
+        "Low": 342.06,
+        "DateTimeUnixEpochMilliseconds": 1560747600000,
+        "Volume": 5358219
+      },
+      {
+        "Open": 355.57,
+        "Close": 357.12,
+        "High": 361.5,
+        "Low": 353.75,
+        "DateTimeUnixEpochMilliseconds": 1560834000000,
+        "Volume": 5428542
+      },
+      {
+        "Open": 361.72,
+        "Close": 363.52,
+        "High": 364.74,
+        "Low": 356.12,
+        "DateTimeUnixEpochMilliseconds": 1560920400000,
+        "Volume": 5667156
+      },
+      {
+        "Open": 365.91,
+        "Close": 365.21,
+        "High": 370.12,
+        "Low": 361.215,
+        "DateTimeUnixEpochMilliseconds": 1561006800000,
+        "Volume": 5899467
+      },
+      {
+        "Open": 365.0,
+        "Close": 369.21,
+        "High": 371.45,
+        "Low": 365.0,
+        "DateTimeUnixEpochMilliseconds": 1561093200000,
+        "Volume": 7448356
+      },
+      {
+        "Open": 370.27,
+        "Close": 371.04,
+        "High": 375.0,
+        "Low": 370.2,
+        "DateTimeUnixEpochMilliseconds": 1561352400000,
+        "Volume": 4830240
+      },
+      {
+        "Open": 370.75,
+        "Close": 360.3,
+        "High": 370.9994,
+        "Low": 358.29,
+        "DateTimeUnixEpochMilliseconds": 1561438800000,
+        "Volume": 5750383
+      },
+      {
+        "Open": 361.6,
+        "Close": 362.2,
+        "High": 366.79,
+        "Low": 361.6,
+        "DateTimeUnixEpochMilliseconds": 1561525200000,
+        "Volume": 3669677
+      },
+      {
+        "Open": 363.2,
+        "Close": 370.02,
+        "High": 370.85,
+        "Low": 363.2,
+        "DateTimeUnixEpochMilliseconds": 1561611600000,
+        "Volume": 4138575
+      },
+      {
+        "Open": 370.26,
+        "Close": 367.32,
+        "High": 371.5448,
+        "Low": 364.87,
+        "DateTimeUnixEpochMilliseconds": 1561698000000,
+        "Volume": 4592706
+      },
+      {
+        "Open": 373.5,
+        "Close": 374.6,
+        "High": 376.66,
+        "Low": 372.0,
+        "DateTimeUnixEpochMilliseconds": 1561957200000,
+        "Volume": 5001518
+      },
+      {
+        "Open": 374.89,
+        "Close": 375.43,
+        "High": 376.0,
+        "Low": 370.31,
+        "DateTimeUnixEpochMilliseconds": 1562043600000,
+        "Volume": 3628962
+      },
+      {
+        "Open": 376.69,
+        "Close": 381.72,
+        "High": 381.99,
+        "Low": 375.84,
+        "DateTimeUnixEpochMilliseconds": 1562130000000,
+        "Volume": 3799009
+      },
+      {
+        "Open": 378.29,
+        "Close": 380.55,
+        "High": 381.4,
+        "Low": 375.555,
+        "DateTimeUnixEpochMilliseconds": 1562302800000,
+        "Volume": 3732162
+      },
+      {
+        "Open": 378.19,
+        "Close": 376.16,
+        "High": 378.25,
+        "Low": 375.36,
+        "DateTimeUnixEpochMilliseconds": 1562562000000,
+        "Volume": 3113402
+      },
+      {
+        "Open": 379.06,
+        "Close": 379.93,
+        "High": 384.76,
+        "Low": 377.5,
+        "DateTimeUnixEpochMilliseconds": 1562648400000,
+        "Volume": 6932822
+      },
+      {
+        "Open": 382.77,
+        "Close": 381.0,
+        "High": 384.3399,
+        "Low": 377.4,
+        "DateTimeUnixEpochMilliseconds": 1562734800000,
+        "Volume": 5878790
+      },
+      {
+        "Open": 381.1,
+        "Close": 379.5,
+        "High": 384.54,
+        "Low": 378.8,
+        "DateTimeUnixEpochMilliseconds": 1562821200000,
+        "Volume": 4336287
+      },
+      {
+        "Open": 378.68,
+        "Close": 373.25,
+        "High": 379.7375,
+        "Low": 372.7917,
+        "DateTimeUnixEpochMilliseconds": 1562907600000,
+        "Volume": 6636937
+      },
+      {
+        "Open": 372.94,
+        "Close": 366.6,
+        "High": 373.68,
+        "Low": 362.3,
+        "DateTimeUnixEpochMilliseconds": 1563166800000,
+        "Volume": 7944680
+      },
+      {
+        "Open": 370.09,
+        "Close": 365.99,
+        "High": 371.34,
+        "Low": 364.92,
+        "DateTimeUnixEpochMilliseconds": 1563253200000,
+        "Volume": 5863222
+      },
+      {
+        "Open": 366.25,
+        "Close": 362.44,
+        "High": 366.5,
+        "Low": 361.75,
+        "DateTimeUnixEpochMilliseconds": 1563339600000,
+        "Volume": 13639536
+      },
+      {
+        "Open": 323.76,
+        "Close": 325.21,
+        "High": 329.85,
+        "Low": 320.3,
+        "DateTimeUnixEpochMilliseconds": 1563426000000,
+        "Volume": 31305899
+      },
+      {
+        "Open": 323.4,
+        "Close": 315.1,
+        "High": 325.85,
+        "Low": 314.23,
+        "DateTimeUnixEpochMilliseconds": 1563512400000,
+        "Volume": 16302482
+      },
+      {
+        "Open": 312.0,
+        "Close": 310.62,
+        "High": 314.54,
+        "Low": 305.81,
+        "DateTimeUnixEpochMilliseconds": 1563771600000,
+        "Volume": 17725334
+      },
+      {
+        "Open": 311.44,
+        "Close": 307.3,
+        "High": 313.5,
+        "Low": 306.0,
+        "DateTimeUnixEpochMilliseconds": 1563858000000,
+        "Volume": 9171068
+      },
+      {
+        "Open": 310.51,
+        "Close": 317.94,
+        "High": 319.99,
+        "Low": 307.25,
+        "DateTimeUnixEpochMilliseconds": 1563944400000,
+        "Volume": 11961818
+      },
+      {
+        "Open": 318.86,
+        "Close": 326.46,
+        "High": 327.69,
+        "Low": 316.3,
+        "DateTimeUnixEpochMilliseconds": 1564030800000,
+        "Volume": 10798496
+      },
+      {
+        "Open": 328.79,
+        "Close": 335.78,
+        "High": 336.0,
+        "Low": 327.5,
+        "DateTimeUnixEpochMilliseconds": 1564117200000,
+        "Volume": 10847495
+      },
+      {
+        "Open": 335.98,
+        "Close": 332.7,
+        "High": 336.4,
+        "Low": 328.77,
+        "DateTimeUnixEpochMilliseconds": 1564376400000,
+        "Volume": 5782817
+      },
+      {
+        "Open": 329.2,
+        "Close": 325.93,
+        "High": 329.65,
+        "Low": 323.23,
+        "DateTimeUnixEpochMilliseconds": 1564462800000,
+        "Volume": 6029320
+      },
+      {
+        "Open": 325.16,
+        "Close": 322.99,
+        "High": 331.77,
+        "Low": 318.53,
+        "DateTimeUnixEpochMilliseconds": 1564549200000,
+        "Volume": 6259494
+      },
+      {
+        "Open": 324.25,
+        "Close": 319.5,
+        "High": 328.58,
+        "Low": 318.735,
+        "DateTimeUnixEpochMilliseconds": 1564635600000,
+        "Volume": 6563156
+      },
+      {
+        "Open": 317.49,
+        "Close": 318.83,
+        "High": 319.41,
+        "Low": 311.8,
+        "DateTimeUnixEpochMilliseconds": 1564722000000,
+        "Volume": 6280343
+      },
+      {
+        "Open": 310.96,
+        "Close": 307.63,
+        "High": 313.4179,
+        "Low": 304.677,
+        "DateTimeUnixEpochMilliseconds": 1564981200000,
+        "Volume": 8692485
+      },
+      {
+        "Open": 310.58,
+        "Close": 310.1,
+        "High": 311.88,
+        "Low": 305.3,
+        "DateTimeUnixEpochMilliseconds": 1565067600000,
+        "Volume": 6179090
+      },
+      {
+        "Open": 302.56,
+        "Close": 304.29,
+        "High": 305.0,
+        "Low": 296.8126,
+        "DateTimeUnixEpochMilliseconds": 1565154000000,
+        "Volume": 9322433
+      },
+      {
+        "Open": 311.03,
+        "Close": 315.9,
+        "High": 316.3648,
+        "Low": 306.63,
+        "DateTimeUnixEpochMilliseconds": 1565240400000,
+        "Volume": 5905865
+      },
+      {
+        "Open": 313.74,
+        "Close": 308.93,
+        "High": 316.64,
+        "Low": 305.68,
+        "DateTimeUnixEpochMilliseconds": 1565326800000,
+        "Volume": 5349059
+      },
+      {
+        "Open": 305.46,
+        "Close": 310.83,
+        "High": 312.89,
+        "Low": 303.24,
+        "DateTimeUnixEpochMilliseconds": 1565586000000,
+        "Volume": 6531722
+      },
+      {
+        "Open": 309.77,
+        "Close": 312.28,
+        "High": 316.43,
+        "Low": 308.16,
+        "DateTimeUnixEpochMilliseconds": 1565672400000,
+        "Volume": 5338761
+      },
+      {
+        "Open": 308.01,
+        "Close": 299.11,
+        "High": 308.41,
+        "Low": 298.005,
+        "DateTimeUnixEpochMilliseconds": 1565758800000,
+        "Volume": 7355753
+      },
+      {
+        "Open": 299.5,
+        "Close": 295.76,
+        "High": 300.63,
+        "Low": 288.0,
+        "DateTimeUnixEpochMilliseconds": 1565845200000,
+        "Volume": 9683384
+      },
+      {
+        "Open": 298.86,
+        "Close": 302.8,
+        "High": 303.55,
+        "Low": 296.27,
+        "DateTimeUnixEpochMilliseconds": 1565931600000,
+        "Volume": 7090757
+      },
+      {
+        "Open": 306.25,
+        "Close": 309.38,
+        "High": 311.75,
+        "Low": 304.75,
+        "DateTimeUnixEpochMilliseconds": 1566190800000,
+        "Volume": 4951733
+      },
+      {
+        "Open": 304.57,
+        "Close": 298.99,
+        "High": 305.0,
+        "Low": 297.6811,
+        "DateTimeUnixEpochMilliseconds": 1566277200000,
+        "Volume": 7352162
+      },
+      {
+        "Open": 301.61,
+        "Close": 297.81,
+        "High": 302.88,
+        "Low": 296.2,
+        "DateTimeUnixEpochMilliseconds": 1566363600000,
+        "Volume": 5689746
+      },
+      {
+        "Open": 298.65,
+        "Close": 296.93,
+        "High": 300.33,
+        "Low": 293.15,
+        "DateTimeUnixEpochMilliseconds": 1566450000000,
+        "Volume": 4977042
+      },
+      {
+        "Open": 295.0,
+        "Close": 291.44,
+        "High": 299.01,
+        "Low": 290.32,
+        "DateTimeUnixEpochMilliseconds": 1566536400000,
+        "Volume": 6331189
+      },
+      {
+        "Open": 295.24,
+        "Close": 294.98,
+        "High": 296.95,
+        "Low": 292.5,
+        "DateTimeUnixEpochMilliseconds": 1566795600000,
+        "Volume": 4696982
+      },
+      {
+        "Open": 294.54,
+        "Close": 291.03,
+        "High": 296.77,
+        "Low": 287.1968,
+        "DateTimeUnixEpochMilliseconds": 1566882000000,
+        "Volume": 6314559
+      },
+      {
+        "Open": 289.47,
+        "Close": 291.77,
+        "High": 292.82,
+        "Low": 287.75,
+        "DateTimeUnixEpochMilliseconds": 1566968400000,
+        "Volume": 3958043
+      },
+      {
+        "Open": 295.0,
+        "Close": 296.78,
+        "High": 299.93,
+        "Low": 294.99,
+        "DateTimeUnixEpochMilliseconds": 1567054800000,
+        "Volume": 4392532
+      },
+      {
+        "Open": 298.78,
+        "Close": 293.75,
+        "High": 298.94,
+        "Low": 290.85,
+        "DateTimeUnixEpochMilliseconds": 1567141200000,
+        "Volume": 4447990
+      },
+      {
+        "Open": 290.82,
+        "Close": 289.29,
+        "High": 293.9,
+        "Low": 288.06,
+        "DateTimeUnixEpochMilliseconds": 1567486800000,
+        "Volume": 3684177
+      },
+      {
+        "Open": 291.25,
+        "Close": 291.52,
+        "High": 292.38,
+        "Low": 286.51,
+        "DateTimeUnixEpochMilliseconds": 1567573200000,
+        "Volume": 4653665
+      },
+      {
+        "Open": 285.32,
+        "Close": 293.25,
+        "High": 293.97,
+        "Low": 282.785,
+        "DateTimeUnixEpochMilliseconds": 1567659600000,
+        "Volume": 8972356
+      },
+      {
+        "Open": 293.35,
+        "Close": 290.17,
+        "High": 293.35,
+        "Low": 287.03,
+        "DateTimeUnixEpochMilliseconds": 1567746000000,
+        "Volume": 5166556
+      },
+      {
+        "Open": 294.81,
+        "Close": 294.34,
+        "High": 301.55,
+        "Low": 290.6,
+        "DateTimeUnixEpochMilliseconds": 1568005200000,
+        "Volume": 8232744
+      },
+      {
+        "Open": 291.16,
+        "Close": 287.99,
+        "High": 297.17,
+        "Low": 282.6629,
+        "DateTimeUnixEpochMilliseconds": 1568091600000,
+        "Volume": 12320248
+      },
+      {
+        "Open": 285.7,
+        "Close": 288.27,
+        "High": 292.65,
+        "Low": 284.61,
+        "DateTimeUnixEpochMilliseconds": 1568178000000,
+        "Volume": 7405949
+      },
+      {
+        "Open": 288.1,
+        "Close": 288.86,
+        "High": 292.73,
+        "Low": 286.6,
+        "DateTimeUnixEpochMilliseconds": 1568264400000,
+        "Volume": 5010927
+      },
+      {
+        "Open": 290.61,
+        "Close": 294.15,
+        "High": 296.62,
+        "Low": 290.04,
+        "DateTimeUnixEpochMilliseconds": 1568350800000,
+        "Volume": 6583124
+      },
+      {
+        "Open": 294.23,
+        "Close": 294.29,
+        "High": 297.43,
+        "Low": 289.78,
+        "DateTimeUnixEpochMilliseconds": 1568610000000,
+        "Volume": 5307386
+      },
+      {
+        "Open": 294.5,
+        "Close": 298.6,
+        "High": 299.15,
+        "Low": 291.79,
+        "DateTimeUnixEpochMilliseconds": 1568696400000,
+        "Volume": 4817119
+      },
+      {
+        "Open": 294.99,
+        "Close": 291.56,
+        "High": 296.05,
+        "Low": 287.45,
+        "DateTimeUnixEpochMilliseconds": 1568782800000,
+        "Volume": 7841539
+      },
+      {
+        "Open": 291.56,
+        "Close": 286.6,
+        "High": 293.81,
+        "Low": 283.4,
+        "DateTimeUnixEpochMilliseconds": 1568869200000,
+        "Volume": 8545761
+      },
+      {
+        "Open": 280.26,
+        "Close": 270.75,
+        "High": 282.5,
+        "Low": 266.0,
+        "DateTimeUnixEpochMilliseconds": 1568955600000,
+        "Volume": 23954192
+      },
+      {
+        "Open": 268.345,
+        "Close": 265.92,
+        "High": 273.39,
+        "Low": 261.89,
+        "DateTimeUnixEpochMilliseconds": 1569214800000,
+        "Volume": 13610294
+      },
+      {
+        "Open": 262.5,
+        "Close": 254.59,
+        "High": 265.0,
+        "Low": 252.28,
+        "DateTimeUnixEpochMilliseconds": 1569301200000,
+        "Volume": 16392808
+      },
+      {
+        "Open": 255.71,
+        "Close": 264.75,
+        "High": 266.6,
+        "Low": 253.7,
+        "DateTimeUnixEpochMilliseconds": 1569387600000,
+        "Volume": 11846748
+      },
+      {
+        "Open": 266.42,
+        "Close": 263.31,
+        "High": 268.05,
+        "Low": 260.2,
+        "DateTimeUnixEpochMilliseconds": 1569474000000,
+        "Volume": 7696858
+      },
+      {
+        "Open": 266.175,
+        "Close": 263.08,
+        "High": 267.44,
+        "Low": 260.39,
+        "DateTimeUnixEpochMilliseconds": 1569560400000,
+        "Volume": 7367491
+      },
+      {
+        "Open": 264.0,
+        "Close": 267.62,
+        "High": 268.88,
+        "Low": 262.78,
+        "DateTimeUnixEpochMilliseconds": 1569819600000,
+        "Volume": 6823100
+      },
+      {
+        "Open": 267.35,
+        "Close": 269.58,
+        "High": 272.2,
+        "Low": 264.03,
+        "DateTimeUnixEpochMilliseconds": 1569906000000,
+        "Volume": 8786284
+      },
+      {
+        "Open": 263.61,
+        "Close": 268.03,
+        "High": 269.35,
+        "Low": 262.19,
+        "DateTimeUnixEpochMilliseconds": 1569992400000,
+        "Volume": 7773299
+      },
+      {
+        "Open": 267.78,
+        "Close": 268.15,
+        "High": 268.843,
+        "Low": 257.01,
+        "DateTimeUnixEpochMilliseconds": 1570078800000,
+        "Volume": 9068810
+      },
+      {
+        "Open": 268.2,
+        "Close": 272.79,
+        "High": 275.4846,
+        "Low": 266.47,
+        "DateTimeUnixEpochMilliseconds": 1570165200000,
+        "Volume": 9992774
+      },
+      {
+        "Open": 271.99,
+        "Close": 274.46,
+        "High": 276.68,
+        "Low": 271.28,
+        "DateTimeUnixEpochMilliseconds": 1570424400000,
+        "Volume": 6796811
+      },
+      {
+        "Open": 273.03,
+        "Close": 270.72,
+        "High": 275.53,
+        "Low": 270.6427,
+        "DateTimeUnixEpochMilliseconds": 1570510800000,
+        "Volume": 6302269
+      },
+      {
+        "Open": 270.02,
+        "Close": 267.53,
+        "High": 271.0,
+        "Low": 264.57,
+        "DateTimeUnixEpochMilliseconds": 1570597200000,
+        "Volume": 6843488
+      },
+      {
+        "Open": 265.97,
+        "Close": 280.48,
+        "High": 280.53,
+        "Low": 265.0337,
+        "DateTimeUnixEpochMilliseconds": 1570683600000,
+        "Volume": 10961191
+      },
+      {
+        "Open": 284.8,
+        "Close": 282.93,
+        "High": 287.87,
+        "Low": 275.8947,
+        "DateTimeUnixEpochMilliseconds": 1570770000000,
+        "Volume": 8817301
+      },
+      {
+        "Open": 283.93,
+        "Close": 285.53,
+        "High": 286.93,
+        "Low": 282.0,
+        "DateTimeUnixEpochMilliseconds": 1571029200000,
+        "Volume": 5543120
+      },
+      {
+        "Open": 283.82,
+        "Close": 284.25,
+        "High": 285.87,
+        "Low": 279.4,
+        "DateTimeUnixEpochMilliseconds": 1571115600000,
+        "Volume": 7728161
+      },
+      {
+        "Open": 283.12,
+        "Close": 286.28,
+        "High": 288.17,
+        "Low": 280.7431,
+        "DateTimeUnixEpochMilliseconds": 1571202000000,
+        "Volume": 18413335
+      },
+      {
+        "Open": 304.49,
+        "Close": 293.35,
+        "High": 308.75,
+        "Low": 288.3001,
+        "DateTimeUnixEpochMilliseconds": 1571288400000,
+        "Volume": 38462343
+      },
+      {
+        "Open": 289.36,
+        "Close": 275.3,
+        "High": 290.9,
+        "Low": 273.36,
+        "DateTimeUnixEpochMilliseconds": 1571374800000,
+        "Volume": 23449638
+      },
+      {
+        "Open": 272.89,
+        "Close": 278.05,
+        "High": 279.9399,
+        "Low": 269.0,
+        "DateTimeUnixEpochMilliseconds": 1571634000000,
+        "Volume": 12633959
+      },
+      {
+        "Open": 271.159,
+        "Close": 266.69,
+        "High": 275.41,
+        "Low": 265.8,
+        "DateTimeUnixEpochMilliseconds": 1571720400000,
+        "Volume": 11865593
+      },
+      {
+        "Open": 268.06,
+        "Close": 271.27,
+        "High": 273.92,
+        "Low": 266.63,
+        "DateTimeUnixEpochMilliseconds": 1571806800000,
+        "Volume": 7154430
+      },
+      {
+        "Open": 271.81,
+        "Close": 271.5,
+        "High": 274.02,
+        "Low": 268.8,
+        "DateTimeUnixEpochMilliseconds": 1571893200000,
+        "Volume": 4911033
+      },
+      {
+        "Open": 270.68,
+        "Close": 276.82,
+        "High": 277.77,
+        "Low": 270.18,
+        "DateTimeUnixEpochMilliseconds": 1571979600000,
+        "Volume": 4747829
+      },
+      {
+        "Open": 278.05,
+        "Close": 281.86,
+        "High": 285.75,
+        "Low": 277.35,
+        "DateTimeUnixEpochMilliseconds": 1572238800000,
+        "Volume": 6248433
+      },
+      {
+        "Open": 281.87,
+        "Close": 281.21,
+        "High": 284.41,
+        "Low": 277.545,
+        "DateTimeUnixEpochMilliseconds": 1572325200000,
+        "Volume": 4356181
+      },
+      {
+        "Open": 284.34,
+        "Close": 291.45,
+        "High": 293.49,
+        "Low": 283.0,
+        "DateTimeUnixEpochMilliseconds": 1572411600000,
+        "Volume": 9345562
+      },
+      {
+        "Open": 291.0,
+        "Close": 287.41,
+        "High": 291.45,
+        "Low": 284.78,
+        "DateTimeUnixEpochMilliseconds": 1572498000000,
+        "Volume": 5090021
+      },
+      {
+        "Open": 288.7,
+        "Close": 286.81,
+        "High": 289.12,
+        "Low": 283.02,
+        "DateTimeUnixEpochMilliseconds": 1572584400000,
+        "Volume": 5594293
+      },
+      {
+        "Open": 288.0,
+        "Close": 292.86,
+        "High": 295.39,
+        "Low": 287.16,
+        "DateTimeUnixEpochMilliseconds": 1572847200000,
+        "Volume": 5566213
+      },
+      {
+        "Open": 289.99,
+        "Close": 288.03,
+        "High": 291.19,
+        "Low": 286.31,
+        "DateTimeUnixEpochMilliseconds": 1572933600000,
+        "Volume": 4062370
+      },
+      {
+        "Open": 288.19,
+        "Close": 288.59,
+        "High": 290.56,
+        "Low": 285.84,
+        "DateTimeUnixEpochMilliseconds": 1573020000000,
+        "Volume": 3438257
+      },
+      {
+        "Open": 290.7,
+        "Close": 289.57,
+        "High": 298.19,
+        "Low": 288.2679,
+        "DateTimeUnixEpochMilliseconds": 1573106400000,
+        "Volume": 5928471
+      },
+      {
+        "Open": 288.73,
+        "Close": 291.57,
+        "High": 293.99,
+        "Low": 287.505,
+        "DateTimeUnixEpochMilliseconds": 1573192800000,
+        "Volume": 4509588
+      },
+      {
+        "Open": 289.16,
+        "Close": 294.18,
+        "High": 296.36,
+        "Low": 288.5,
+        "DateTimeUnixEpochMilliseconds": 1573452000000,
+        "Volume": 3945885
+      },
+      {
+        "Open": 295.32,
+        "Close": 292.01,
+        "High": 295.345,
+        "Low": 288.7,
+        "DateTimeUnixEpochMilliseconds": 1573538400000,
+        "Volume": 5774833
+      },
+      {
+        "Open": 291.03,
+        "Close": 283.11,
+        "High": 293.41,
+        "Low": 281.14,
+        "DateTimeUnixEpochMilliseconds": 1573624800000,
+        "Volume": 9233066
+      },
+      {
+        "Open": 283.25,
+        "Close": 289.62,
+        "High": 290.63,
+        "Low": 283.22,
+        "DateTimeUnixEpochMilliseconds": 1573711200000,
+        "Volume": 6539771
+      },
+      {
+        "Open": 290.59,
+        "Close": 295.03,
+        "High": 295.8186,
+        "Low": 287.568,
+        "DateTimeUnixEpochMilliseconds": 1573797600000,
+        "Volume": 6337779
+      },
+      {
+        "Open": 296.0,
+        "Close": 302.57,
+        "High": 304.99,
+        "Low": 293.28,
+        "DateTimeUnixEpochMilliseconds": 1574056800000,
+        "Volume": 8621566
+      },
+      {
+        "Open": 304.01,
+        "Close": 302.6,
+        "High": 305.6699,
+        "Low": 298.5201,
+        "DateTimeUnixEpochMilliseconds": 1574143200000,
+        "Volume": 5919710
+      },
+      {
+        "Open": 301.01,
+        "Close": 305.16,
+        "High": 308.25,
+        "Low": 301.0,
+        "DateTimeUnixEpochMilliseconds": 1574229600000,
+        "Volume": 5115546
+      },
+      {
+        "Open": 306.0,
+        "Close": 311.69,
+        "High": 312.69,
+        "Low": 304.2622,
+        "DateTimeUnixEpochMilliseconds": 1574316000000,
+        "Volume": 7488373
+      },
+      {
+        "Open": 309.1,
+        "Close": 310.48,
+        "High": 311.4,
+        "Low": 304.41,
+        "DateTimeUnixEpochMilliseconds": 1574402400000,
+        "Volume": 5970056
+      },
+      {
+        "Open": 308.83,
+        "Close": 315.55,
+        "High": 315.73,
+        "Low": 305.25,
+        "DateTimeUnixEpochMilliseconds": 1574661600000,
+        "Volume": 7878943
+      },
+      {
+        "Open": 315.0,
+        "Close": 312.49,
+        "High": 316.5,
+        "Low": 311.69,
+        "DateTimeUnixEpochMilliseconds": 1574748000000,
+        "Volume": 5328348
+      },
+      {
+        "Open": 313.93,
+        "Close": 315.93,
+        "High": 316.82,
+        "Low": 312.75,
+        "DateTimeUnixEpochMilliseconds": 1574834400000,
+        "Volume": 4100975
+      },
+      {
+        "Open": 315.78,
+        "Close": 314.66,
+        "High": 316.62,
+        "Low": 313.34,
+        "DateTimeUnixEpochMilliseconds": 1575007200000,
+        "Volume": 2411749
+      },
+      {
+        "Open": 314.39,
+        "Close": 309.99,
+        "High": 314.39,
+        "Low": 303.75,
+        "DateTimeUnixEpochMilliseconds": 1575266400000,
+        "Volume": 6223135
+      },
+      {
+        "Open": 302.22,
+        "Close": 306.16,
+        "High": 307.36,
+        "Low": 301.88,
+        "DateTimeUnixEpochMilliseconds": 1575352800000,
+        "Volume": 5272447
+      },
+      {
+        "Open": 308.43,
+        "Close": 304.32,
+        "High": 308.43,
+        "Low": 303.2727,
+        "DateTimeUnixEpochMilliseconds": 1575439200000,
+        "Volume": 3513551
+      },
+      {
+        "Open": 305.27,
+        "Close": 302.86,
+        "High": 306.48,
+        "Low": 298.81,
+        "DateTimeUnixEpochMilliseconds": 1575525600000,
+        "Volume": 4618867
+      },
+      {
+        "Open": 304.7,
+        "Close": 307.35,
+        "High": 307.8495,
+        "Low": 302.6,
+        "DateTimeUnixEpochMilliseconds": 1575612000000,
+        "Volume": 4459684
+      },
+      {
+        "Open": 307.35,
+        "Close": 302.5,
+        "High": 311.49,
+        "Low": 302.44,
+        "DateTimeUnixEpochMilliseconds": 1575871200000,
+        "Volume": 5766006
+      },
+      {
+        "Open": 296.12,
+        "Close": 293.12,
+        "High": 298.94,
+        "Low": 292.02,
+        "DateTimeUnixEpochMilliseconds": 1575957600000,
+        "Volume": 10481239
+      },
+      {
+        "Open": 294.49,
+        "Close": 298.93,
+        "High": 299.43,
+        "Low": 294.2,
+        "DateTimeUnixEpochMilliseconds": 1576044000000,
+        "Volume": 5607155
+      },
+      {
+        "Open": 295.67,
+        "Close": 298.44,
+        "High": 299.165,
+        "Low": 295.06,
+        "DateTimeUnixEpochMilliseconds": 1576130400000,
+        "Volume": 4771404
+      },
+      {
+        "Open": 298.5,
+        "Close": 298.5,
+        "High": 301.8,
+        "Low": 297.25,
+        "DateTimeUnixEpochMilliseconds": 1576216800000,
+        "Volume": 3883069
+      },
+      {
+        "Open": 300.85,
+        "Close": 304.21,
+        "High": 305.71,
+        "Low": 298.63,
+        "DateTimeUnixEpochMilliseconds": 1576476000000,
+        "Volume": 4660166
+      },
+      {
+        "Open": 307.36,
+        "Close": 315.48,
+        "High": 316.8,
+        "Low": 306.6,
+        "DateTimeUnixEpochMilliseconds": 1576562400000,
+        "Volume": 10437127
+      },
+      {
+        "Open": 316.26,
+        "Close": 320.8,
+        "High": 325.36,
+        "Low": 315.6,
+        "DateTimeUnixEpochMilliseconds": 1576648800000,
+        "Volume": 11210737
+      },
+      {
+        "Open": 324.5,
+        "Close": 332.22,
+        "High": 332.83,
+        "Low": 324.18,
+        "DateTimeUnixEpochMilliseconds": 1576735200000,
+        "Volume": 9833355
+      },
+      {
+        "Open": 335.0,
+        "Close": 336.9,
+        "High": 338.0,
+        "Low": 330.6,
+        "DateTimeUnixEpochMilliseconds": 1576821600000,
+        "Volume": 9923260
+      },
+      {
+        "Open": 337.76,
+        "Close": 333.1,
+        "High": 337.95,
+        "Low": 331.0201,
+        "DateTimeUnixEpochMilliseconds": 1577080800000,
+        "Volume": 5767937
+      },
+      {
+        "Open": 334.01,
+        "Close": 333.2,
+        "High": 335.7,
+        "Low": 331.6,
+        "DateTimeUnixEpochMilliseconds": 1577167200000,
+        "Volume": 2019322
+      },
+      {
+        "Open": 334.6,
+        "Close": 332.63,
+        "High": 336.4623,
+        "Low": 332.01,
+        "DateTimeUnixEpochMilliseconds": 1577340000000,
+        "Volume": 3595854
+      },
+      {
+        "Open": 332.96,
+        "Close": 329.09,
+        "High": 333.82,
+        "Low": 326.01,
+        "DateTimeUnixEpochMilliseconds": 1577426400000,
+        "Volume": 5037156
+      },
+      {
+        "Open": 329.08,
+        "Close": 323.31,
+        "High": 329.185,
+        "Low": 322.86,
+        "DateTimeUnixEpochMilliseconds": 1577685600000,
+        "Volume": 4315267
+      },
+      {
+        "Open": 322.0,
+        "Close": 323.57,
+        "High": 324.916,
+        "Low": 321.09,
+        "DateTimeUnixEpochMilliseconds": 1577772000000,
+        "Volume": 3714837
+      },
+      {
+        "Open": 326.1,
+        "Close": 329.81,
+        "High": 329.98,
+        "Low": 324.78,
+        "DateTimeUnixEpochMilliseconds": 1577944800000,
+        "Volume": 4348493
+      },
+      {
+        "Open": 326.78,
+        "Close": 325.9,
+        "High": 329.8599,
+        "Low": 325.53,
+        "DateTimeUnixEpochMilliseconds": 1578031200000,
+        "Volume": 3795466
+      },
+      {
+        "Open": 323.12,
+        "Close": 335.83,
+        "High": 336.36,
+        "Low": 321.2,
+        "DateTimeUnixEpochMilliseconds": 1578290400000,
+        "Volume": 5668577
+      },
+      {
+        "Open": 336.47,
+        "Close": 330.75,
+        "High": 336.7,
+        "Low": 330.3,
+        "DateTimeUnixEpochMilliseconds": 1578376800000,
+        "Volume": 4742458
+      },
+      {
+        "Open": 331.49,
+        "Close": 339.26,
+        "High": 342.7,
+        "Low": 331.05,
+        "DateTimeUnixEpochMilliseconds": 1578463200000,
+        "Volume": 7109117
+      },
+      {
+        "Open": 342.0,
+        "Close": 335.66,
+        "High": 343.4196,
+        "Low": 334.6101,
+        "DateTimeUnixEpochMilliseconds": 1578549600000,
+        "Volume": 4717430
+      },
+      {
+        "Open": 337.13,
+        "Close": 329.05,
+        "High": 338.5,
+        "Low": 327.27,
+        "DateTimeUnixEpochMilliseconds": 1578636000000,
+        "Volume": 4720540
+      },
+      {
+        "Open": 331.8,
+        "Close": 338.92,
+        "High": 340.85,
+        "Low": 331.51,
+        "DateTimeUnixEpochMilliseconds": 1578895200000,
+        "Volume": 6296174
+      },
+      {
+        "Open": 344.4,
+        "Close": 338.69,
+        "High": 345.38,
+        "Low": 335.52,
+        "DateTimeUnixEpochMilliseconds": 1578981600000,
+        "Volume": 7201544
+      },
+      {
+        "Open": 338.68,
+        "Close": 339.07,
+        "High": 343.17,
+        "Low": 336.6,
+        "DateTimeUnixEpochMilliseconds": 1579068000000,
+        "Volume": 5158035
+      },
+      {
+        "Open": 343.5,
+        "Close": 338.62,
+        "High": 343.555,
+        "Low": 335.85,
+        "DateTimeUnixEpochMilliseconds": 1579154400000,
+        "Volume": 5015997
+      },
+      {
+        "Open": 341.0,
+        "Close": 339.67,
+        "High": 341.57,
+        "Low": 337.38,
+        "DateTimeUnixEpochMilliseconds": 1579240800000,
+        "Volume": 6066547
+      },
+      {
+        "Open": 340.0,
+        "Close": 338.11,
+        "High": 341.0,
+        "Low": 332.59,
+        "DateTimeUnixEpochMilliseconds": 1579586400000,
+        "Volume": 14350322
+      },
+      {
+        "Open": 332.55,
+        "Close": 326.0,
+        "High": 336.3,
+        "Low": 323.6,
+        "DateTimeUnixEpochMilliseconds": 1579672800000,
+        "Volume": 21729959
+      },
+      {
+        "Open": 326.04,
+        "Close": 349.6,
+        "High": 349.88,
+        "Low": 325.01,
+        "DateTimeUnixEpochMilliseconds": 1579759200000,
+        "Volume": 18200293
+      },
+      {
+        "Open": 348.46,
+        "Close": 353.16,
+        "High": 359.85,
+        "Low": 345.88,
+        "DateTimeUnixEpochMilliseconds": 1579845600000,
+        "Volume": 17939681
+      },
+      {
+        "Open": 345.95,
+        "Close": 342.88,
+        "High": 351.9,
+        "Low": 341.02,
+        "DateTimeUnixEpochMilliseconds": 1580104800000,
+        "Volume": 7709482
+      },
+      {
+        "Open": 345.88,
+        "Close": 348.52,
+        "High": 352.4,
+        "Low": 342.78,
+        "DateTimeUnixEpochMilliseconds": 1580191200000,
+        "Volume": 6821581
+      }
+    ]
+  }
+]
