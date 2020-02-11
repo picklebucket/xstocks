@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Stocks.Pipelines.Tests.Fixtures.Pipelines
 {
-    class DIProcessor
+    class DIProcessor : Processor<CustomPipelineArgs>
     {
         private readonly PipelineSettings _pipelineSettings;
 
@@ -14,7 +14,7 @@ namespace Stocks.Pipelines.Tests.Fixtures.Pipelines
             _pipelineSettings = pipelineSettings;
         }
 
-        public void Execute(CustomPipelineArgs pipelineArgs)
+        public override void Execute(CustomPipelineArgs pipelineArgs)
         {
             pipelineArgs.ResponseMessage = _pipelineSettings.ConfigFilePath;
         }

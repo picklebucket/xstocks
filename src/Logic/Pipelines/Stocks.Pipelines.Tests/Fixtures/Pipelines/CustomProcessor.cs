@@ -4,9 +4,9 @@ using System.Text;
 
 namespace Stocks.Pipelines.Tests.Fixtures.Pipelines
 {
-    class CustomProcessor
+    class CustomProcessor : Processor<CustomPipelineArgs>
     {
-        public void Execute(CustomPipelineArgs pipelineArgs)
+        public override void Execute(CustomPipelineArgs pipelineArgs)
         {
             pipelineArgs.ResponseMessage = Messages.CustomMessage;
         }

@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace Stocks.Pipelines.Tests.Fixtures.Pipelines
 {
-    class AsyncProcessor
+    class AsyncProcessor : AsyncProcessor<CustomPipelineArgs>
     {
-        public async Task ExecuteAsync(CustomPipelineArgs args)
+        public override async Task ExecuteAsync(CustomPipelineArgs args)
         {
             args.ResponseMessage = Messages.AsyncMessage;
             await Task.CompletedTask;

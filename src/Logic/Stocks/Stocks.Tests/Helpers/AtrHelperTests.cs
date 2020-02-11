@@ -2,43 +2,30 @@
 using Stocks.Data.Repositories.Interfaces;
 using Stocks.Helpers;
 using Stocks.Models;
-using Stocks.Tests.Fixtures;
+using Stocks.Services;
+using Stocks.Services.Interfaces;
+using Stocks.Tests.Mock;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
 namespace Stocks.Tests.Helpers
 {
-    [Collection(Constants.CollectionName)]
     public class AtrHelperTests
     {
-        private readonly IPriceHistoryRepository _priceHistoryRepository;
+        private readonly IReportService _reportService;
 
-        public AtrHelperTests(HelpersFixture helpersFixture)
+        public AtrHelperTests()
         {
-            _priceHistoryRepository = helpersFixture.PriceHistoryRepository;
+            _reportService = new ReportService(new FilePriceHistoryRepository());
         }
 
         [Fact]
         public async Task CalculateAtr()
         {
             string symbol = "NFLX";
-            PriceHistory priceHistory = await _priceHistoryRepository.GetAsync(symbol);
-            var candles = new List<CandleModel>();
-            foreach (var candle in priceHistory.Candles)
-            {
-                candles.Add(new CandleModel()
-                {
-                    Date = DateTimeOffset.FromUnixTimeMilliseconds(candle.DateTimeUnixEpochMilliseconds),
-                    Open = candle.Open,
-                    Close = candle.Close,
-                    High = candle.High,
-                    Low = candle.Low,
-                    Volume = candle.Volume
-                });
-            }
+            var candles = await _reportService.GetCollectedCandlesAsync(symbol);
             var atrItems = AtrHelper.CalculateATR(candles);
             int i;
             for (i = 0; i < 13; i++)

@@ -9,18 +9,24 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
+using Microsoft.Extensions.DependencyInjection;
+using Xunit.Abstractions;
+using System.Text.Json;
 
 namespace Stocks.Tests.Pipelines
 {
-    public class ProcessSymbolPipelineTests : IClassFixture<StocksFixture>
+    [Collection(Constants.CollectionName)]
+    public class ProcessSymbolPipelineTests : BaseTests
     {
         private readonly IPipelineManagerService _pipelineManagerService;
         private readonly IPriceHistoryRepository _priceHistoryRepository;
+        private readonly ITestOutputHelper _testOutputHelper;
 
-        public ProcessSymbolPipelineTests(StocksFixture stocksFixture)
+        public ProcessSymbolPipelineTests(StocksFixture stocksFixture, ITestOutputHelper testOutputHelper) : base(stocksFixture)
         {
-            _pipelineManagerService = stocksFixture.PipelineManagerService;
-            _priceHistoryRepository = stocksFixture.PriceHistoryRepository;
+            _pipelineManagerService = ServiceProvider.GetService<IPipelineManagerService>();
+            _priceHistoryRepository = ServiceProvider.GetService<IPriceHistoryRepository>();
+            _testOutputHelper = testOutputHelper;
         }
 
         [Fact]
@@ -41,6 +47,8 @@ namespace Stocks.Tests.Pipelines
             PriceHistory priceHistory = await _priceHistoryRepository.GetAsync(args.Symbol);
             Assert.NotNull(priceHistory);
             Assert.NotEmpty(priceHistory.Candles);
+
+            _testOutputHelper.WriteLine(JsonSerializer.Serialize(args.ReportItems, new JsonSerializerOptions() { WriteIndented = true }));
         }
     }
 }

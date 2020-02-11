@@ -30,11 +30,14 @@ namespace Stocks.Tests.DI
         private static void ConfigureServices(IServiceCollection serviceCollection, AmeritradeApiSettings ameritradeApiSettings, StocksContext stocksContext, PipelineSettings pipelineSettings)
         {
             serviceCollection.AddSingleton(ameritradeApiSettings);
-            serviceCollection.AddTransient<IAmeritradeApiService, AmeritradeApiService>();
             serviceCollection.AddSingleton(stocksContext);
+            serviceCollection.AddSingleton(pipelineSettings);
+
+            serviceCollection.AddTransient<IAmeritradeApiService, AmeritradeApiService>();
             serviceCollection.AddTransient<IPriceHistoryRepository, PriceHistoryRepository>();
             serviceCollection.AddTransient<ICollectingService, CollectingService>();
-            serviceCollection.AddSingleton(pipelineSettings);
+            serviceCollection.AddTransient<IReportService, ReportService>();
+
             serviceCollection.AddTransient<IPipelineManagerService, PipelineManagerService>();
             serviceCollection.AddPipelineProcessors(pipelineSettings);
         }

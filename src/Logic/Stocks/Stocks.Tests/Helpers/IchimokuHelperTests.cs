@@ -2,11 +2,12 @@
 using Stocks.Data.Repositories.Interfaces;
 using Stocks.Helpers;
 using Stocks.Models;
-using Stocks.Tests.Fixtures;
+using Stocks.Services;
+using Stocks.Services.Interfaces;
+using Stocks.Tests.Mock;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Xunit;
@@ -14,15 +15,14 @@ using Xunit.Abstractions;
 
 namespace Stocks.Tests.Helpers
 {
-    [Collection(Constants.CollectionName)]
     public class IchimokuHelperTests 
     {
         private readonly ITestOutputHelper _testOutputHelper;
-        private readonly IPriceHistoryRepository _priceHistoryRepository;
+        private readonly IReportService _reportService;
 
-        public IchimokuHelperTests(HelpersFixture helpersFixture, ITestOutputHelper testOutputHelper)
+        public IchimokuHelperTests(ITestOutputHelper testOutputHelper)
         {
-            _priceHistoryRepository = helpersFixture.PriceHistoryRepository;
+            _reportService = new ReportService(new FilePriceHistoryRepository());
             _testOutputHelper = testOutputHelper;
         }
 
@@ -30,20 +30,7 @@ namespace Stocks.Tests.Helpers
         public async Task BuildIchimokuCloud()
         {
             string symbol = "NFLX";
-            PriceHistory priceHistory = await _priceHistoryRepository.GetAsync(symbol);
-            var candles = new List<CandleModel>();
-            foreach (var candle in priceHistory.Candles)
-            {
-                candles.Add(new CandleModel()
-                {
-                    Date = DateTimeOffset.FromUnixTimeMilliseconds(candle.DateTimeUnixEpochMilliseconds),
-                    Open = candle.Open,
-                    Close = candle.Close,
-                    High = candle.High,
-                    Low = candle.Low,
-                    Volume = candle.Volume
-                });
-            }
+            var candles = await _reportService.GetCollectedCandlesAsync(symbol);
             var cloudItems = IchimokuItemWrapper.Create(IchimokuHelper.BuildIchimokuCloud(candles));
             _testOutputHelper.WriteLine(JsonSerializer.Serialize(cloudItems, new JsonSerializerOptions() { WriteIndented = true}));
 

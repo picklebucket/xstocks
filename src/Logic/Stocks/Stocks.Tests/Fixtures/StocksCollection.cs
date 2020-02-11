@@ -6,7 +6,7 @@ using Xunit;
 namespace Stocks.Tests.Fixtures
 {
     [CollectionDefinition(Constants.CollectionName)]
-    public class StocksCollection : ICollectionFixture<StocksFixture>, ICollectionFixture<HelpersFixture>
+    public class StocksCollection : ICollectionFixture<StocksFixture>
     {
     }
 }

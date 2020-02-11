@@ -9,18 +9,20 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Stocks.Tests.Services
 {
-    public class CollectingServiceTests : IClassFixture<StocksFixture>
+    [Collection(Constants.CollectionName)]
+    public class CollectingServiceTests : BaseTests
     {
         private readonly ICollectingService _collectingService;
         private readonly IPriceHistoryRepository _priceHistoryRepository;
 
-        public CollectingServiceTests(StocksFixture stocksFixture)
+        public CollectingServiceTests(StocksFixture stocksFixture) : base(stocksFixture)
         {
-            _collectingService = stocksFixture.CollectingService;
-            _priceHistoryRepository = stocksFixture.PriceHistoryRepository;
+            _collectingService = ServiceProvider.GetService<ICollectingService>();
+            _priceHistoryRepository = ServiceProvider.GetService<IPriceHistoryRepository>();
         }
 
         [Fact]

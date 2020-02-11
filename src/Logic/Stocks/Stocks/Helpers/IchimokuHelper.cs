@@ -6,30 +6,6 @@ using System.Text;
 
 namespace Stocks.Helpers
 {
-    public class IchimokuItem
-    {
-        public DateTimeOffset Date { get; set; }
-        public double? TenkanSen { get; set; }
-        public double? KijunSen { get; set; }
-        public double? ChikouSpan { get; set; }
-        public double? SenkouSpanA { get; set; }
-        public double? SenkouSpanB { get; set; }
-
-        public IchimokuItem()
-        {
-        }
-
-        public IchimokuItem(DateTimeOffset date, double? tenkanSen, double? kijunSen, double? chikouSpan, double? senkouSpanA, double? senkouSpanB)
-        {
-            Date = date;
-            TenkanSen = tenkanSen;
-            KijunSen = kijunSen;
-            ChikouSpan = chikouSpan;
-            SenkouSpanA = senkouSpanA;
-            SenkouSpanB = senkouSpanB;
-        }
-    }
-
     /// <summary>
     /// Builds Ichimoku cloud.
     /// See formulas in doc\ichimoku.xlsx 
@@ -40,11 +16,10 @@ namespace Stocks.Helpers
         public const int MediumShiftSize = 25;
         public const int LargeShiftSize = 51; 
 
-        public static List<IchimokuItem> BuildIchimokuCloud(IEnumerable<CandleModel> candles)
+        public static List<IchimokuItem> BuildIchimokuCloud(List<CandleItem> candles)
         {
             var cloudItems = new List<IchimokuItem>();
-            var extendedCandles = new List<CandleModel>(candles);
-            int initialCandlesCount = extendedCandles.Count;
+            int initialCandlesCount = candles.Count;
             if (initialCandlesCount > 0)
             {
                 var lastCandle = candles.Last();
@@ -52,19 +27,19 @@ namespace Stocks.Helpers
                 for (int i = 0; i < MediumShiftSize; i++)
                 {
                     dateTime = dateTime.AddDays(1);
-                    extendedCandles.Add(new CandleModel(dateTime));
+                    candles.Add(new CandleItem(dateTime));
                 }
 
-                for (int i = 0; i < extendedCandles.Count; i++)
+                for (int i = 0; i < candles.Count; i++)
                 {
                     cloudItems.Add(new IchimokuItem()
                     {
-                        Date = extendedCandles[i].Date.Value,
-                        TenkanSen = GetTenkanSen(i, extendedCandles, initialCandlesCount),
-                        KijunSen = GetKijunSen(i, extendedCandles, initialCandlesCount),
-                        ChikouSpan = GetChikouSpan(i, extendedCandles),
+                        Date = candles[i].Date.Value,
+                        TenkanSen = GetTenkanSen(i, candles, initialCandlesCount),
+                        KijunSen = GetKijunSen(i, candles, initialCandlesCount),
+                        ChikouSpan = GetChikouSpan(i, candles),
                         SenkouSpanA = GetSenkouSpanA(i, cloudItems),
-                        SenkouSpanB = GetSenkouSpanB(i, extendedCandles)
+                        SenkouSpanB = GetSenkouSpanB(i, candles)
                     });
                 }
             }
@@ -77,7 +52,7 @@ namespace Stocks.Helpers
         /// <param name="currentCandleIndex"></param>
         /// <param name="candles"></param>
         /// <returns></returns>
-        private static double? GetTenkanSen(int currentCandleIndex, List<CandleModel> candles, int initialCandlesCount)
+        private static double? GetTenkanSen(int currentCandleIndex, List<CandleItem> candles, int initialCandlesCount)
         {
             double? tenkanSen = null;
             if(currentCandleIndex < initialCandlesCount)
@@ -98,7 +73,7 @@ namespace Stocks.Helpers
         /// <param name="currentCandleIndex"></param>
         /// <param name="candles"></param>
         /// <returns></returns>
-        private static double? GetKijunSen(int currentCandleIndex, List<CandleModel> candles, int initialCandlesCount)
+        private static double? GetKijunSen(int currentCandleIndex, List<CandleItem> candles, int initialCandlesCount)
         {
             double? kijunSen = null;
             if (currentCandleIndex < initialCandlesCount)
@@ -125,7 +100,7 @@ namespace Stocks.Helpers
             return null;
         }
 
-        private static double? GetSenkouSpanB(int currentCandleIndex, List<CandleModel> candles)
+        private static double? GetSenkouSpanB(int currentCandleIndex, List<CandleItem> candles)
         {
             if(currentCandleIndex >= LargeShiftSize + MediumShiftSize)
             {
@@ -147,7 +122,7 @@ namespace Stocks.Helpers
         /// <param name="currentCandleIndex"></param>
         /// <param name="candles"></param>
         /// <returns></returns>
-        private static double? GetChikouSpan(int currentCandleIndex, List<CandleModel> candles)
+        private static double? GetChikouSpan(int currentCandleIndex, List<CandleItem> candles)
         {
             int closePriceIndex = currentCandleIndex + MediumShiftSize;
             double? chikouSpan = null;
@@ -162,7 +137,7 @@ namespace Stocks.Helpers
             return chikouSpan;
         }
 
-        private static double? GetHighestHighForPeriod(int currentCandleIndex, List<CandleModel> candles, int shiftSize)
+        private static double? GetHighestHighForPeriod(int currentCandleIndex, List<CandleItem> candles, int shiftSize)
         {
             int indexDelta = shiftSize;
             if (currentCandleIndex >= indexDelta)
@@ -182,7 +157,7 @@ namespace Stocks.Helpers
             return null;
         }
 
-        private static double? GetLowestLowForPeriod(int currentCandleIndex, List<CandleModel> candles, int shiftSize)
+        private static double? GetLowestLowForPeriod(int currentCandleIndex, List<CandleItem> candles, int shiftSize)
         {
             int indexDelta = shiftSize;
             if (currentCandleIndex >= indexDelta)

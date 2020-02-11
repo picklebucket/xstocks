@@ -9,19 +9,8 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace Stocks.Tests.Fixtures
+namespace Stocks.Tests.Mock
 {
-    public class HelpersFixture
-    {
-        public IPriceHistoryRepository PriceHistoryRepository { get; }
-
-        public HelpersFixture()
-        {
-            PriceHistoryRepository = new FilePriceHistoryRepository();
-        }
-
-    }
-
     public class FilePriceHistoryRepository : IPriceHistoryRepository
     {
         public Task CreateAsync(PriceHistory entity)

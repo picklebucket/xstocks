@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Stocks.Models
 {
-    public class CandleModel
+    public class CandleItem
     {
         public double? Open { get; set; }
         public double? Close { get; set; }
@@ -13,11 +13,11 @@ namespace Stocks.Models
         public DateTimeOffset? Date { get; set; }
         public long? Volume { get; set; }
 
-        public CandleModel()
+        public CandleItem()
         {
         }
 
-        public CandleModel(DateTimeOffset date)
+        public CandleItem(DateTimeOffset date)
         {
             Date = date;
         }

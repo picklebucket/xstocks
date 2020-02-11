@@ -6,25 +6,17 @@ using System.Text;
 
 namespace Stocks.Helpers
 {
-    public class AtrItem
-    {
-        public DateTimeOffset? Date { get; set; }
-        public double? TR { get; set; }
-        public double? ATR { get; set; } 
-    }
-
     public static class AtrHelper
     {
-        public static List<AtrItem> CalculateATR(IEnumerable<CandleModel> candles)
+        public static List<AtrItem> CalculateATR(List<CandleItem> candles)
         {
             var atrItems = new List<AtrItem>();
-            var candlesList = candles.ToList();
-            for (int i = 0; i < candlesList.Count; i++)
+            for (int i = 0; i < candles.Count; i++)
             {
                 var atrItem = new AtrItem()
                 {
-                    Date = candlesList[i].Date,
-                    TR = CalculateTR(i, candlesList)
+                    Date = candles[i].Date,
+                    TR = CalculateTR(i, candles)
                 };
                 if(i >= 13)
                 {
@@ -44,24 +36,33 @@ namespace Stocks.Helpers
             return atrItems;
         }
 
-        private static double? CalculateTR(int currentCandleIndex, List<CandleModel> candles)
+        private static double? CalculateTR(int currentCandleIndex, List<CandleItem> candles)
         {
             var trInputData = new List<double?>();
 
             double? currentHighCurrentLow = candles[currentCandleIndex].High - candles[currentCandleIndex].Low;
             trInputData.Add(currentHighCurrentLow);
             
-            double? currentHighPreviousClose;
-            double? currentLowPreviousClose;
+            double? currentHighPreviousClose = null;
+            double? currentLowPreviousClose = null;
             if(currentCandleIndex > 0)
             {
-                currentHighPreviousClose = Math.Abs((candles[currentCandleIndex].High - candles[currentCandleIndex - 1].Close).Value);
+                var currentCandle = candles[currentCandleIndex];
+                var previousCandle = candles[currentCandleIndex - 1];
+
+                if(currentCandle.High.HasValue && previousCandle.Close.HasValue)
+                {
+                    currentHighPreviousClose = Math.Abs((currentCandle.High - previousCandle.Close).Value);
+                }
                 trInputData.Add(currentHighPreviousClose);
 
-                currentLowPreviousClose = Math.Abs((candles[currentCandleIndex].Low - candles[currentCandleIndex - 1].Close).Value);
+                if (currentCandle.Low.HasValue && previousCandle.Close.HasValue)
+                {
+                    currentLowPreviousClose = Math.Abs((currentCandle.Low - previousCandle.Close).Value);
+                }
                 trInputData.Add(currentLowPreviousClose);
             }
-            
+
             return trInputData.Max();
         }
     }

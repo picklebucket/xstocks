@@ -1,4 +1,5 @@
 ﻿using Stocks.Data.Repositories.Interfaces;
+using Stocks.Pipelines;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Stocks.Tests.Fixtures.Pipelines.ProcessSymbol
 {
-    class WipeDataProcessor
+    class WipeDataProcessor : AsyncProcessor<ProcessSymbolPipelineArgs>
     {
         private readonly IPriceHistoryRepository _priceHistoryRepository;
 
@@ -15,7 +16,7 @@ namespace Stocks.Tests.Fixtures.Pipelines.ProcessSymbol
             _priceHistoryRepository = priceHistoryRepository;
         }
 
-        public async Task ExecuteAsync(ProcessSymbolPipelineArgs args)
+        public override async Task ExecuteAsync(ProcessSymbolPipelineArgs args)
         {
             await _priceHistoryRepository.DeleteAsync(args.Symbol);
         }
