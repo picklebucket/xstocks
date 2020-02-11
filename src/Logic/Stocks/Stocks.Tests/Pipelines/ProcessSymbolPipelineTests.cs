@@ -3,15 +3,12 @@ using Stocks.Data.Entities;
 using Stocks.Data.Repositories.Interfaces;
 using Stocks.Pipelines.Services.Interfaces;
 using Stocks.Tests.Fixtures;
-using Stocks.Tests.Fixtures.Pipelines.ProcessSymbol;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit.Abstractions;
 using System.Text.Json;
+using Stocks.Tests.Pipelines.ProcessSymbol;
 
 namespace Stocks.Tests.Pipelines
 {
@@ -48,6 +45,7 @@ namespace Stocks.Tests.Pipelines
             Assert.NotNull(priceHistory);
             Assert.NotEmpty(priceHistory.Candles);
 
+            _testOutputHelper.WriteLine(args.ResultMessage);
             _testOutputHelper.WriteLine(JsonSerializer.Serialize(args.ReportItems, new JsonSerializerOptions() { WriteIndented = true }));
         }
     }

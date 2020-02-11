@@ -13,11 +13,13 @@ namespace Stocks.Helpers
             reportItems[0].IndicatorItem = new IndicatorItem();
             for (int i = 1; i < reportItems.Count; i++)
             {
-                var indicatorItem = new IndicatorItem();
-                double? entryPrice = reportItems[i - 1].CandleItem.Close;
                 double? atr = reportItems[i].AtrItem.ATR;
-                indicatorItem.StopLoss = entryPrice - atr;
-                indicatorItem.TakeProfit = entryPrice + atr * atr;
+                var indicatorItem = new IndicatorItem
+                {
+                    EntryPrice = reportItems[i - 1].CandleItem.Close
+                };
+                indicatorItem.StopLoss = indicatorItem.EntryPrice - atr;
+                indicatorItem.TakeProfit = indicatorItem.EntryPrice + atr * atr;
 
                 double? price = reportItems[i].CandleItem.Close;
                 if(price <= indicatorItem.StopLoss)

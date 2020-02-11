@@ -1,9 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <pipelines>
   <processSymbol>
-    <processor type="Stocks.Tests.Fixtures.Pipelines.ProcessSymbol.WipeDataProcessor, Stocks.Tests" async="true" resolve="true"></processor>
-    <processor type="Stocks.Tests.Fixtures.Pipelines.ProcessSymbol.CollectDataProcessor, Stocks.Tests" async="true" resolve="true"></processor>
-    <processor type="Stocks.Tests.Fixtures.Pipelines.ProcessSymbol.ReadDataProcessor, Stocks.Tests" async="true" resolve="true"></processor>
-    <processor type="Stocks.Tests.Fixtures.Pipelines.ProcessSymbol.BuildReportProcessor, Stocks.Tests" async="false" resolve="true"></processor>
+    <processor type="Stocks.Tests.Pipelines.ProcessSymbol.WipeDataProcessor, Stocks.Tests" async="true" resolve="true"></processor>
+    <processor type="Stocks.Tests.Pipelines.ProcessSymbol.CollectDataProcessor, Stocks.Tests" async="true" resolve="true"></processor>
+    <processor type="Stocks.Tests.Pipelines.ProcessSymbol.ReadDataProcessor, Stocks.Tests" async="true" resolve="true"></processor>
+    <processor type="Stocks.Tests.Pipelines.ProcessSymbol.BuildReportProcessor, Stocks.Tests" async="false" resolve="true"></processor>
+    <processor type="Stocks.Tests.Pipelines.ProcessSymbol.ExportToIndicatorCsv, Stocks.Tests" async="false" resolve="true"></processor>
   </processSymbol>
 </pipelines> 

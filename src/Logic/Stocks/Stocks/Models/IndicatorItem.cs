@@ -6,6 +6,7 @@ namespace Stocks.Models
 {
     public class IndicatorItem
     {
+        public double? EntryPrice { get; set; }
         public double? StopLoss { get; set; }
         public double? TakeProfit { get; set; }
         public PriceResult PriceResult { get; set; }

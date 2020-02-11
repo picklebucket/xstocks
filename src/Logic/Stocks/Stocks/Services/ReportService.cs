@@ -5,6 +5,7 @@ using Stocks.Models;
 using Stocks.Services.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -41,6 +42,20 @@ namespace Stocks.Services
             return reportItems;
         }
 
+        public byte[] ExportToCsv(IEnumerable<ReportItem> reportItems)
+        {
+            using var stream = new MemoryStream();
+            using StreamWriter streamWriter = new StreamWriter(stream);
+            streamWriter.WriteLine("Symbol, Date, Entry Price, Stop Loss, Take Profit, Result");
+            foreach (var reportItem in reportItems)
+            {
+                streamWriter.WriteLine($"{reportItem.Symbol}, {reportItem.CandleItem.Date}, {reportItem.IndicatorItem.EntryPrice}, {reportItem.IndicatorItem.StopLoss}, {reportItem.IndicatorItem.TakeProfit}, {reportItem.IndicatorItem.PriceResult}");
+            }
+            streamWriter.Flush();
+            byte[] content = stream.ToArray();
+            return content;
+        }
+
         public async Task<List<CandleItem>> GetCollectedCandlesAsync(string symbol)
         {
             PriceHistory priceHistory = await _priceHistoryRepository.GetAsync(symbol);
@@ -59,5 +74,7 @@ namespace Stocks.Services
             }
             return candles;
         }
+
+        
     }
 }

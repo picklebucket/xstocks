@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Stocks.Tests.Fixtures.Pipelines.ProcessSymbol
+namespace Stocks.Tests.Pipelines.ProcessSymbol
 {
     public class ProcessSymbolPipelineArgs : PipelineArgs
     {
@@ -13,5 +13,6 @@ namespace Stocks.Tests.Fixtures.Pipelines.ProcessSymbol
         public PriceHistoryRequest PriceHistoryRequest { get; set; }
         public List<CandleItem> CandleItems { get; set; }
         public IEnumerable<ReportItem> ReportItems { get; set; }
+        public string ResultMessage { get; set; }
     }
 }

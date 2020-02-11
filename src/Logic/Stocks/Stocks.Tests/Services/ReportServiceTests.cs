@@ -4,6 +4,8 @@ using Xunit;
 using Stocks.Services;
 using Stocks.Tests.Mock;
 using System.Threading.Tasks;
+using System.Text;
+using Xunit.Abstractions;
 
 namespace Stocks.Tests.Services
 {
@@ -11,10 +13,12 @@ namespace Stocks.Tests.Services
     public class ReportServiceTests : BaseTests
     {
         private readonly IReportService _reportService;
+        private readonly ITestOutputHelper _testOutputHelper;
 
-        public ReportServiceTests(StocksFixture stocksFixture) : base(stocksFixture)
+        public ReportServiceTests(StocksFixture stocksFixture, ITestOutputHelper testOutputHelper) : base(stocksFixture)
         {
             _reportService = new ReportService(new FilePriceHistoryRepository());
+            _testOutputHelper = testOutputHelper;
         }
 
         [Fact]
@@ -34,6 +38,17 @@ namespace Stocks.Tests.Services
                 Assert.NotNull(reportItem.IchimokuItem);
                 Assert.NotNull(reportItem.IndicatorItem);
             }
+        }
+
+        [Fact]
+        public async Task ExportToCsv()
+        {
+            string symbol = "NFLX";
+            var candles = await _reportService.GetCollectedCandlesAsync(symbol);
+            var reportItems = _reportService.BuildReport(symbol, candles);
+            var csvContent = _reportService.ExportToCsv(reportItems);
+            string output = Encoding.Default.GetString(csvContent);
+            _testOutputHelper.WriteLine(output);
         }
     }
 }

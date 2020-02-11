@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Stocks.Tests.Fixtures.Pipelines.ProcessSymbol
+namespace Stocks.Tests.Pipelines.ProcessSymbol
 {
     class BuildReportProcessor : Processor<ProcessSymbolPipelineArgs>
     {
