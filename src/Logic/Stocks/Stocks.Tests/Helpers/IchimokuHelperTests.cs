@@ -91,6 +91,18 @@ namespace Stocks.Tests.Helpers
             }
             Assert.NotNull(cloudItems[endIndex].SenkouSpanB);
         }
+
+        [Fact]
+        public async Task CalculateBuySignals()
+        {
+            string symbol = "NFLX";
+            var candles = await _reportService.GetCollectedCandlesAsync(symbol);
+            var ichimokuItems = IchimokuHelper.BuildIchimokuCloud(candles);
+            var signals = IchimokuHelper.GetSignals(ichimokuItems, candles);
+            Assert.NotEmpty(signals);
+            var buySignals = signals.Where(x => x == SignalType.BuySignal);
+            Assert.NotEmpty(buySignals);
+        }
     }
 
     public class IchimokuItemWrapper : IchimokuItem

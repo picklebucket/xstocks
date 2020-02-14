@@ -46,7 +46,7 @@ namespace Stocks.Tests.Services
             string symbol = "NFLX";
             var candles = await _reportService.GetCollectedCandlesAsync(symbol);
             var reportItems = _reportService.BuildReport(symbol, candles);
-            var csvContent = _reportService.ExportToCsv(reportItems);
+            var csvContent = _reportService.ExportToIndicatorCsv(reportItems);
             string output = Encoding.Default.GetString(csvContent);
             _testOutputHelper.WriteLine(output);
         }

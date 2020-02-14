@@ -9,7 +9,7 @@ namespace Stocks.Services.Interfaces
     public interface IReportService
     {
         IEnumerable<ReportItem> BuildReport(string symbol, List<CandleItem> candleItems);
-        byte[] ExportToCsv(IEnumerable<ReportItem> reportItems);
+        byte[] ExportToIndicatorCsv(IEnumerable<ReportItem> reportItems);
         Task<List<CandleItem>> GetCollectedCandlesAsync(string symbol);
     }
 }

@@ -10,6 +10,7 @@ namespace Stocks.Models
         public AtrItem AtrItem { get; set; }
         public CandleItem CandleItem { get; set; }
         public IchimokuItem IchimokuItem { get; set; }
+        public SignalType SignalType { get; set; }
         public IndicatorItem IndicatorItem { get; set; }
     }
 }

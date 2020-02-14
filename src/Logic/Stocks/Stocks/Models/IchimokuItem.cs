@@ -9,6 +9,9 @@ namespace Stocks.Models
         public DateTimeOffset Date { get; set; }
         public double? TenkanSen { get; set; }
         public double? KijunSen { get; set; }
+        /// <summary>
+        /// Lagging line
+        /// </summary>
         public double? ChikouSpan { get; set; }
         public double? SenkouSpanA { get; set; }
         public double? SenkouSpanB { get; set; }

@@ -46,6 +46,33 @@ namespace Stocks.Helpers
             return cloudItems;
         }
 
+        public static List<SignalType> GetSignals(List<IchimokuItem> ichimokuItems, List<CandleItem> candleItems)
+        {
+            var signalTypes = new List<SignalType>();
+            for (int i = 0; i < ichimokuItems.Count; i++)
+            {
+                SignalType signalType = SignalType.None;
+                int count = 0;
+                int j = i;
+                while(CanBeBuySignal(ichimokuItems[j], candleItems[j]))
+                {
+                    count++;
+                    j++;
+                    if(count == 3)
+                    {
+                        signalType = SignalType.BuySignal;
+                    }
+                }
+                signalTypes.Add(signalType);
+            }
+            return signalTypes;
+        }
+
+        private static bool CanBeBuySignal(IchimokuItem ichimokuItem, CandleItem candleItem)
+        {
+            return ichimokuItem.ChikouSpan > ichimokuItem.SenkouSpanA && candleItem.Close > ichimokuItem.SenkouSpanA && ichimokuItem.SenkouSpanA > ichimokuItem.SenkouSpanB;
+        }
+
         /// <summary>
         /// 9 day average
         /// </summary>
