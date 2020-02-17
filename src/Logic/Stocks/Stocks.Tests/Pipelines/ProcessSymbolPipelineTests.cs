@@ -27,7 +27,7 @@ namespace Stocks.Tests.Pipelines
         }
 
         [Fact]
-        public async Task Run()
+        public async Task RunProcessSymbolPipeline()
         {
             var args = new ProcessSymbolPipelineArgs()
             {
@@ -45,7 +45,11 @@ namespace Stocks.Tests.Pipelines
             Assert.NotNull(priceHistory);
             Assert.NotEmpty(priceHistory.Candles);
 
-            _testOutputHelper.WriteLine(args.ResultMessage);
+            foreach (var message in args.Messages)
+            {
+                _testOutputHelper.WriteLine(message);
+            }
+            _testOutputHelper.WriteLine("Report: ");
             _testOutputHelper.WriteLine(JsonSerializer.Serialize(args.ReportItems, new JsonSerializerOptions() { WriteIndented = true }));
         }
     }

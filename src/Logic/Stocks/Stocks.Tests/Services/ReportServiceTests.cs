@@ -41,12 +41,23 @@ namespace Stocks.Tests.Services
         }
 
         [Fact]
-        public async Task ExportToCsv()
+        public async Task ExportToIndicatorCsv()
         {
             string symbol = "NFLX";
             var candles = await _reportService.GetCollectedCandlesAsync(symbol);
             var reportItems = _reportService.BuildReport(symbol, candles);
-            var csvContent = _reportService.ExportToIndicatorCsv(reportItems);
+            var csvContent = _reportService.ExportToTradeCsv(reportItems);
+            string output = Encoding.Default.GetString(csvContent);
+            _testOutputHelper.WriteLine(output);
+        }
+
+        [Fact]
+        public async Task ExportToTradeCsv()
+        {
+            string symbol = "NFLX";
+            var candles = await _reportService.GetCollectedCandlesAsync(symbol);
+            var reportItems = _reportService.BuildReport(symbol, candles);
+            var csvContent = _reportService.ExportToTradeCsv(reportItems);
             string output = Encoding.Default.GetString(csvContent);
             _testOutputHelper.WriteLine(output);
         }

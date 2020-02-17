@@ -6,6 +6,7 @@ using Stocks.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -52,6 +53,27 @@ namespace Stocks.Services
             foreach (var reportItem in reportItems)
             {
                 streamWriter.WriteLine($"{reportItem.Symbol}, {reportItem.CandleItem.Date}, {reportItem.SignalType}, {reportItem.IndicatorItem.EntryPrice}, {reportItem.IndicatorItem.StopLoss}, {reportItem.IndicatorItem.TakeProfit}, {reportItem.IndicatorItem.PriceResult}");
+            }
+            streamWriter.Flush();
+            byte[] content = stream.ToArray();
+            return content;
+        }
+
+        public byte[] ExportToTradeCsv(IEnumerable<ReportItem> reportItems)
+        {
+            using var stream = new MemoryStream();
+            using StreamWriter streamWriter = new StreamWriter(stream);
+            streamWriter.WriteLine("Symbol, Trades taken, Number of losses, Number of wins, Average win %");
+            
+            var groupedReports = reportItems.Where(x => x.SignalType == SignalType.BuySignal).GroupBy(x => x.Symbol);
+            foreach (IGrouping<string, ReportItem> groupedReport in groupedReports)
+            {
+                string symbol = groupedReport.Key;
+                int tradesTaken = groupedReport.Count();
+                int numberOfLosses = groupedReport.Count(x => x.IndicatorItem.PriceResult == PriceResult.StopLossReached);
+                int numberOfWins = tradesTaken - numberOfLosses;
+                double winAverage = (numberOfWins / (double)tradesTaken) * 100;
+                streamWriter.WriteLine($"{symbol}, {tradesTaken}, {numberOfLosses}, {numberOfWins}, {winAverage}");
             }
             streamWriter.Flush();
             byte[] content = stream.ToArray();

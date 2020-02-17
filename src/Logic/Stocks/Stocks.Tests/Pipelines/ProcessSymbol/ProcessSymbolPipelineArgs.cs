@@ -13,6 +13,11 @@ namespace Stocks.Tests.Pipelines.ProcessSymbol
         public PriceHistoryRequest PriceHistoryRequest { get; set; }
         public List<CandleItem> CandleItems { get; set; }
         public IEnumerable<ReportItem> ReportItems { get; set; }
-        public string ResultMessage { get; set; }
+        public List<string> Messages { get; set; }
+
+        public ProcessSymbolPipelineArgs()
+        {
+            Messages = new List<string>();
+        }
     }
 }
