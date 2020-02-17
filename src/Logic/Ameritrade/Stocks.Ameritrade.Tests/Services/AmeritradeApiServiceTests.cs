@@ -16,6 +16,11 @@ namespace Stocks.Ameritrade.Tests.Services
 
         public AmeritradeApiServiceTests(AmeritradeFixture ameritradeFixture, ITestOutputHelper testOutputHelper)
         {
+            if(ameritradeFixture == null)
+            {
+                throw new ArgumentNullException(nameof(ameritradeFixture));
+            }
+
             _ameritradeApiService = ameritradeFixture.AmeritradeApiService;
             _testOutputHelper = testOutputHelper;
         }
@@ -23,10 +28,10 @@ namespace Stocks.Ameritrade.Tests.Services
         [Fact]
         public async Task GetPriceHistory_InvalidParameters_Error()
         {
-            await Assert.ThrowsAsync<ArgumentException>(() => _ameritradeApiService.GetPriceHistory(null, null));
-            await Assert.ThrowsAsync<ArgumentException>(() => _ameritradeApiService.GetPriceHistory(string.Empty, null));
-            await Assert.ThrowsAsync<ArgumentNullException>(() => _ameritradeApiService.GetPriceHistory("symbol", null));
-            await _ameritradeApiService.GetPriceHistory("symbol", new PriceHistoryRequest());
+            await Assert.ThrowsAsync<ArgumentException>(() => _ameritradeApiService.GetPriceHistory(null, null)).ConfigureAwait(false);
+            await Assert.ThrowsAsync<ArgumentException>(() => _ameritradeApiService.GetPriceHistory(string.Empty, null)).ConfigureAwait(false);
+            await Assert.ThrowsAsync<ArgumentNullException>(() => _ameritradeApiService.GetPriceHistory("symbol", null)).ConfigureAwait(false);
+            await _ameritradeApiService.GetPriceHistory("symbol", new PriceHistoryRequest()).ConfigureAwait(false);
         }
 
         [Fact]
@@ -39,7 +44,7 @@ namespace Stocks.Ameritrade.Tests.Services
                 FrequencyType = FrequencyType.Daily,
                 Period = 12
             };
-            ApiResponse<PriceHistoryResponse> response = await _ameritradeApiService.GetPriceHistory(symbol, priceHistoryRequest);
+            ApiResponse<PriceHistoryResponse> response = await _ameritradeApiService.GetPriceHistory(symbol, priceHistoryRequest).ConfigureAwait(false);
             Assert.False(response.IsSuccess);
             Assert.NotEmpty(response.ErrorMessage);
             Assert.Null(response.Content);
@@ -56,10 +61,11 @@ namespace Stocks.Ameritrade.Tests.Services
                 FrequencyType = FrequencyType.Daily,
                 Period = 1
             };
-            ApiResponse<PriceHistoryResponse> response = await _ameritradeApiService.GetPriceHistory(symbol, priceHistoryRequest);
+            ApiResponse<PriceHistoryResponse> response = await _ameritradeApiService.GetPriceHistory(symbol, priceHistoryRequest).ConfigureAwait(false);
             Assert.True(response.IsSuccess);
             Assert.Null(response.ErrorMessage);
             Assert.NotNull(response.Content);
+            Assert.NotNull(response.Content.Candles);
             _testOutputHelper.WriteLine(response.ToJson());
         }
     }

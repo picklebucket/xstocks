@@ -1,10 +1,11 @@
-﻿using Stocks.Ameritrade.Models;
+﻿using Stocks.Ameritrade.Helpers;
+using Stocks.Ameritrade.Models;
 using Stocks.Ameritrade.Models.PriceHistory;
-using Stocks.Ameritrade.Models.Token;
 using Stocks.Ameritrade.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Globalization;
 using System.IO;
 using System.Net;
 using System.Net.Http;
@@ -46,15 +47,22 @@ namespace Stocks.Ameritrade.Services
 
         public AmeritradeApiService(AmeritradeApiSettings apiSettings)
         {
+            if (apiSettings == null)
+            {
+                throw new ArgumentNullException(nameof(apiSettings));
+            }
+
+
             _refreshToken = apiSettings.RefreshToken;
             _clientId = apiSettings.ClientId;
 
             _httpClient = new HttpClient
             {
-                BaseAddress = new Uri(apiSettings.BaseUrl)
+                BaseAddress = apiSettings.BaseUrl
             };
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1303:Do not pass literals as localized parameters", Justification = "<Pending>")]
         public async Task<ApiResponse<PriceHistoryResponse>> GetPriceHistory(string symbol, PriceHistoryRequest priceHistoryRequest)
         {
             if(string.IsNullOrEmpty(symbol))
@@ -89,7 +97,7 @@ namespace Stocks.Ameritrade.Services
             }
             if(priceHistoryRequest.Period.HasValue)
             {
-                queryParameters.Add("period", priceHistoryRequest.Period.Value.ToString());
+                queryParameters.Add("period", priceHistoryRequest.Period.Value.ToString(CultureInfo.InvariantCulture));
             }
             if(priceHistoryRequest.FrequencyType != FrequencyType.Unspecified)
             {
@@ -112,20 +120,25 @@ namespace Stocks.Ameritrade.Services
                 queryParameters.Add("frequencyType", frequencyType);
             }
 
-            var response = await GetAsync($"marketdata/{symbol}/pricehistory", queryParameters);
-            string responseString = await response.Content.ReadAsStringAsync();
+            var response = await GetAsync($"marketdata/{symbol}/pricehistory", queryParameters).ConfigureAwait(false);
+            string responseString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
             if (response.IsSuccessStatusCode)
             {                
                 PriceHistoryResponse priceHistory = JsonSerializer.Deserialize<PriceHistoryResponse>(responseString);
-                return ApiResponse<PriceHistoryResponse>.Success(priceHistory);
+                return ApiResponseHelper.Success(priceHistory);
             }
             else if(response.StatusCode == HttpStatusCode.BadRequest)
             {
-                var error = JsonSerializer.Deserialize<BadRequestResponse>(responseString);
-                return ApiResponse<PriceHistoryResponse>.Error(error.ErrorMessage);
+                string errorMessage = GetErrorMessage(responseString);
+                return ApiResponseHelper.Error<PriceHistoryResponse>(errorMessage);
             }
 
-            return ApiResponse<PriceHistoryResponse>.Error("Unknown error");
+            return ApiResponseHelper.Error<PriceHistoryResponse>("Unknown error");
+        }
+
+        private string GetErrorMessage(string json)
+        {
+            return JsonDocument.Parse(json).RootElement.GetProperty("error").GetString();
         }
 
         private async Task<string> RefreshAccessTokenAsync()
@@ -136,13 +149,16 @@ namespace Stocks.Ameritrade.Services
                 { "client_id", _clientId },
                 { "refresh_token", _refreshToken }
             };
-            var response = await _httpClient.PostAsync("oauth2/token", new FormUrlEncodedContent(body));
+            HttpResponseMessage response;
+            using (var content = new FormUrlEncodedContent(body))
+            {
+                response = await _httpClient.PostAsync("oauth2/token", content).ConfigureAwait(false);
+            }
             string accessToken = null;
             if(response.IsSuccessStatusCode)
             {
-                string responseText = await response.Content.ReadAsStringAsync();
-                var tokenResponse = JsonSerializer.Deserialize<TokenResponse>(responseText);
-                accessToken = tokenResponse.AccessToken;
+                string responseText = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                accessToken = JsonDocument.Parse(responseText).RootElement.GetProperty("access_token").GetString();
             }
             return accessToken;
         }
@@ -155,17 +171,17 @@ namespace Stocks.Ameritrade.Services
             {
                 url += $"?{query}";
             }
-            return await SendAsync(() => new HttpRequestMessage(HttpMethod.Get, url));
+            return await SendAsync(() => new HttpRequestMessage(HttpMethod.Get, url)).ConfigureAwait(false);
         }
 
         private async Task<HttpResponseMessage> SendAsync(Func<HttpRequestMessage> requestMessageGetter)
         {
-            var response = await SendAuthAsync(requestMessageGetter);
+            var response = await SendAuthAsync(requestMessageGetter).ConfigureAwait(false);
             //Unathorized error code could be because access token is expired. we will refresh it below
             if (response.StatusCode == HttpStatusCode.Unauthorized)
             {
-                AccessToken = await RefreshAccessTokenAsync();
-                response = await SendAuthAsync(requestMessageGetter);
+                AccessToken = await RefreshAccessTokenAsync().ConfigureAwait(false);
+                response = await SendAuthAsync(requestMessageGetter).ConfigureAwait(false);
             }
             return response;
         }
@@ -174,7 +190,7 @@ namespace Stocks.Ameritrade.Services
         {
             var requestMessage = requestMessageGetter.Invoke();
             requestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", AccessToken);
-            return await _httpClient.SendAsync(requestMessage);
+            return await _httpClient.SendAsync(requestMessage).ConfigureAwait(false);
         }
     }
 }

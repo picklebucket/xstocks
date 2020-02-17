@@ -7,7 +7,7 @@ namespace Stocks.Ameritrade.Tests.Fixtures
 {
     public class AmeritradeFixture
     {
-        public IAmeritradeApiService AmeritradeApiService;
+        public IAmeritradeApiService AmeritradeApiService { get; }
         public AmeritradeFixture()
         {
             var configuration = new ConfigurationBuilder()

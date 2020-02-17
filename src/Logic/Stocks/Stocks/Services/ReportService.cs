@@ -47,6 +47,11 @@ namespace Stocks.Services
 
         public byte[] ExportToIndicatorCsv(IEnumerable<ReportItem> reportItems)
         {
+            if (reportItems == null)
+            {
+                throw new ArgumentNullException(nameof(reportItems));
+            }
+
             using var stream = new MemoryStream();
             using StreamWriter streamWriter = new StreamWriter(stream);
             streamWriter.WriteLine("Symbol, Date, Signal, Entry Price, Stop Loss, Take Profit, Result");
@@ -82,7 +87,7 @@ namespace Stocks.Services
 
         public async Task<List<CandleItem>> GetCollectedCandlesAsync(string symbol)
         {
-            PriceHistory priceHistory = await _priceHistoryRepository.GetAsync(symbol);
+            PriceHistory priceHistory = await _priceHistoryRepository.GetAsync(symbol).ConfigureAwait(false);
             var candles = new List<CandleItem>();
             foreach (var candle in priceHistory.Candles)
             {

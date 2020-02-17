@@ -18,14 +18,14 @@ namespace Stocks.Data.Repositories
         {
             IMongoCollection<PriceHistory> collection = Context.GetCollection<PriceHistory>(CollectionName);
             var filter = Builders<PriceHistory>.Filter.Eq(x => x.Symbol, symbol);
-            await collection.DeleteOneAsync(filter);
+            await collection.DeleteManyAsync(filter).ConfigureAwait(false);
         }
 
         public async Task<PriceHistory> GetAsync(string symbol)
         {
             IMongoCollection<PriceHistory> collection = Context.GetCollection<PriceHistory>(CollectionName);
             var filter = Builders<PriceHistory>.Filter.Eq(x => x.Symbol, symbol);
-            return await collection.Find(filter).FirstOrDefaultAsync();
+            return await collection.Find(filter).FirstOrDefaultAsync().ConfigureAwait(false);
         }
     }
 }

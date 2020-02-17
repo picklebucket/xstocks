@@ -24,6 +24,7 @@ namespace Stocks.Pipelines.Providers
             return processors;
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1303:Do not pass literals as localized parameters", Justification = "<Pending>")]
         public IEnumerable<ProcessorInfo> GetProcessors(string pipelineName)
         {
             var pipelineNode = GetPipelineNode(pipelineName);
@@ -43,14 +44,20 @@ namespace Stocks.Pipelines.Providers
                 bool async = false;
                 if(asyncAttribute != null)
                 {
-                    bool.TryParse(asyncAttribute.Value, out async);
+                    if(!bool.TryParse(asyncAttribute.Value, out async))
+                    {
+                        throw new ArgumentException($"Cannot parse 'async' attribute value of '{typeName}' processor");
+                    }
                 }
 
                 var resolveAttribute = processorNode.Attributes["resolve"];
                 bool resolve = false;
                 if(resolveAttribute != null)
                 {
-                    bool.TryParse(resolveAttribute.Value, out resolve);
+                    if(!bool.TryParse(resolveAttribute.Value, out resolve))
+                    {
+                        throw new ArgumentException($"Cannot parse 'resolve' attribute value of '{typeName}' processor");
+                    }
                 }
                 processors.Add(new ProcessorInfo(processorType, async, resolve));
             }

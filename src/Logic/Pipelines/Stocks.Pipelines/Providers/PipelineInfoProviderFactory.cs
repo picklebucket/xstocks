@@ -7,6 +7,7 @@ namespace Stocks.Pipelines.Providers
 {
     static class PipelineInfoProviderFactory
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1303:Do not pass literals as localized parameters", Justification = "<Pending>")]
         public static IPipelineInfoProvider GetProvider(PipelineSettings pipelineSettings)
         {
             return pipelineSettings.ConfigFileType switch

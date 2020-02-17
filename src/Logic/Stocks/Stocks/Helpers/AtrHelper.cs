@@ -10,6 +10,10 @@ namespace Stocks.Helpers
     {
         public static List<AtrItem> CalculateATR(List<CandleItem> candles)
         {
+            if(candles == null)
+            {
+                throw new ArgumentNullException(nameof(candles));
+            }
             var atrItems = new List<AtrItem>();
             for (int i = 0; i < candles.Count; i++)
             {

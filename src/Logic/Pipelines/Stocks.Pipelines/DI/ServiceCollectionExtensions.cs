@@ -12,6 +12,10 @@ namespace Stocks.Pipelines.DI
     {
         public static void AddPipelineProcessors(this IServiceCollection serviceCollection, PipelineSettings pipelineSettings)
         {
+            if(pipelineSettings == null)
+            {
+                throw new ArgumentNullException(nameof(pipelineSettings));
+            }
             IPipelineInfoProvider pipelineInfoProvider = PipelineInfoProviderFactory.GetProvider(pipelineSettings);
             IEnumerable<ProcessorInfo> diProcessors = pipelineInfoProvider.GetAllProcessors().Where(x => x.Resolve);
             foreach (ProcessorInfo processor in diProcessors)

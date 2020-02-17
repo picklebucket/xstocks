@@ -8,8 +8,18 @@ namespace Stocks.Helpers
 {
     public static class IndicatorHelper
     {
-        public static List<IndicatorItem> Calculate(List<AtrItem> atrItems, List<CandleItem> candleItems)
+        public static List<IndicatorItem> Calculate(List<AtrItem> atrItems, List<CandleItem> candles)
         {
+            if (atrItems == null)
+            {
+                throw new ArgumentNullException(nameof(atrItems));
+            }
+            if (candles == null)
+            {
+                throw new ArgumentNullException(nameof(candles));
+            }
+
+
             var indicatorItems = new List<IndicatorItem>()
             {
                 new IndicatorItem()
@@ -19,12 +29,12 @@ namespace Stocks.Helpers
                 double? atr = atrItems[i].ATR;
                 var indicatorItem = new IndicatorItem
                 {
-                    EntryPrice = candleItems[i - 1].Close
+                    EntryPrice = candles[i - 1].Close
                 };
                 indicatorItem.StopLoss = indicatorItem.EntryPrice - atr;
                 indicatorItem.TakeProfit = indicatorItem.EntryPrice + atr * atr;
 
-                double? price = candleItems[i].Close;
+                double? price = candles[i].Close;
                 if(price <= indicatorItem.StopLoss)
                 {
                     indicatorItem.PriceResult = PriceResult.StopLossReached;

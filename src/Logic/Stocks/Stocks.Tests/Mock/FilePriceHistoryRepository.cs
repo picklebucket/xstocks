@@ -35,7 +35,7 @@ namespace Stocks.Tests.Mock
 
         public async Task<PriceHistory> GetAsync(string symbol)
         {
-            string json = await File.ReadAllTextAsync("priceHistory.json");
+            string json = await File.ReadAllTextAsync("priceHistory.json").ConfigureAwait(false);
             var priceHistories = JsonSerializer.Deserialize<PriceHistory[]>(json);
 
             return priceHistories.FirstOrDefault(x => x.Symbol == symbol);

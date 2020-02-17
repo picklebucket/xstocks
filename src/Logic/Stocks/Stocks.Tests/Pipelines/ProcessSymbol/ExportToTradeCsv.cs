@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Stocks.Tests.Pipelines.ProcessSymbol
 {
-    class ExportToTradeCsv : Processor<ProcessSymbolPipelineArgs>
+    public class ExportToTradeCsv : Processor<ProcessSymbolPipelineArgs>
     {
         private readonly IReportService _reportService;
 
@@ -19,7 +19,7 @@ namespace Stocks.Tests.Pipelines.ProcessSymbol
         public override void Execute(ProcessSymbolPipelineArgs args)
         {
             var csvContent = _reportService.ExportToTradeCsv(args.ReportItems);
-            string fileName = $"{args.Symbol.ToLower()}.trades.csv";
+            string fileName = $"{args.Symbol}.trades.csv";
             string filePath = Path.GetFullPath(fileName);
             File.WriteAllText(filePath, Encoding.Default.GetString(csvContent));
             args.Messages.Add($"Trades were saved to: {filePath}");

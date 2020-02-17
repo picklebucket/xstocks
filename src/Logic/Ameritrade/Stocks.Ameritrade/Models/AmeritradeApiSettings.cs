@@ -8,6 +8,6 @@ namespace Stocks.Ameritrade.Models
     {
         public string RefreshToken { get; set; }
         public string ClientId { get; set; }
-        public string BaseUrl { get; set; }
+        public Uri BaseUrl { get; set; }
     }
 }

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Stocks.Pipelines.Tests.Fixtures.Pipelines
 {
-    class CustomProcessor : Processor<CustomPipelineArgs>
+    public class CustomProcessor : Processor<CustomPipelineArgs>
     {
         public override void Execute(CustomPipelineArgs pipelineArgs)
         {

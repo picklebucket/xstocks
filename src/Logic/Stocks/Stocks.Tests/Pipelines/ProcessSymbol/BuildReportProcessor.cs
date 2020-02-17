@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Stocks.Tests.Pipelines.ProcessSymbol
 {
-    class BuildReportProcessor : Processor<ProcessSymbolPipelineArgs>
+    public class BuildReportProcessor : Processor<ProcessSymbolPipelineArgs>
     {
         private readonly IReportService _reportService;
 

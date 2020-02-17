@@ -24,27 +24,27 @@ namespace Stocks.Data.Repositories
         public virtual async Task CreateAsync(T entity)
         {
             IMongoCollection<T> collection = Context.GetCollection<T>(CollectionName);
-            await collection.InsertOneAsync(entity);
+            await collection.InsertOneAsync(entity).ConfigureAwait(false);
         }
 
         public async Task CreateManyAsync(params T[] entities)
         {
             IMongoCollection<T> collection = Context.GetCollection<T>(CollectionName);
-            await collection.InsertManyAsync(entities);
+            await collection.InsertManyAsync(entities).ConfigureAwait(false);
         }
 
         public async Task<T> GetByIdAsync(ObjectId id)
         {
             var filter = Builders<T>.Filter.Eq(x => x.Id, id);
             IMongoCollection<T> collection = Context.GetCollection<T>(CollectionName);
-            return await collection.Find(filter).FirstOrDefaultAsync();
+            return await collection.Find(filter).FirstOrDefaultAsync().ConfigureAwait(false);
         }
 
         public async Task DeleteAsync(ObjectId id)
         {
             IMongoCollection<T> collection = Context.GetCollection<T>(CollectionName);
             var filter = Builders<T>.Filter.Eq(x => x.Id, id);
-            await collection.DeleteOneAsync(filter);
+            await collection.DeleteOneAsync(filter).ConfigureAwait(false);
         }
     }
 }

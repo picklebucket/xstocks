@@ -35,9 +35,9 @@ namespace Stocks.Tests.Services
                 FrequencyType = FrequencyType.Daily,
                 Period = 1
             };
-            await _collectingService.CollectDataAsync(symbol, priceHistoryRequest);
+            await _collectingService.CollectDataAsync(symbol, priceHistoryRequest).ConfigureAwait(false);
 
-            PriceHistory priceHistory = await _priceHistoryRepository.GetAsync(symbol);
+            PriceHistory priceHistory = await _priceHistoryRepository.GetAsync(symbol).ConfigureAwait(false);
             Assert.NotNull(priceHistory);
             Assert.NotEmpty(priceHistory.Candles);
         }
@@ -46,7 +46,7 @@ namespace Stocks.Tests.Services
         public async Task ExportToCsv()
         {
             string symbol = "NFLX";
-            PriceHistory priceHistory = await _priceHistoryRepository.GetAsync(symbol);
+            PriceHistory priceHistory = await _priceHistoryRepository.GetAsync(symbol).ConfigureAwait(false);
             using var file = new StreamWriter("candles.csv");
             file.WriteLine("Date, Open, High, Low, Close, Volume");
             foreach (var candle in priceHistory.Candles)

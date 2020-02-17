@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Stocks.Tests.Pipelines.ProcessSymbol
 {
-    class ExportToIndicatorCsv : Processor<ProcessSymbolPipelineArgs>
+    public class ExportToIndicatorCsv : Processor<ProcessSymbolPipelineArgs>
     {
         private readonly IReportService _reportService;
 
@@ -19,7 +19,7 @@ namespace Stocks.Tests.Pipelines.ProcessSymbol
         public override void Execute(ProcessSymbolPipelineArgs args)
         {
             byte[] csvContent = _reportService.ExportToIndicatorCsv(args.ReportItems);
-            string fileName = $"{args.Symbol.ToLower()}.indicators.csv";
+            string fileName = $"{args.Symbol}.indicators.csv";
             string filePath = Path.GetFullPath(fileName);
             File.WriteAllText(filePath, Encoding.Default.GetString(csvContent));
             args.Messages.Add($"Indicators were saved to: {filePath}");

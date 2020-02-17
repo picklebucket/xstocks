@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Stocks.Tests.Pipelines.ProcessSymbol
 {
-    class ReadDataProcessor : AsyncProcessor<ProcessSymbolPipelineArgs>
+    public class ReadDataProcessor : AsyncProcessor<ProcessSymbolPipelineArgs>
     {
         private readonly IReportService _reportService;
 
@@ -18,7 +18,7 @@ namespace Stocks.Tests.Pipelines.ProcessSymbol
 
         public override async Task ExecuteAsync(ProcessSymbolPipelineArgs args)
         {
-            args.CandleItems = await _reportService.GetCollectedCandlesAsync(args.Symbol);
+            args.CandleItems.AddRange(await _reportService.GetCollectedCandlesAsync(args.Symbol).ConfigureAwait(false));
         }
     }
 }

@@ -28,7 +28,7 @@ namespace Stocks.Pipelines
         public async Task InvokeAsync(params object[] parameters)
         {
             var task = (Task)Invoke(parameters);
-            await task;
+            await task.ConfigureAwait(false);
         }
     }
 }

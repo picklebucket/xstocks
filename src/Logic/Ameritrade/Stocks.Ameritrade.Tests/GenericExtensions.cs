@@ -5,7 +5,7 @@ using System.Text.Json;
 
 namespace Stocks.Ameritrade.Tests
 {
-    public static class Extensions
+    public static class GenericExtensions
     {
         public static string ToJson<T>(this T instance)
         {

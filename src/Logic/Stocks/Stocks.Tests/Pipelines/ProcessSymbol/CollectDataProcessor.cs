@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Stocks.Tests.Pipelines.ProcessSymbol
 {
-    class CollectDataProcessor : AsyncProcessor<ProcessSymbolPipelineArgs>
+    public class CollectDataProcessor : AsyncProcessor<ProcessSymbolPipelineArgs>
     {
         private readonly ICollectingService _collectingService;
 
@@ -18,7 +18,7 @@ namespace Stocks.Tests.Pipelines.ProcessSymbol
 
         public override async Task ExecuteAsync(ProcessSymbolPipelineArgs args)
         {
-            await _collectingService.CollectDataAsync(args.Symbol, args.PriceHistoryRequest);
+            await _collectingService.CollectDataAsync(args.Symbol, args.PriceHistoryRequest).ConfigureAwait(false);
         }
     }
 }

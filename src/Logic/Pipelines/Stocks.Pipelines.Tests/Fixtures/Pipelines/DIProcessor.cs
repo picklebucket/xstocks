@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Stocks.Pipelines.Tests.Fixtures.Pipelines
 {
-    class DIProcessor : Processor<CustomPipelineArgs>
+    public class DIProcessor : Processor<CustomPipelineArgs>
     {
         private readonly PipelineSettings _pipelineSettings;
 

@@ -25,7 +25,7 @@ namespace Stocks.Tests.Helpers
         public async Task CalculateAtr()
         {
             string symbol = "NFLX";
-            var candles = await _reportService.GetCollectedCandlesAsync(symbol);
+            var candles = await _reportService.GetCollectedCandlesAsync(symbol).ConfigureAwait(false);
             var atrItems = AtrHelper.CalculateATR(candles);
             int i;
             for (i = 0; i < 13; i++)

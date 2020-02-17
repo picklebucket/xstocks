@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Stocks.Tests.Pipelines.ProcessSymbol
 {
-    class WipeDataProcessor : AsyncProcessor<ProcessSymbolPipelineArgs>
+    public class WipeDataProcessor : AsyncProcessor<ProcessSymbolPipelineArgs>
     {
         private readonly IPriceHistoryRepository _priceHistoryRepository;
 
@@ -18,7 +18,7 @@ namespace Stocks.Tests.Pipelines.ProcessSymbol
 
         public override async Task ExecuteAsync(ProcessSymbolPipelineArgs args)
         {
-            await _priceHistoryRepository.DeleteAsync(args.Symbol);
+            await _priceHistoryRepository.DeleteAsync(args.Symbol).ConfigureAwait(false);
         }
     }
 }

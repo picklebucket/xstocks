@@ -25,7 +25,7 @@ namespace Stocks.Tests.Services
         public async Task BuildReport()
         {
             string symbol = "NFLX";
-            var candles = await _reportService.GetCollectedCandlesAsync(symbol);
+            var candles = await _reportService.GetCollectedCandlesAsync(symbol).ConfigureAwait(false);
             var reportItems = _reportService.BuildReport(symbol, candles);
             Assert.NotNull(reportItems);
             Assert.NotEmpty(reportItems);
@@ -44,7 +44,7 @@ namespace Stocks.Tests.Services
         public async Task ExportToIndicatorCsv()
         {
             string symbol = "NFLX";
-            var candles = await _reportService.GetCollectedCandlesAsync(symbol);
+            var candles = await _reportService.GetCollectedCandlesAsync(symbol).ConfigureAwait(false);
             var reportItems = _reportService.BuildReport(symbol, candles);
             var csvContent = _reportService.ExportToTradeCsv(reportItems);
             string output = Encoding.Default.GetString(csvContent);
@@ -55,7 +55,7 @@ namespace Stocks.Tests.Services
         public async Task ExportToTradeCsv()
         {
             string symbol = "NFLX";
-            var candles = await _reportService.GetCollectedCandlesAsync(symbol);
+            var candles = await _reportService.GetCollectedCandlesAsync(symbol).ConfigureAwait(false);
             var reportItems = _reportService.BuildReport(symbol, candles);
             var csvContent = _reportService.ExportToTradeCsv(reportItems);
             string output = Encoding.Default.GetString(csvContent);

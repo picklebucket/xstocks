@@ -15,6 +15,10 @@ namespace Stocks.Pipelines.Services
 
         public PipelineManagerService(IServiceProvider serviceProvider, PipelineSettings pipelineSettings)
         {
+            if(pipelineSettings == null)
+            {
+                throw new ArgumentNullException(nameof(pipelineSettings));
+            }
             _pipelineInfoProvider = PipelineInfoProviderFactory.GetProvider(pipelineSettings);
             _pipelines = new Dictionary<string, PipelineInfo>();
             _serviceProvider = serviceProvider;
@@ -22,6 +26,11 @@ namespace Stocks.Pipelines.Services
 
         public async Task RunAsync(string pipelineName, PipelineArgs args)
         {
+            if(args == null)
+            {
+                throw new ArgumentNullException(nameof(args));
+            }
+
             var pipeline = GetPipeline(pipelineName);
             var pipelineMethods = new List<PipelineMethodInfo>();
             foreach (ProcessorInfo processor in pipeline.Processors)
@@ -39,7 +48,7 @@ namespace Stocks.Pipelines.Services
             {
                 if(pipelineMethod.Async)
                 {
-                    await pipelineMethod.InvokeAsync(args);
+                    await pipelineMethod.InvokeAsync(args).ConfigureAwait(false);
                 }
                 else
                 {

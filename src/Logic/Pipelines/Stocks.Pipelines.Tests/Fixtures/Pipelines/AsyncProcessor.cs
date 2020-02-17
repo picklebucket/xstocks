@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace Stocks.Pipelines.Tests.Fixtures.Pipelines
 {
-    class AsyncProcessor : AsyncProcessor<CustomPipelineArgs>
+    public class AsyncProcessor : AsyncProcessor<CustomPipelineArgs>
     {
-        public override async Task ExecuteAsync(CustomPipelineArgs args)
+        public override Task ExecuteAsync(CustomPipelineArgs args)
         {
             args.ResponseMessage = Messages.AsyncMessage;
-            await Task.CompletedTask;
+            return Task.CompletedTask;
         }
     }
 }

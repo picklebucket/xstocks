@@ -26,9 +26,13 @@ namespace Stocks.Pipelines.Models
     {
         public static PipelineInfoProviderType ConvertFrom(string value)
         {
-            return (value.ToLower()) switch
+            if(value == null)
             {
-                "xml" => PipelineInfoProviderType.Xml,
+                throw new ArgumentNullException(value);
+            }
+            return (value.ToUpperInvariant()) switch
+            {
+                "XML" => PipelineInfoProviderType.Xml,
                 _ => PipelineInfoProviderType.Unknown,
             };
         }

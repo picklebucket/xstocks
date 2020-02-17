@@ -30,11 +30,11 @@ namespace Stocks.Tests.Helpers
         public async Task BuildIchimokuCloud()
         {
             string symbol = "NFLX";
-            var candles = await _reportService.GetCollectedCandlesAsync(symbol);
+            var candles = await _reportService.GetCollectedCandlesAsync(symbol).ConfigureAwait(false);
             var cloudItems = IchimokuItemWrapper.Create(IchimokuHelper.BuildIchimokuCloud(candles));
             _testOutputHelper.WriteLine(JsonSerializer.Serialize(cloudItems, new JsonSerializerOptions() { WriteIndented = true}));
 
-            Assert.Equal(candles.Count + IchimokuHelper.MediumShiftSize, cloudItems.Count);
+            Assert.Equal(candles.Count, cloudItems.Count);
 
             //tenkan-sen has no values for first 8 and last 25 periods
             for (int i = 0; i < IchimokuHelper.SmallShiftSize; i++)
@@ -96,7 +96,7 @@ namespace Stocks.Tests.Helpers
         public async Task CalculateBuySignals()
         {
             string symbol = "NFLX";
-            var candles = await _reportService.GetCollectedCandlesAsync(symbol);
+            var candles = await _reportService.GetCollectedCandlesAsync(symbol).ConfigureAwait(false);
             var ichimokuItems = IchimokuHelper.BuildIchimokuCloud(candles);
             var signals = IchimokuHelper.GetSignals(ichimokuItems, candles);
             Assert.NotEmpty(signals);

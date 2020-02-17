@@ -18,6 +18,11 @@ namespace Stocks.Helpers
 
         public static List<IchimokuItem> BuildIchimokuCloud(List<CandleItem> candles)
         {
+            if (candles == null)
+            {
+                throw new ArgumentNullException(nameof(candles));
+            }
+
             var cloudItems = new List<IchimokuItem>();
             int initialCandlesCount = candles.Count;
             if (initialCandlesCount > 0)
@@ -46,15 +51,26 @@ namespace Stocks.Helpers
             return cloudItems;
         }
 
-        public static List<SignalType> GetSignals(List<IchimokuItem> ichimokuItems, List<CandleItem> candleItems)
+        public static List<SignalType> GetSignals(List<IchimokuItem> ichimokuItems, List<CandleItem> candles)
         {
+            if (ichimokuItems == null)
+            {
+                throw new ArgumentNullException(nameof(ichimokuItems));
+            }
+
+            if (candles == null)
+            {
+                throw new ArgumentNullException(nameof(candles));
+            }
+
+
             var signalTypes = new List<SignalType>();
             for (int i = 0; i < ichimokuItems.Count; i++)
             {
                 SignalType signalType = SignalType.None;
                 int count = 0;
                 int j = i;
-                while(CanBeBuySignal(ichimokuItems[j], candleItems[j]))
+                while(CanBeBuySignal(ichimokuItems[j], candles[j]))
                 {
                     count++;
                     j++;

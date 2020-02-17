@@ -3,8 +3,6 @@ using Stocks.Pipelines.Services.Interfaces;
 using Stocks.Pipelines.Tests.Fixtures;
 using Stocks.Pipelines.Tests.Fixtures.Pipelines;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 using Xunit.Abstractions;
@@ -19,6 +17,11 @@ namespace Stocks.Pipelines.Tests.Services
 
         public PipelineManagerServiceTests(PipelinesFixture pipelinesFixture, ITestOutputHelper testOutputHelper)
         {
+            if (pipelinesFixture == null)
+            {
+                throw new ArgumentNullException(nameof(pipelinesFixture));
+            }
+
             _pipelineManagerService = pipelinesFixture.PipelineManagerService;
             _pipelineSettings = pipelinesFixture.PipelineSettings;
             _testOutputHelper = testOutputHelper;
@@ -28,7 +31,7 @@ namespace Stocks.Pipelines.Tests.Services
         public async Task RunCustomPipeline()
         {
             var args = new CustomPipelineArgs();
-            await _pipelineManagerService.RunAsync("custom", args);
+            await _pipelineManagerService.RunAsync("custom", args).ConfigureAwait(false);
             Assert.Equal(Messages.CustomMessage, args.ResponseMessage);
             Assert.False(args.Aborted);
             _testOutputHelper.WriteLine(args.ResponseMessage);
@@ -38,7 +41,7 @@ namespace Stocks.Pipelines.Tests.Services
         public async Task RunAbortPipeline()
         {
             var args = new CustomPipelineArgs();
-            await _pipelineManagerService.RunAsync("abort", args);
+            await _pipelineManagerService.RunAsync("abort", args).ConfigureAwait(false);
             Assert.Equal(Messages.AbortMessage, args.ResponseMessage);
             Assert.True(args.Aborted);
             _testOutputHelper.WriteLine(args.ResponseMessage);
@@ -48,7 +51,7 @@ namespace Stocks.Pipelines.Tests.Services
         public async Task RunDIPipeline()
         {
             var args = new CustomPipelineArgs();
-            await _pipelineManagerService.RunAsync("di", args);
+            await _pipelineManagerService.RunAsync("di", args).ConfigureAwait(false);
             Assert.Equal(_pipelineSettings.ConfigFilePath, args.ResponseMessage);
             Assert.False(args.Aborted);
         }
@@ -57,7 +60,7 @@ namespace Stocks.Pipelines.Tests.Services
         public async Task RunAsyncPipeline()
         {
             var args = new CustomPipelineArgs();
-            await _pipelineManagerService.RunAsync("async", args);
+            await _pipelineManagerService.RunAsync("async", args).ConfigureAwait(false);
             Assert.Equal(Messages.AsyncMessage, args.ResponseMessage);
             Assert.False(args.Aborted);
         }
