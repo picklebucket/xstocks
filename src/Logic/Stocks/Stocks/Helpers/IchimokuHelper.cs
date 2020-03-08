@@ -86,6 +86,8 @@ namespace Stocks.Helpers
 
         private static bool CanBeBuySignal(IchimokuItem ichimokuItem, CandleItem candleItem)
         {
+            //TODO: needs to check if Span A is above B like here, but also check if Span B is above Span A, so need an OR
+
             return ichimokuItem.ChikouSpan > ichimokuItem.SenkouSpanA && candleItem.Close > ichimokuItem.SenkouSpanA && ichimokuItem.SenkouSpanA > ichimokuItem.SenkouSpanB;
         }
 
