@@ -1,7 +1,7 @@
-﻿using Stocks.Ameritrade.Helpers;
-using Stocks.Ameritrade.Models;
+﻿using Stocks.Ameritrade.Models;
 using Stocks.Ameritrade.Models.PriceHistory;
 using Stocks.Ameritrade.Services.Interfaces;
+using Stocks.Common.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -63,7 +63,7 @@ namespace Stocks.Ameritrade.Services
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1303:Do not pass literals as localized parameters", Justification = "<Pending>")]
-        public async Task<ApiResponse<PriceHistoryResponse>> GetPriceHistory(string symbol, PriceHistoryRequest priceHistoryRequest)
+        public async Task<ServiceResponse<PriceHistoryResponse>> GetPriceHistory(string symbol, PriceHistoryRequest priceHistoryRequest)
         {
             if(string.IsNullOrEmpty(symbol))
             {
@@ -125,15 +125,15 @@ namespace Stocks.Ameritrade.Services
             if (response.IsSuccessStatusCode)
             {                
                 PriceHistoryResponse priceHistory = JsonSerializer.Deserialize<PriceHistoryResponse>(responseString);
-                return ApiResponseHelper.Success(priceHistory);
+                return ServiceResponse<PriceHistoryResponse>.Success(priceHistory);
             }
             else if(response.StatusCode == HttpStatusCode.BadRequest)
             {
                 string errorMessage = GetErrorMessage(responseString);
-                return ApiResponseHelper.Error<PriceHistoryResponse>(errorMessage);
+                return ServiceResponse<PriceHistoryResponse>.Error(errorMessage);
             }
 
-            return ApiResponseHelper.Error<PriceHistoryResponse>("Unknown error");
+            return ServiceResponse<PriceHistoryResponse>.Error("Unknown error");
         }
 
         private string GetErrorMessage(string json)

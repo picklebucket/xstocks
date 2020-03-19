@@ -2,6 +2,8 @@
 using Stocks.Ameritrade.Models.PriceHistory;
 using Stocks.Ameritrade.Services.Interfaces;
 using Stocks.Ameritrade.Tests.Fixtures;
+using Stocks.Common.Models;
+using Stocks.Common.Tests;
 using System;
 using System.Threading.Tasks;
 using Xunit;
@@ -44,11 +46,11 @@ namespace Stocks.Ameritrade.Tests.Services
                 FrequencyType = FrequencyType.Daily,
                 Period = 12
             };
-            ApiResponse<PriceHistoryResponse> response = await _ameritradeApiService.GetPriceHistory(symbol, priceHistoryRequest).ConfigureAwait(false);
+            ServiceResponse<PriceHistoryResponse> response = await _ameritradeApiService.GetPriceHistory(symbol, priceHistoryRequest).ConfigureAwait(false);
             Assert.False(response.IsSuccess);
             Assert.NotEmpty(response.ErrorMessage);
             Assert.Null(response.Content);
-            _testOutputHelper.WriteLine(response.ToJson());
+            _testOutputHelper.WriteLine(response.ToPrettyJson());
         }
 
         [Fact]
@@ -61,12 +63,12 @@ namespace Stocks.Ameritrade.Tests.Services
                 FrequencyType = FrequencyType.Daily,
                 Period = 1
             };
-            ApiResponse<PriceHistoryResponse> response = await _ameritradeApiService.GetPriceHistory(symbol, priceHistoryRequest).ConfigureAwait(false);
+            ServiceResponse<PriceHistoryResponse> response = await _ameritradeApiService.GetPriceHistory(symbol, priceHistoryRequest).ConfigureAwait(false);
             Assert.True(response.IsSuccess);
             Assert.Null(response.ErrorMessage);
             Assert.NotNull(response.Content);
             Assert.NotNull(response.Content.Candles);
-            _testOutputHelper.WriteLine(response.ToJson());
+            _testOutputHelper.WriteLine(response.ToPrettyJson());
         }
     }
 }

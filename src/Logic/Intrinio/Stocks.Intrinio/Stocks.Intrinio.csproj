@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Intrinio.SDK" Version="5.1.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.8">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Stocks.Intrinio.Tests\UnitTest1.cs" />
+    <Compile Remove="Services\IntrinioApiService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove=".editorconfig" />
+    <None Remove="Stocks.Intrinio.Tests\obj\Stocks.Intrinio.Tests.csproj.nuget.dgspec.json" />
+    <None Remove="Stocks.Intrinio.Tests\obj\Stocks.Intrinio.Tests.csproj.nuget.cache" />
+    <None Remove="Stocks.Intrinio.Tests\obj\Stocks.Intrinio.Tests.csproj.nuget.g.targets" />
+    <None Remove="Stocks.Intrinio.Tests\obj\Stocks.Intrinio.Tests.csproj.nuget.g.props" />
+    <None Remove="Stocks.Intrinio.Tests\obj\project.assets.json" />
+    <None Remove="Stocks.Intrinio.Tests\obj\Debug\netcoreapp3.1\Stocks.Intrinio.Tests.csprojAssemblyReference.cache" />
+    <None Remove="Stocks.Intrinio.Tests\obj\Debug\netcoreapp3.1\Stocks.Intrinio.Tests.assets.cache" />
+  </ItemGroup>
+  <ItemGroup>
+    <AdditionalFiles Include=".editorconfig" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Common\Common\Stocks.Common\Stocks.Common.csproj" />
+  </ItemGroup>
+</Project>
