@@ -11,6 +11,5 @@ namespace Stocks.Services.Interfaces
         IEnumerable<ReportItem> BuildReport(string symbol, List<CandleItem> candleItems);
         byte[] ExportToIndicatorCsv(IEnumerable<ReportItem> reportItems);
         byte[] ExportToTradeCsv(IEnumerable<ReportItem> reportItems);
-        Task<List<CandleItem>> GetCollectedCandlesAsync(string symbol);
     }
 }

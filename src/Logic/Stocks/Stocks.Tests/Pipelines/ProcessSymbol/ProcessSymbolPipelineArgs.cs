@@ -1,5 +1,5 @@
 ﻿using Stocks.Models;
-using Stocks.Models.Api;
+using Stocks.Models.Api.PriceHistory;
 using Stocks.Pipelines;
 using System.Collections.Generic;
 

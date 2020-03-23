@@ -6,6 +6,7 @@ using Stocks.Tests.Mock;
 using System.Threading.Tasks;
 using System.Text;
 using Xunit.Abstractions;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Stocks.Tests.Services
 {
@@ -13,11 +14,13 @@ namespace Stocks.Tests.Services
     public class ReportServiceTests : BaseTests
     {
         private readonly IReportService _reportService;
+        private readonly IPriceHistoryService _priceHistoryService;
         private readonly ITestOutputHelper _testOutputHelper;
 
         public ReportServiceTests(StocksFixture stocksFixture, ITestOutputHelper testOutputHelper) : base(stocksFixture)
         {
-            _reportService = new ReportService(new FilePriceHistoryRepository());
+            _priceHistoryService = new PriceHistoryService(new FilePriceHistoryRepository());
+            _reportService = ServiceProvider.GetService<IReportService>();
             _testOutputHelper = testOutputHelper;
         }
 
@@ -25,7 +28,7 @@ namespace Stocks.Tests.Services
         public async Task BuildReport()
         {
             string symbol = "NFLX";
-            var candles = await _reportService.GetCollectedCandlesAsync(symbol).ConfigureAwait(false);
+            var candles = await _priceHistoryService.GetCollectedCandlesAsync(symbol).ConfigureAwait(false);
             var reportItems = _reportService.BuildReport(symbol, candles);
             Assert.NotNull(reportItems);
             Assert.NotEmpty(reportItems);
@@ -44,7 +47,7 @@ namespace Stocks.Tests.Services
         public async Task ExportToIndicatorCsv()
         {
             string symbol = "NFLX";
-            var candles = await _reportService.GetCollectedCandlesAsync(symbol).ConfigureAwait(false);
+            var candles = await _priceHistoryService.GetCollectedCandlesAsync(symbol).ConfigureAwait(false);
             var reportItems = _reportService.BuildReport(symbol, candles);
             var csvContent = _reportService.ExportToTradeCsv(reportItems);
             string output = Encoding.Default.GetString(csvContent);
@@ -55,7 +58,7 @@ namespace Stocks.Tests.Services
         public async Task ExportToTradeCsv()
         {
             string symbol = "NFLX";
-            var candles = await _reportService.GetCollectedCandlesAsync(symbol).ConfigureAwait(false);
+            var candles = await _priceHistoryService.GetCollectedCandlesAsync(symbol).ConfigureAwait(false);
             var reportItems = _reportService.BuildReport(symbol, candles);
             var csvContent = _reportService.ExportToTradeCsv(reportItems);
             string output = Encoding.Default.GetString(csvContent);

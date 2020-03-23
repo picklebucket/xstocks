@@ -25,5 +25,14 @@ namespace Stocks.Common.Helpers
             }
             return null;
         }
+
+        public static DateTimeOffset? GetDateTimeOffsetFromDateTime(DateTime? date)
+        {
+            if(date.HasValue)
+            {
+                return new DateTimeOffset(date.Value.ToUniversalTime());
+            }
+            return null;
+        }
     }
 }

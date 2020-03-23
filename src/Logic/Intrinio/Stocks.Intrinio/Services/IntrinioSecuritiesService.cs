@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Intrinio.SDK.Model;
 using Stocks.Common.Helpers;
 using Stocks.Common.Models;
-using Stocks.Intrinio.Models;
+using Stocks.Intrinio.Models.Ichimoku;
 using Stocks.Intrinio.Models.PriceHistory;
 using Stocks.Intrinio.Services.Interfaces;
 using Stocks.Intrinio.Wrappers;
@@ -62,7 +62,7 @@ namespace Stocks.Intrinio.Services
             }
         }
 
-        public async Task<ServiceResponse<ApiResponseSecurityIchimokuKinkoHyo>> GetIchimokuAsync(IchimokuRequest ichimokuRequest)
+        public async Task<ServiceResponse<IntrinioIchimokuResponse>> GetIchimokuAsync(IntrinioIchimokuRequest ichimokuRequest)
         {
             if (ichimokuRequest == null)
             {
@@ -71,17 +71,38 @@ namespace Stocks.Intrinio.Services
 
             try
             {
-                ApiResponseSecurityIchimokuKinkoHyo result = await _intrinioSecurityApi
+                ApiResponseSecurityIchimokuKinkoHyo apiResponse = await _intrinioSecurityApi
                     .GetSecurityPriceTechnicalsIchimokuAsync(ichimokuRequest.Identifier, ichimokuRequest.LowPeriod, 
                         ichimokuRequest.MediumPeriod, ichimokuRequest.HighPeriod, ichimokuRequest.StartDate, ichimokuRequest.EndDate, 
                         ichimokuRequest.PageSize, ichimokuRequest.NextPage)
                     .ConfigureAwait(false);
-                return ServiceResponse<ApiResponseSecurityIchimokuKinkoHyo>.Success(result);
+                var result = new IntrinioIchimokuResponse()
+                {
+                    Technicals = apiResponse.Technicals.Select(x => new IchimokuTechnical()
+                    {
+                        ChikouSpan = ToDecimal(x.ChikouSpan),
+                        KijunSen = ToDecimal(x.KijunSen),
+                        SenkouSpanA = ToDecimal(x.SenkouSpanA),
+                        SenkouSpanB = ToDecimal(x.SenkouSpanB),
+                        TenkanSen = ToDecimal(x.TenkanSen),
+                        Date = DateHelper.GetDateTimeOffsetFromDateTime(x.DateTime)
+                    })
+                };
+                return ServiceResponse<IntrinioIchimokuResponse>.Success(result);
             }
             catch (Exception e)
             {
-                return ServiceResponse<ApiResponseSecurityIchimokuKinkoHyo>.Error(e.Message);
+                return ServiceResponse<IntrinioIchimokuResponse>.Error(e.Message);
             }
+        }
+
+        private decimal? ToDecimal(float? number)
+        {
+            if(number.HasValue)
+            {
+                return Convert.ToDecimal(number.Value, CultureInfo.InvariantCulture);
+            }
+            return null;
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using Stocks.Common.Models;
-using Stocks.Models.Api;
+using Stocks.Models.Api.PriceHistory;
 using System.Threading.Tasks;
 
 namespace Stocks.Services.Collecting

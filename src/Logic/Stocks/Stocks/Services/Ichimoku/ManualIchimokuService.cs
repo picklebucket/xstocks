@@ -1,22 +1,59 @@
-﻿using Stocks.Models;
+﻿using Stocks.Common.Helpers;
+using Stocks.Common.Models;
+using Stocks.Extensions;
+using Stocks.Intrinio.Models.PriceHistory;
+using Stocks.Intrinio.Services.Interfaces;
+using Stocks.Models;
+using Stocks.Models.Api.Ichimoku;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Threading.Tasks;
 
-namespace Stocks.Helpers
+namespace Stocks.Services.Ichimoku
 {
     /// <summary>
     /// Builds Ichimoku cloud.
     /// See formulas in doc\ichimoku.xlsx 
     /// </summary>
-    public static class IchimokuHelper
+    public class ManualIchimokuService : IIchimokuService
     {
-        public const int SmallShiftSize = 8;
-        public const int MediumShiftSize = 25;
-        public const int LargeShiftSize = 51; 
+        private readonly IIntrinioSecuritiesService _intrinioSecuritiesService;
 
-        public static List<IchimokuItem> BuildIchimokuCloud(List<CandleItem> candles)
+        public ManualIchimokuService(IIntrinioSecuritiesService intrinioSecuritiesService)
+        {
+            _intrinioSecuritiesService = intrinioSecuritiesService;
+        }
+
+        public async Task<ServiceResponse<IchimokuResponse>> BuildIchimokuCloudAsync(IchimokuRequest request)
+        {
+            if(request == null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+
+            var intrinioPriceHistoryRequest = new IntrinioPriceHistoryRequest(request.Symbol, request.StartDate, 
+                request.EndDate, request.Frequency.ToIntrinioFrequencyType());
+            var response = await _intrinioSecuritiesService.GetStockPricesAsync(intrinioPriceHistoryRequest).ConfigureAwait(false);
+            if(response.IsSuccess)
+            {
+
+                List<CandleItem> candles = response.Content.StockPrices.Select(x => new CandleItem() 
+                {
+                    Open = x.Open,
+                    Close = x.Close,
+                    Date = DateHelper.GetDateTimeOffsetFromUnixTimeMilliseconds(x.DateTimeUnixEpochMilliseconds),
+                    High = x.High,
+                    Low = x.Low,
+                    Volume = x.Volume
+                }).ToList();
+                var ichimokuItems = BuildIchimokuCloud(candles);
+                return ServiceResponse<IchimokuResponse>.Success(new IchimokuResponse(ichimokuItems));
+            }
+            return ServiceResponse<IchimokuResponse>.Error(response.ErrorMessage);
+        }
+
+        private List<IchimokuItem> BuildIchimokuCloud(List<CandleItem> candles)
         {
             if (candles == null)
             {
@@ -29,7 +66,7 @@ namespace Stocks.Helpers
             {
                 var lastCandle = candles.Last();
                 DateTimeOffset dateTime = lastCandle.Date.Value;
-                for (int i = 0; i < MediumShiftSize; i++)
+                for (int i = 0; i < IchimokuConstants.MediumShiftSize; i++)
                 {
                     dateTime = dateTime.AddDays(1);
                     candles.Add(new CandleItem(dateTime));
@@ -51,46 +88,6 @@ namespace Stocks.Helpers
             return cloudItems;
         }
 
-        public static List<SignalType> GetSignals(List<IchimokuItem> ichimokuItems, List<CandleItem> candles)
-        {
-            if (ichimokuItems == null)
-            {
-                throw new ArgumentNullException(nameof(ichimokuItems));
-            }
-
-            if (candles == null)
-            {
-                throw new ArgumentNullException(nameof(candles));
-            }
-
-
-            var signalTypes = new List<SignalType>();
-            for (int i = 0; i < ichimokuItems.Count; i++)
-            {
-                SignalType signalType = SignalType.None;
-                int count = 0;
-                int j = i;
-                while(CanBeBuySignal(ichimokuItems[j], candles[j]))
-                {
-                    count++;
-                    j++;
-                    if(count == 3)
-                    {
-                        signalType = SignalType.BuySignal;
-                    }
-                }
-                signalTypes.Add(signalType);
-            }
-            return signalTypes;
-        }
-
-        private static bool CanBeBuySignal(IchimokuItem ichimokuItem, CandleItem candleItem)
-        {
-            //TODO: needs to check if Span A is above B like here, but also check if Span B is above Span A, so need an OR
-
-            return ichimokuItem.ChikouSpan > ichimokuItem.SenkouSpanA && candleItem.Close > ichimokuItem.SenkouSpanA && ichimokuItem.SenkouSpanA > ichimokuItem.SenkouSpanB;
-        }
-
         /// <summary>
         /// 9 day average
         /// </summary>
@@ -100,10 +97,10 @@ namespace Stocks.Helpers
         private static decimal? GetTenkanSen(int currentCandleIndex, List<CandleItem> candles, int initialCandlesCount)
         {
             decimal? tenkanSen = null;
-            if(currentCandleIndex < initialCandlesCount)
+            if (currentCandleIndex < initialCandlesCount)
             {
-                decimal? highestHigh = GetHighestHighForPeriod(currentCandleIndex, candles, SmallShiftSize);
-                decimal? lowestLow = GetLowestLowForPeriod(currentCandleIndex, candles, SmallShiftSize);
+                decimal? highestHigh = GetHighestHighForPeriod(currentCandleIndex, candles, IchimokuConstants.SmallShiftSize);
+                decimal? lowestLow = GetLowestLowForPeriod(currentCandleIndex, candles, IchimokuConstants.SmallShiftSize);
                 if (highestHigh.HasValue && lowestLow.HasValue)
                 {
                     tenkanSen = (highestHigh.Value + lowestLow.Value) / 2;
@@ -111,6 +108,7 @@ namespace Stocks.Helpers
             }
             return tenkanSen;
         }
+
 
         /// <summary>
         /// 26 day average
@@ -123,8 +121,8 @@ namespace Stocks.Helpers
             decimal? kijunSen = null;
             if (currentCandleIndex < initialCandlesCount)
             {
-                decimal? highestHigh = GetHighestHighForPeriod(currentCandleIndex, candles, MediumShiftSize);
-                decimal? lowestLow = GetLowestLowForPeriod(currentCandleIndex, candles, MediumShiftSize);
+                decimal? highestHigh = GetHighestHighForPeriod(currentCandleIndex, candles, IchimokuConstants.MediumShiftSize);
+                decimal? lowestLow = GetLowestLowForPeriod(currentCandleIndex, candles, IchimokuConstants.MediumShiftSize);
                 if (highestHigh.HasValue && lowestLow.HasValue)
                 {
                     kijunSen = (highestHigh.Value + lowestLow.Value) / 2;
@@ -135,9 +133,9 @@ namespace Stocks.Helpers
 
         private static decimal? GetSenkouSpanA(int currentIndex, List<IchimokuItem> previousItems)
         {
-            if(currentIndex >= 2 * MediumShiftSize)
+            if (currentIndex >= 2 * IchimokuConstants.MediumShiftSize)
             {
-                int startIndex = currentIndex - MediumShiftSize + 1;
+                int startIndex = currentIndex - IchimokuConstants.MediumShiftSize + 1;
                 var ichimokuItem = previousItems[startIndex];
                 decimal? senkouSpanA = (ichimokuItem.TenkanSen + ichimokuItem.KijunSen) / 2;
                 return senkouSpanA;
@@ -147,12 +145,12 @@ namespace Stocks.Helpers
 
         private static decimal? GetSenkouSpanB(int currentCandleIndex, List<CandleItem> candles)
         {
-            if(currentCandleIndex >= LargeShiftSize + MediumShiftSize)
+            if (currentCandleIndex >= IchimokuConstants.LargeShiftSize + IchimokuConstants.MediumShiftSize)
             {
-                int startIndex = currentCandleIndex - MediumShiftSize + 1;
-                decimal? highestHigh = GetHighestHighForPeriod(startIndex, candles, LargeShiftSize);
-                decimal? lowestLow = GetLowestLowForPeriod(startIndex, candles, LargeShiftSize);
-                if(highestHigh.HasValue && lowestLow.HasValue)
+                int startIndex = currentCandleIndex - IchimokuConstants.MediumShiftSize + 1;
+                decimal? highestHigh = GetHighestHighForPeriod(startIndex, candles, IchimokuConstants.LargeShiftSize);
+                decimal? lowestLow = GetLowestLowForPeriod(startIndex, candles, IchimokuConstants.LargeShiftSize);
+                if (highestHigh.HasValue && lowestLow.HasValue)
                 {
                     decimal? senkouSpanB = (highestHigh + lowestLow) / 2;
                     return senkouSpanB;
@@ -169,12 +167,12 @@ namespace Stocks.Helpers
         /// <returns></returns>
         private static decimal? GetChikouSpan(int currentCandleIndex, List<CandleItem> candles)
         {
-            int closePriceIndex = currentCandleIndex + MediumShiftSize;
+            int closePriceIndex = currentCandleIndex + IchimokuConstants.MediumShiftSize;
             decimal? chikouSpan = null;
-            if(candles.Count > closePriceIndex)
+            if (candles.Count > closePriceIndex)
             {
                 var candle = candles[closePriceIndex];
-                if(candle.Close.HasValue)
+                if (candle.Close.HasValue)
                 {
                     chikouSpan = candle.Close;
                 }
@@ -221,5 +219,7 @@ namespace Stocks.Helpers
             }
             return null;
         }
+
+
     }
 }

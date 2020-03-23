@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Xunit.Abstractions;
 using System.Text.Json;
 using Stocks.Tests.Pipelines.ProcessSymbol;
+using Stocks.Models.Api.PriceHistory;
 using Stocks.Models.Api;
 
 namespace Stocks.Tests.Pipelines

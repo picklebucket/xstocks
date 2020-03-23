@@ -1,5 +1,5 @@
 ﻿using Stocks.Common.Tests;
-using Stocks.Intrinio.Models;
+using Stocks.Intrinio.Models.Ichimoku;
 using Stocks.Intrinio.Models.PriceHistory;
 using Stocks.Intrinio.Services;
 using Stocks.Intrinio.Services.Interfaces;
@@ -30,7 +30,7 @@ namespace Stocks.Intrinio.Tests.Services
         [Fact]
         public async Task GetIchimoku()
         {
-            var request = new IchimokuRequest("AAPL", new DateTime(2018, 1, 1), new DateTime(2019, 1, 1));
+            var request = new IntrinioIchimokuRequest("AAPL", new DateTime(2018, 1, 1), new DateTime(2019, 1, 1));
             var response = await _securitiesService.GetIchimokuAsync(request).ConfigureAwait(false);
             Assert.True(response.IsSuccess, response.ErrorMessage);
             Assert.NotEmpty(response.Content.Technicals);

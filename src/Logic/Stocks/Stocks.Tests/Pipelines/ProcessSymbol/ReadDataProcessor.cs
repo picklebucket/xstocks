@@ -9,16 +9,16 @@ namespace Stocks.Tests.Pipelines.ProcessSymbol
 {
     public class ReadDataProcessor : AsyncProcessor<ProcessSymbolPipelineArgs>
     {
-        private readonly IReportService _reportService;
+        private readonly IPriceHistoryService _priceHistoryService;
 
-        public ReadDataProcessor(IReportService reportService)
+        public ReadDataProcessor(IPriceHistoryService priceHistoryService)
         {
-            _reportService = reportService;
+            _priceHistoryService = priceHistoryService;
         }
 
         public override async Task ExecuteAsync(ProcessSymbolPipelineArgs args)
         {
-            args.CandleItems.AddRange(await _reportService.GetCollectedCandlesAsync(args.PriceHistoryRequest.Symbol).ConfigureAwait(false));
+            args.CandleItems.AddRange(await _priceHistoryService.GetCollectedCandlesAsync(args.PriceHistoryRequest.Symbol).ConfigureAwait(false));
         }
     }
 }

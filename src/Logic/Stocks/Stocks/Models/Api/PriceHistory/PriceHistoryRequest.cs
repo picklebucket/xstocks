@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Stocks.Models.Api
+namespace Stocks.Models.Api.PriceHistory
 {
     public class PriceHistoryRequest
     {

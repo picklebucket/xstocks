@@ -1,7 +1,7 @@
 ﻿using Stocks.Common.Models;
 using Stocks.Data.Entities;
 using Stocks.Data.Repositories.Interfaces;
-using Stocks.Models.Api;
+using Stocks.Models.Api.PriceHistory;
 using System;
 using System.Threading.Tasks;
 

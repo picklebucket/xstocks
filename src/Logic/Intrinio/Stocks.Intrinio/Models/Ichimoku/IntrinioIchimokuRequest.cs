@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
 
-namespace Stocks.Intrinio.Models
+namespace Stocks.Intrinio.Models.Ichimoku
 {
-    public class IchimokuRequest
+    public class IntrinioIchimokuRequest
     {
         public string Identifier { get; }  // string | A Security identifier (Ticker, FIGI, ISIN, CUSIP, Intrinio ID)
         public int? LowPeriod { get; }  // int? | The number of observations, per period, to calculate Tenkan Sen (Conversion Line) of Ichimoku Kinko Hyo (optional)  (default to 9)
@@ -16,7 +16,7 @@ namespace Stocks.Intrinio.Models
         public int? PageSize { get; }  // int? | The number of results to return (optional)  (default to 100)
         public string NextPage { get; set; }  // string | Gets the next page of data from a previous API call (optional) 
 
-        private IchimokuRequest()
+        private IntrinioIchimokuRequest()
         {
             LowPeriod = 9;
             MediumPeriod = 26;
@@ -24,12 +24,22 @@ namespace Stocks.Intrinio.Models
             PageSize = Constants.DefaultPageSize;
         }
 
-        public IchimokuRequest(string identifier, DateTime startDate, DateTime endDate, string nextPage = null) : this()
+        public IntrinioIchimokuRequest(string identifier, DateTime? startDate, DateTime? endDate, string nextPage = null) 
+            : this()
         {
             Identifier = identifier;
-            StartDate = startDate.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
-            EndDate = endDate.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+            StartDate = ToDateString(startDate);
+            EndDate = ToDateString(endDate);
             NextPage = nextPage;
+        }
+
+        private string ToDateString(DateTime? value)
+        {
+            if(value.HasValue)
+            {
+                return value.Value.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+            }
+            return null;
         }
     }
 }

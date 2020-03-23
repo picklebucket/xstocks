@@ -12,8 +12,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Stocks.Ameritrade.Services.Interfaces;
 using Moq;
 using Stocks.Common.Models;
-using Stocks.Models.Api;
 using Stocks.Services.Collecting;
+using Stocks.Models.Api.PriceHistory;
+using Stocks.Models.Api;
 
 namespace Stocks.Tests.Services
 {

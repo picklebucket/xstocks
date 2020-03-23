@@ -3,6 +3,7 @@ using Stocks.Data.Entities;
 using Stocks.Data.Repositories.Interfaces;
 using Stocks.Helpers;
 using Stocks.Models;
+using Stocks.Services.Ichimoku;
 using Stocks.Services.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -15,35 +16,37 @@ namespace Stocks.Services
 {
     public class ReportService : IReportService
     {
-        private readonly IPriceHistoryRepository _priceHistoryRepository;
+        private readonly IIchimokuService _ichimokuService;
 
-        public ReportService(IPriceHistoryRepository priceHistoryRepository)
+        public ReportService(IIchimokuService ichimokuService)
         {
-            _priceHistoryRepository = priceHistoryRepository;
+            _ichimokuService = ichimokuService;
         }
 
         public IEnumerable<ReportItem> BuildReport(string symbol, List<CandleItem> candleItems)
         {
             var reportItems = new List<ReportItem>();
+            return null;
+            //TODO::Uncomment this and fix this method to return data 
 
-            var ichimokuItems = IchimokuHelper.BuildIchimokuCloud(candleItems);
-            var signals = IchimokuHelper.GetSignals(ichimokuItems, candleItems);
-            var atrItems = AtrHelper.CalculateATR(candleItems);
-            var indicatorItems = IndicatorHelper.Calculate(atrItems, candleItems);
-            for (int i = 0; i < candleItems.Count; i++)
-            {
-                reportItems.Add(new ReportItem()
-                {
-                    CandleItem = candleItems[i],
-                    IchimokuItem = ichimokuItems[i],
-                    AtrItem = atrItems[i],
-                    IndicatorItem = indicatorItems[i],
-                    Symbol = symbol,
-                    SignalType = signals[i]
-                });
-            }            
+            //var ichimokuItems = _ichimokuService.BuildIchimokuCloud(candleItems);
+            //var signals = SignalHelper.GetSignals(ichimokuItems, candleItems);
+            //var atrItems = AtrHelper.CalculateATR(candleItems);
+            //var indicatorItems = IndicatorHelper.Calculate(atrItems, candleItems);
+            //for (int i = 0; i < candleItems.Count; i++)
+            //{
+            //    reportItems.Add(new ReportItem()
+            //    {
+            //        CandleItem = candleItems[i],
+            //        IchimokuItem = ichimokuItems[i],
+            //        AtrItem = atrItems[i],
+            //        IndicatorItem = indicatorItems[i],
+            //        Symbol = symbol,
+            //        SignalType = signals[i]
+            //    });
+            //}
 
-            return reportItems;
+            //return reportItems;
         }
 
         public byte[] ExportToIndicatorCsv(IEnumerable<ReportItem> reportItems)
@@ -84,27 +87,6 @@ namespace Stocks.Services
             streamWriter.Flush();
             byte[] content = stream.ToArray();
             return content;
-        }
-
-        public async Task<List<CandleItem>> GetCollectedCandlesAsync(string symbol)
-        {
-            PriceHistory priceHistory = await _priceHistoryRepository.GetAsync(symbol).ConfigureAwait(false);
-            var candles = new List<CandleItem>();
-            foreach (var candle in priceHistory.Candles)
-            {
-                candles.Add(new CandleItem()
-                {
-                    Date = DateHelper.GetDateTimeOffsetFromUnixTimeMilliseconds(candle.DateTimeUnixEpochMilliseconds),
-                    Open = candle.Open,
-                    Close = candle.Close,
-                    High = candle.High,
-                    Low = candle.Low,
-                    Volume = candle.Volume
-                });
-            }
-            return candles;
-        }
-
-        
+        }        
     }
 }

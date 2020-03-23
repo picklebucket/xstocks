@@ -6,7 +6,7 @@ namespace Stocks.Models
 {
     public class IchimokuItem
     {
-        public DateTimeOffset Date { get; set; }
+        public DateTimeOffset? Date { get; set; }
         public decimal? TenkanSen { get; set; }
         public decimal? KijunSen { get; set; }
         /// <summary>
@@ -20,7 +20,7 @@ namespace Stocks.Models
         {
         }
 
-        public IchimokuItem(DateTimeOffset date, decimal? tenkanSen, decimal? kijunSen, decimal? chikouSpan, decimal? senkouSpanA, decimal? senkouSpanB)
+        public IchimokuItem(DateTimeOffset? date, decimal? tenkanSen, decimal? kijunSen, decimal? chikouSpan, decimal? senkouSpanA, decimal? senkouSpanB)
         {
             Date = date;
             TenkanSen = tenkanSen;

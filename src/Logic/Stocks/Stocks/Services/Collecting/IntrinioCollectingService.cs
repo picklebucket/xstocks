@@ -1,9 +1,11 @@
 ﻿using Stocks.Common.Models;
 using Stocks.Data.Entities;
 using Stocks.Data.Repositories.Interfaces;
+using Stocks.Extensions;
 using Stocks.Intrinio.Models.PriceHistory;
 using Stocks.Intrinio.Services.Interfaces;
 using Stocks.Models.Api;
+using Stocks.Models.Api.PriceHistory;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,13 +27,8 @@ namespace Stocks.Services.Collecting
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1062:Validate arguments of public methods", Justification = "<Pending>")]
         protected override async Task<ServiceResponse<IntrinioPriceHistoryResponse>> GetPriceHistoryAsync(PriceHistoryRequest priceHistoryRequest)
         {
-            var frequencyType = priceHistoryRequest.FrequencyType switch
-            {
-                FrequencyType.Daily => IntrinioFrequencyType.Daily,
-                _ => IntrinioFrequencyType.Unspecified
-            };
             var request = new IntrinioPriceHistoryRequest(priceHistoryRequest.Symbol, 
-                priceHistoryRequest.StartDate, priceHistoryRequest.EndDate, frequencyType);
+                priceHistoryRequest.StartDate, priceHistoryRequest.EndDate, priceHistoryRequest.FrequencyType.ToIntrinioFrequencyType());
             var response = await _intrinioSecuritiesService.GetStockPricesAsync(request).ConfigureAwait(false);
             return response;
         }
