@@ -18,7 +18,7 @@ namespace Stocks.Tests.Pipelines.ProcessSymbol
 
         public override async Task ExecuteAsync(ProcessSymbolPipelineArgs args)
         {
-            args.CandleItems.AddRange(await _reportService.GetCollectedCandlesAsync(args.Symbol).ConfigureAwait(false));
+            args.CandleItems.AddRange(await _reportService.GetCollectedCandlesAsync(args.PriceHistoryRequest.Symbol).ConfigureAwait(false));
         }
     }
 }

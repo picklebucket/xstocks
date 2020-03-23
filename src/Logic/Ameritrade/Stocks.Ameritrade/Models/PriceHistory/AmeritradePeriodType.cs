@@ -4,12 +4,12 @@ using System.Text;
 
 namespace Stocks.Ameritrade.Models.PriceHistory
 {
-    public enum FrequencyType
+    public enum AmeritradePeriodType
     {
         Unspecified,
-        Minute,
-        Daily,
-        Weekly,
-        Monthly
+        Day,
+        Month,
+        Year,
+        Ytd
     }
 }

@@ -9,14 +9,9 @@ namespace Stocks.Intrinio.Wrappers
 {
     public class IntrinioFundamentalsApi : FundamentalsApi
     {
-        private IntrinioFundamentalsApi(Configuration configuration) : base(configuration)
+        public IntrinioFundamentalsApi(IntrinioApiSettings settings) : base(IntrinioConfiguration.Create(settings))
         {
 
-        }
-
-        public static IntrinioFundamentalsApi Create(IntrinioApiSettings settings)
-        {
-            return new IntrinioFundamentalsApi(IntrinioConfiguration.Create(settings));
         }
     }
 }

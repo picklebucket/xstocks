@@ -14,7 +14,7 @@ namespace Stocks.Ameritrade.Models.PriceHistory
         public string Symbol { get; set; }
 
         [JsonPropertyName("candles")]
-        public IEnumerable<Candle> Candles { get; set; }
+        public IEnumerable<CandleResponse> Candles { get; set; }
     }
 
 }

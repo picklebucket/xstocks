@@ -97,13 +97,13 @@ namespace Stocks.Helpers
         /// <param name="currentCandleIndex"></param>
         /// <param name="candles"></param>
         /// <returns></returns>
-        private static double? GetTenkanSen(int currentCandleIndex, List<CandleItem> candles, int initialCandlesCount)
+        private static decimal? GetTenkanSen(int currentCandleIndex, List<CandleItem> candles, int initialCandlesCount)
         {
-            double? tenkanSen = null;
+            decimal? tenkanSen = null;
             if(currentCandleIndex < initialCandlesCount)
             {
-                double? highestHigh = GetHighestHighForPeriod(currentCandleIndex, candles, SmallShiftSize);
-                double? lowestLow = GetLowestLowForPeriod(currentCandleIndex, candles, SmallShiftSize);
+                decimal? highestHigh = GetHighestHighForPeriod(currentCandleIndex, candles, SmallShiftSize);
+                decimal? lowestLow = GetLowestLowForPeriod(currentCandleIndex, candles, SmallShiftSize);
                 if (highestHigh.HasValue && lowestLow.HasValue)
                 {
                     tenkanSen = (highestHigh.Value + lowestLow.Value) / 2;
@@ -118,13 +118,13 @@ namespace Stocks.Helpers
         /// <param name="currentCandleIndex"></param>
         /// <param name="candles"></param>
         /// <returns></returns>
-        private static double? GetKijunSen(int currentCandleIndex, List<CandleItem> candles, int initialCandlesCount)
+        private static decimal? GetKijunSen(int currentCandleIndex, List<CandleItem> candles, int initialCandlesCount)
         {
-            double? kijunSen = null;
+            decimal? kijunSen = null;
             if (currentCandleIndex < initialCandlesCount)
             {
-                double? highestHigh = GetHighestHighForPeriod(currentCandleIndex, candles, MediumShiftSize);
-                double? lowestLow = GetLowestLowForPeriod(currentCandleIndex, candles, MediumShiftSize);
+                decimal? highestHigh = GetHighestHighForPeriod(currentCandleIndex, candles, MediumShiftSize);
+                decimal? lowestLow = GetLowestLowForPeriod(currentCandleIndex, candles, MediumShiftSize);
                 if (highestHigh.HasValue && lowestLow.HasValue)
                 {
                     kijunSen = (highestHigh.Value + lowestLow.Value) / 2;
@@ -133,28 +133,28 @@ namespace Stocks.Helpers
             return kijunSen;
         }
 
-        private static double? GetSenkouSpanA(int currentIndex, List<IchimokuItem> previousItems)
+        private static decimal? GetSenkouSpanA(int currentIndex, List<IchimokuItem> previousItems)
         {
             if(currentIndex >= 2 * MediumShiftSize)
             {
                 int startIndex = currentIndex - MediumShiftSize + 1;
                 var ichimokuItem = previousItems[startIndex];
-                double? senkouSpanA = (ichimokuItem.TenkanSen + ichimokuItem.KijunSen) / 2;
+                decimal? senkouSpanA = (ichimokuItem.TenkanSen + ichimokuItem.KijunSen) / 2;
                 return senkouSpanA;
             }
             return null;
         }
 
-        private static double? GetSenkouSpanB(int currentCandleIndex, List<CandleItem> candles)
+        private static decimal? GetSenkouSpanB(int currentCandleIndex, List<CandleItem> candles)
         {
             if(currentCandleIndex >= LargeShiftSize + MediumShiftSize)
             {
                 int startIndex = currentCandleIndex - MediumShiftSize + 1;
-                double? highestHigh = GetHighestHighForPeriod(startIndex, candles, LargeShiftSize);
-                double? lowestLow = GetLowestLowForPeriod(startIndex, candles, LargeShiftSize);
+                decimal? highestHigh = GetHighestHighForPeriod(startIndex, candles, LargeShiftSize);
+                decimal? lowestLow = GetLowestLowForPeriod(startIndex, candles, LargeShiftSize);
                 if(highestHigh.HasValue && lowestLow.HasValue)
                 {
-                    double? senkouSpanB = (highestHigh + lowestLow) / 2;
+                    decimal? senkouSpanB = (highestHigh + lowestLow) / 2;
                     return senkouSpanB;
                 }
             }
@@ -167,10 +167,10 @@ namespace Stocks.Helpers
         /// <param name="currentCandleIndex"></param>
         /// <param name="candles"></param>
         /// <returns></returns>
-        private static double? GetChikouSpan(int currentCandleIndex, List<CandleItem> candles)
+        private static decimal? GetChikouSpan(int currentCandleIndex, List<CandleItem> candles)
         {
             int closePriceIndex = currentCandleIndex + MediumShiftSize;
-            double? chikouSpan = null;
+            decimal? chikouSpan = null;
             if(candles.Count > closePriceIndex)
             {
                 var candle = candles[closePriceIndex];
@@ -182,12 +182,12 @@ namespace Stocks.Helpers
             return chikouSpan;
         }
 
-        private static double? GetHighestHighForPeriod(int currentCandleIndex, List<CandleItem> candles, int shiftSize)
+        private static decimal? GetHighestHighForPeriod(int currentCandleIndex, List<CandleItem> candles, int shiftSize)
         {
             int indexDelta = shiftSize;
             if (currentCandleIndex >= indexDelta)
             {
-                double? highestHigh = 0;
+                decimal? highestHigh = 0;
                 int startIndex = currentCandleIndex - indexDelta;
                 int endIndex = currentCandleIndex;
                 for (int i = startIndex; i <= endIndex; i++)
@@ -202,12 +202,12 @@ namespace Stocks.Helpers
             return null;
         }
 
-        private static double? GetLowestLowForPeriod(int currentCandleIndex, List<CandleItem> candles, int shiftSize)
+        private static decimal? GetLowestLowForPeriod(int currentCandleIndex, List<CandleItem> candles, int shiftSize)
         {
             int indexDelta = shiftSize;
             if (currentCandleIndex >= indexDelta)
             {
-                double? lowestLow = double.MaxValue;
+                decimal? lowestLow = decimal.MaxValue;
                 int startIndex = currentCandleIndex - indexDelta;
                 int endIndex = currentCandleIndex;
                 for (int i = startIndex; i <= endIndex; i++)

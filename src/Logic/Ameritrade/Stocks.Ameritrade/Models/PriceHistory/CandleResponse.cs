@@ -5,19 +5,19 @@ using System.Text.Json.Serialization;
 
 namespace Stocks.Ameritrade.Models.PriceHistory
 {
-    public class Candle
+    public class CandleResponse
     {
         [JsonPropertyName("open")]
-        public double Open { get; set; }
+        public decimal Open { get; set; }
 
         [JsonPropertyName("close")]
-        public double Close { get; set; }
+        public decimal Close { get; set; }
 
         [JsonPropertyName("high")]
-        public double High { get; set; }
+        public decimal High { get; set; }
 
         [JsonPropertyName("low")]
-        public double Low { get; set; }
+        public decimal Low { get; set; }
 
         [JsonPropertyName("datetime")]
         public long DateTimeUnixEpochMilliseconds { get; set; }

@@ -40,7 +40,7 @@ namespace Stocks.Intrinio.Tests.Services
         [Fact]
         public async Task GetPriceHistory()
         {
-            var request = new PriceHistoryRequest("AAPL", new DateTime(2018, 1, 1), new DateTime(2019, 1, 1), FrequencyType.Daily);
+            var request = new IntrinioPriceHistoryRequest("AAPL", new DateTime(2018, 1, 1), new DateTime(2019, 1, 1), IntrinioFrequencyType.Daily);
             var response = await _securitiesService.GetStockPricesAsync(request).ConfigureAwait(false);
             Assert.True(response.IsSuccess, response.ErrorMessage);
             Assert.NotEmpty(response.Content.StockPrices);

@@ -63,7 +63,7 @@ namespace Stocks.Ameritrade.Services
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1303:Do not pass literals as localized parameters", Justification = "<Pending>")]
-        public async Task<ServiceResponse<PriceHistoryResponse>> GetPriceHistory(string symbol, PriceHistoryRequest priceHistoryRequest)
+        public async Task<ServiceResponse<PriceHistoryResponse>> GetPriceHistoryAsync(string symbol, AmeritradePriceHistoryRequest priceHistoryRequest)
         {
             if(string.IsNullOrEmpty(symbol))
             {
@@ -75,21 +75,21 @@ namespace Stocks.Ameritrade.Services
             }
 
             var queryParameters = HttpUtility.ParseQueryString(string.Empty);
-            if(priceHistoryRequest.PeriodType != PeriodType.Unspecified)
+            if(priceHistoryRequest.PeriodType != AmeritradePeriodType.Unspecified)
             {
                 string periodType = string.Empty;
                 switch (priceHistoryRequest.PeriodType)
                 {
-                    case PeriodType.Day:
+                    case AmeritradePeriodType.Day:
                         periodType = "day";
                         break;
-                    case PeriodType.Month:
+                    case AmeritradePeriodType.Month:
                         periodType = "month";
                         break;
-                    case PeriodType.Year:
+                    case AmeritradePeriodType.Year:
                         periodType = "year";
                         break;
-                    case PeriodType.Ytd:
+                    case AmeritradePeriodType.Ytd:
                         periodType = "ytd";
                         break;
                 }
@@ -99,21 +99,21 @@ namespace Stocks.Ameritrade.Services
             {
                 queryParameters.Add("period", priceHistoryRequest.Period.Value.ToString(CultureInfo.InvariantCulture));
             }
-            if(priceHistoryRequest.FrequencyType != FrequencyType.Unspecified)
+            if(priceHistoryRequest.FrequencyType != AmeritradeFrequencyType.Unspecified)
             {
                 string frequencyType = string.Empty;
                 switch (priceHistoryRequest.FrequencyType)
                 {
-                    case FrequencyType.Minute:
+                    case AmeritradeFrequencyType.Minute:
                         frequencyType = "minute";
                         break;
-                    case FrequencyType.Daily:
+                    case AmeritradeFrequencyType.Daily:
                         frequencyType = "daily";
                         break;
-                    case FrequencyType.Weekly:
+                    case AmeritradeFrequencyType.Weekly:
                         frequencyType = "weekly";
                         break;
-                    case FrequencyType.Monthly:
+                    case AmeritradeFrequencyType.Monthly:
                         frequencyType = "monthly";
                         break;
                 }

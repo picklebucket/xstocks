@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Globalization;
+using System.Linq;
 using System.Threading.Tasks;
 using Intrinio.SDK.Model;
+using Stocks.Common.Helpers;
 using Stocks.Common.Models;
 using Stocks.Intrinio.Models;
 using Stocks.Intrinio.Models.PriceHistory;
@@ -18,7 +20,7 @@ namespace Stocks.Intrinio.Services
         {
             _intrinioSecurityApi = intrinioSecurityApi;
         }
-        public async Task<ServiceResponse<ApiResponseSecurityStockPrices>> GetStockPricesAsync(PriceHistoryRequest priceHistoryRequest)
+        public async Task<ServiceResponse<IntrinioPriceHistoryResponse>> GetStockPricesAsync(IntrinioPriceHistoryRequest priceHistoryRequest)
         {
             if(priceHistoryRequest == null)
             {
@@ -29,19 +31,34 @@ namespace Stocks.Intrinio.Services
             {
                 var frequency = priceHistoryRequest.Frequency switch
                 {
-                    FrequencyType.Daily => "daily",
+                    IntrinioFrequencyType.Daily => "daily",
                     _ => null,
                 };
-                ApiResponseSecurityStockPrices result = await _intrinioSecurityApi
+                ApiResponseSecurityStockPrices apiResponse = await _intrinioSecurityApi
                     .GetSecurityStockPricesAsync(priceHistoryRequest.Identifier, priceHistoryRequest.StartDate,
                         priceHistoryRequest.EndDate, frequency, priceHistoryRequest.PageSize, priceHistoryRequest.NextPage)
                     .ConfigureAwait(false);
+                
+                var result = new IntrinioPriceHistoryResponse()
+                {
+                    Ticker = apiResponse.Security.Ticker,
+                    StockPrices = apiResponse.StockPrices.Select(x => 
+                        new PriceSummary() 
+                        {
+                            Open = x.Open,
+                            Close = x.Close,
+                            High = x.High,
+                            Low = x.Low,
+                            Volume = x.Volume,
+                            DateTimeUnixEpochMilliseconds = DateHelper.GetDateTimeUnixEpochMilliseconds(x.Date)
+                        })
+                };
 
-                return ServiceResponse<ApiResponseSecurityStockPrices>.Success(result);
+                return ServiceResponse<IntrinioPriceHistoryResponse>.Success(result);
             }
             catch (Exception e)
             {
-                return ServiceResponse<ApiResponseSecurityStockPrices>.Error(e.Message);
+                return ServiceResponse<IntrinioPriceHistoryResponse>.Error(e.Message);
             }
         }
 

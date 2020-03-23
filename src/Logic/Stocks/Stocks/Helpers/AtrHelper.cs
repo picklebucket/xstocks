@@ -40,15 +40,15 @@ namespace Stocks.Helpers
             return atrItems;
         }
 
-        private static double? CalculateTR(int currentCandleIndex, List<CandleItem> candles)
+        private static decimal? CalculateTR(int currentCandleIndex, List<CandleItem> candles)
         {
-            var trInputData = new List<double?>();
+            var trInputData = new List<decimal?>();
 
-            double? currentHighCurrentLow = candles[currentCandleIndex].High - candles[currentCandleIndex].Low;
+            decimal? currentHighCurrentLow = candles[currentCandleIndex].High - candles[currentCandleIndex].Low;
             trInputData.Add(currentHighCurrentLow);
             
-            double? currentHighPreviousClose = null;
-            double? currentLowPreviousClose = null;
+            decimal? currentHighPreviousClose = null;
+            decimal? currentLowPreviousClose = null;
             if(currentCandleIndex > 0)
             {
                 var currentCandle = candles[currentCandleIndex];

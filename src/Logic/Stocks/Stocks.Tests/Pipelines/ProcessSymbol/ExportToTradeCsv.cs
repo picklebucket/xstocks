@@ -19,7 +19,7 @@ namespace Stocks.Tests.Pipelines.ProcessSymbol
         public override void Execute(ProcessSymbolPipelineArgs args)
         {
             var csvContent = _reportService.ExportToTradeCsv(args.ReportItems);
-            string fileName = $"{args.Symbol}.trades.csv";
+            string fileName = $"{args.PriceHistoryRequest.Symbol}.trades.csv";
             string filePath = Path.GetFullPath(fileName);
             File.WriteAllText(filePath, Encoding.Default.GetString(csvContent));
             args.Messages.Add($"Trades were saved to: {filePath}");

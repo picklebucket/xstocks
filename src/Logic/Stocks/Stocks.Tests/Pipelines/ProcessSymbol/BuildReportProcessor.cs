@@ -18,7 +18,7 @@ namespace Stocks.Tests.Pipelines.ProcessSymbol
 
         public override void Execute(ProcessSymbolPipelineArgs args)
         {
-            args.ReportItems = _reportService.BuildReport(args.Symbol, args.CandleItems);
+            args.ReportItems = _reportService.BuildReport(args.PriceHistoryRequest.Symbol, args.CandleItems);
         }
     }
 }

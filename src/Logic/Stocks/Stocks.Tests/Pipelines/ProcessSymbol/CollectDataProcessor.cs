@@ -1,5 +1,5 @@
 ﻿using Stocks.Pipelines;
-using Stocks.Services.Interfaces;
+using Stocks.Services.Collecting;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -18,7 +18,7 @@ namespace Stocks.Tests.Pipelines.ProcessSymbol
 
         public override async Task ExecuteAsync(ProcessSymbolPipelineArgs args)
         {
-            await _collectingService.CollectDataAsync(args.Symbol, args.PriceHistoryRequest).ConfigureAwait(false);
+            await _collectingService.CollectDataAsync(args.PriceHistoryRequest).ConfigureAwait(false);
         }
     }
 }

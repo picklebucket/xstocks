@@ -4,10 +4,10 @@ using System.Text;
 
 namespace Stocks.Ameritrade.Models.PriceHistory
 {
-    public class PriceHistoryRequest
+    public class AmeritradePriceHistoryRequest
     {
-        public PeriodType PeriodType { get; set; }
+        public AmeritradePeriodType PeriodType { get; set; }
         public short? Period { get; set; }
-        public FrequencyType FrequencyType { get; set; }
+        public AmeritradeFrequencyType FrequencyType { get; set; }
     }
 }

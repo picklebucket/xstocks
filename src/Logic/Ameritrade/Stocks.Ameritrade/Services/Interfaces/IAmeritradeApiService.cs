@@ -10,6 +10,6 @@ namespace Stocks.Ameritrade.Services.Interfaces
 {
     public interface IAmeritradeApiService
     {
-        Task<ServiceResponse<PriceHistoryResponse>> GetPriceHistory(string symbol, PriceHistoryRequest priceHistoryRequest);
+        Task<ServiceResponse<PriceHistoryResponse>> GetPriceHistoryAsync(string symbol, AmeritradePriceHistoryRequest priceHistoryRequest);
     }
 }

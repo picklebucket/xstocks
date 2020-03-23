@@ -26,7 +26,7 @@ namespace Stocks.Helpers
             };
             for (int i = 1; i < atrItems.Count; i++)
             {
-                double? atr = atrItems[i].ATR;
+                decimal? atr = atrItems[i].ATR;
                 var indicatorItem = new IndicatorItem
                 {
                     EntryPrice = candles[i - 1].Close
@@ -34,7 +34,7 @@ namespace Stocks.Helpers
                 indicatorItem.StopLoss = indicatorItem.EntryPrice - atr;
                 indicatorItem.TakeProfit = indicatorItem.EntryPrice + atr * atr;
 
-                double? price = candles[i].Close;
+                decimal? price = candles[i].Close;
                 if(price <= indicatorItem.StopLoss)
                 {
                     indicatorItem.PriceResult = PriceResult.StopLossReached;

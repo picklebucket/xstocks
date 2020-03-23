@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Xunit.Abstractions;
 using System.Text.Json;
 using Stocks.Tests.Pipelines.ProcessSymbol;
+using Stocks.Models.Api;
 
 namespace Stocks.Tests.Pipelines
 {
@@ -31,17 +32,11 @@ namespace Stocks.Tests.Pipelines
         {
             var args = new ProcessSymbolPipelineArgs()
             {
-                Symbol = "NFLX",
-                PriceHistoryRequest = new PriceHistoryRequest()
-                {
-                    PeriodType = PeriodType.Year,
-                    FrequencyType = FrequencyType.Daily,
-                    Period = 1
-                }
+                PriceHistoryRequest = new PriceHistoryRequest("NFLX", PeriodType.Year, 1, FrequencyType.Daily)                
             };
             await _pipelineManagerService.RunAsync("processSymbol", args).ConfigureAwait(false);
 
-            PriceHistory priceHistory = await _priceHistoryRepository.GetAsync(args.Symbol).ConfigureAwait(false);
+            PriceHistory priceHistory = await _priceHistoryRepository.GetAsync(args.PriceHistoryRequest.Symbol).ConfigureAwait(false);
             Assert.NotNull(priceHistory);
             Assert.NotEmpty(priceHistory.Candles);
 

@@ -1,15 +1,22 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Stocks.Ameritrade.Models;
 using Stocks.Ameritrade.Services;
 using Stocks.Ameritrade.Services.Interfaces;
 using Stocks.Data;
+using Stocks.Data.Models;
 using Stocks.Data.Repositories;
 using Stocks.Data.Repositories.Interfaces;
+using Stocks.Intrinio.Models;
+using Stocks.Intrinio.Services;
+using Stocks.Intrinio.Services.Interfaces;
+using Stocks.Intrinio.Wrappers;
 using Stocks.Pipelines.DI;
 using Stocks.Pipelines.Models;
 using Stocks.Pipelines.Services;
 using Stocks.Pipelines.Services.Interfaces;
 using Stocks.Services;
+using Stocks.Services.Collecting;
 using Stocks.Services.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -19,23 +26,48 @@ namespace Stocks.Tests.DI
 {
     static class DIConfiguration
     {
-        public static ServiceProvider GetServiceProvider(AmeritradeApiSettings ameritradeApiSettings, StocksContext stocksContext, PipelineSettings pipelineSettings)
+        public static ServiceProvider GetServiceProvider()
         {
             IServiceCollection serviceCollection = new ServiceCollection();
-            ConfigureServices(serviceCollection, ameritradeApiSettings, stocksContext, pipelineSettings);
+            ConfigureServices(serviceCollection);
             ServiceProvider serviceProvider = serviceCollection.BuildServiceProvider();
             return serviceProvider;
         }
 
-        private static void ConfigureServices(IServiceCollection serviceCollection, AmeritradeApiSettings ameritradeApiSettings, StocksContext stocksContext, PipelineSettings pipelineSettings)
+        private static void ConfigureServices(IServiceCollection serviceCollection)
         {
+            var configuration = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json")
+                .AddJsonFile("appsettings.json.user", true)
+                .Build();
+
+            var ameritradeSection = configuration.GetSection("Ameritrade");
+            var ameritradeApiSettings = new AmeritradeApiSettings();
+            ameritradeSection.Bind(ameritradeApiSettings);
             serviceCollection.AddSingleton(ameritradeApiSettings);
+
+            var intrinioSection = configuration.GetSection("Intrinio");
+            var intrinioApiSettings = new IntrinioApiSettings();
+            intrinioSection.Bind(intrinioApiSettings);
+            serviceCollection.AddSingleton(intrinioApiSettings);
+            serviceCollection.AddSingleton<IntrinioSecurityApi>();
+
+            var connectionStringsSection = configuration.GetSection("ConnectionStrings");
+            var connectionStrings = new ConnectionStrings();
+            connectionStringsSection.Bind(connectionStrings);
+            var stocksContext = new StocksContext(connectionStrings.Stocks);
             serviceCollection.AddSingleton(stocksContext);
+
+            var pipelinesSection = configuration.GetSection("Pipelines");
+            var pipelineSettings = new PipelineSettings();
+            pipelinesSection.Bind(pipelineSettings);
             serviceCollection.AddSingleton(pipelineSettings);
 
+
             serviceCollection.AddTransient<IAmeritradeApiService, AmeritradeApiService>();
+            serviceCollection.AddTransient<IIntrinioSecuritiesService, IntrinioSecuritiesService>();
             serviceCollection.AddTransient<IPriceHistoryRepository, PriceHistoryRepository>();
-            serviceCollection.AddTransient<ICollectingService, CollectingService>();
+            serviceCollection.AddTransient<ICollectingService, IntrinioCollectingService>();
             serviceCollection.AddTransient<IReportService, ReportService>();
 
             serviceCollection.AddTransient<IPipelineManagerService, PipelineManagerService>();

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Stocks.Intrinio.Models.PriceHistory
 {
-    public enum FrequencyType
+    public enum IntrinioFrequencyType
     {
         Unspecified,
         Daily

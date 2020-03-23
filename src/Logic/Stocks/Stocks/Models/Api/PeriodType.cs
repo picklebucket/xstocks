@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Stocks.Ameritrade.Models.PriceHistory
+namespace Stocks.Models.Api
 {
     public enum PeriodType
     {

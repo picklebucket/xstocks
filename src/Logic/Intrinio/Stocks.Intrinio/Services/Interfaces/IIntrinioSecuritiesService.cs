@@ -9,7 +9,7 @@ namespace Stocks.Intrinio.Services.Interfaces
 {
     public interface IIntrinioSecuritiesService
     {
-        Task<ServiceResponse<ApiResponseSecurityStockPrices>> GetStockPricesAsync(PriceHistoryRequest priceHistoryRequest);
+        Task<ServiceResponse<IntrinioPriceHistoryResponse>> GetStockPricesAsync(IntrinioPriceHistoryRequest priceHistoryRequest);
         Task<ServiceResponse<ApiResponseSecurityIchimokuKinkoHyo>> GetIchimokuAsync(IchimokuRequest ichimokuRequest);
     }
 }

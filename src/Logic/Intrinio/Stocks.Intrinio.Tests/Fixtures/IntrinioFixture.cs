@@ -22,8 +22,8 @@ namespace Stocks.Intrinio.Tests.Fixtures
             var apiSettings = new IntrinioApiSettings();
             intrinioSection.Bind(apiSettings);
 
-            IntrinioSecurityApi = IntrinioSecurityApi.Create(apiSettings);
-            IntrinioFundamentalsApi = IntrinioFundamentalsApi.Create(apiSettings);
+            IntrinioSecurityApi = new IntrinioSecurityApi(apiSettings);
+            IntrinioFundamentalsApi = new IntrinioFundamentalsApi(apiSettings);
         }
     }
 }

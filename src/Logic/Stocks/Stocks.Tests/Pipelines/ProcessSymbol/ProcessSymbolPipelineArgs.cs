@@ -1,15 +1,12 @@
-﻿using Stocks.Ameritrade.Models.PriceHistory;
-using Stocks.Models;
+﻿using Stocks.Models;
+using Stocks.Models.Api;
 using Stocks.Pipelines;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Stocks.Tests.Pipelines.ProcessSymbol
 {
     public class ProcessSymbolPipelineArgs : PipelineArgs
     {
-        public string Symbol { get; set; }
         public PriceHistoryRequest PriceHistoryRequest { get; set; }
         public List<CandleItem> CandleItems { get; }
         public IEnumerable<ReportItem> ReportItems { get; set; }

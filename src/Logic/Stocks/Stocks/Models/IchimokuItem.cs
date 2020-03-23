@@ -7,20 +7,20 @@ namespace Stocks.Models
     public class IchimokuItem
     {
         public DateTimeOffset Date { get; set; }
-        public double? TenkanSen { get; set; }
-        public double? KijunSen { get; set; }
+        public decimal? TenkanSen { get; set; }
+        public decimal? KijunSen { get; set; }
         /// <summary>
         /// Lagging line
         /// </summary>
-        public double? ChikouSpan { get; set; }
-        public double? SenkouSpanA { get; set; }
-        public double? SenkouSpanB { get; set; }
+        public decimal? ChikouSpan { get; set; }
+        public decimal? SenkouSpanA { get; set; }
+        public decimal? SenkouSpanB { get; set; }
 
         public IchimokuItem()
         {
         }
 
-        public IchimokuItem(DateTimeOffset date, double? tenkanSen, double? kijunSen, double? chikouSpan, double? senkouSpanA, double? senkouSpanB)
+        public IchimokuItem(DateTimeOffset date, decimal? tenkanSen, decimal? kijunSen, decimal? chikouSpan, decimal? senkouSpanA, decimal? senkouSpanB)
         {
             Date = date;
             TenkanSen = tenkanSen;

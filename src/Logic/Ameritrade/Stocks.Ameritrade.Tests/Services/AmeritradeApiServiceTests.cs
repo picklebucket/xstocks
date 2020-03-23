@@ -30,23 +30,23 @@ namespace Stocks.Ameritrade.Tests.Services
         [Fact]
         public async Task GetPriceHistory_InvalidParameters_Error()
         {
-            await Assert.ThrowsAsync<ArgumentException>(() => _ameritradeApiService.GetPriceHistory(null, null)).ConfigureAwait(false);
-            await Assert.ThrowsAsync<ArgumentException>(() => _ameritradeApiService.GetPriceHistory(string.Empty, null)).ConfigureAwait(false);
-            await Assert.ThrowsAsync<ArgumentNullException>(() => _ameritradeApiService.GetPriceHistory("symbol", null)).ConfigureAwait(false);
-            await _ameritradeApiService.GetPriceHistory("symbol", new PriceHistoryRequest()).ConfigureAwait(false);
+            await Assert.ThrowsAsync<ArgumentException>(() => _ameritradeApiService.GetPriceHistoryAsync(null, null)).ConfigureAwait(false);
+            await Assert.ThrowsAsync<ArgumentException>(() => _ameritradeApiService.GetPriceHistoryAsync(string.Empty, null)).ConfigureAwait(false);
+            await Assert.ThrowsAsync<ArgumentNullException>(() => _ameritradeApiService.GetPriceHistoryAsync("symbol", null)).ConfigureAwait(false);
+            await _ameritradeApiService.GetPriceHistoryAsync("symbol", new AmeritradePriceHistoryRequest()).ConfigureAwait(false);
         }
 
         [Fact]
         public async Task GetPriceHistory_BadRequest()
         {
             string symbol = "NFLX";
-            var priceHistoryRequest = new PriceHistoryRequest()
+            var priceHistoryRequest = new AmeritradePriceHistoryRequest()
             {
-                PeriodType = PeriodType.Year,
-                FrequencyType = FrequencyType.Daily,
+                PeriodType = AmeritradePeriodType.Year,
+                FrequencyType = AmeritradeFrequencyType.Daily,
                 Period = 12
             };
-            ServiceResponse<PriceHistoryResponse> response = await _ameritradeApiService.GetPriceHistory(symbol, priceHistoryRequest).ConfigureAwait(false);
+            ServiceResponse<PriceHistoryResponse> response = await _ameritradeApiService.GetPriceHistoryAsync(symbol, priceHistoryRequest).ConfigureAwait(false);
             Assert.False(response.IsSuccess);
             Assert.NotEmpty(response.ErrorMessage);
             Assert.Null(response.Content);
@@ -57,13 +57,13 @@ namespace Stocks.Ameritrade.Tests.Services
         public async Task GetPriceHistory_Ok()
         {
             string symbol = "NFLX";
-            var priceHistoryRequest = new PriceHistoryRequest() 
+            var priceHistoryRequest = new AmeritradePriceHistoryRequest() 
             {
-                PeriodType = PeriodType.Year,
-                FrequencyType = FrequencyType.Daily,
+                PeriodType = AmeritradePeriodType.Year,
+                FrequencyType = AmeritradeFrequencyType.Daily,
                 Period = 1
             };
-            ServiceResponse<PriceHistoryResponse> response = await _ameritradeApiService.GetPriceHistory(symbol, priceHistoryRequest).ConfigureAwait(false);
+            ServiceResponse<PriceHistoryResponse> response = await _ameritradeApiService.GetPriceHistoryAsync(symbol, priceHistoryRequest).ConfigureAwait(false);
             Assert.True(response.IsSuccess);
             Assert.Null(response.ErrorMessage);
             Assert.NotNull(response.Content);

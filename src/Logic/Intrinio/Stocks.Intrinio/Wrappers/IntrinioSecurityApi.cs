@@ -9,14 +9,9 @@ namespace Stocks.Intrinio.Wrappers
 {
     public class IntrinioSecurityApi : SecurityApi
     {
-        private IntrinioSecurityApi(Configuration configuration) : base(configuration)
+        public IntrinioSecurityApi(IntrinioApiSettings settings) : base(IntrinioConfiguration.Create(settings))
         {
 
-        }
-
-        public static IntrinioSecurityApi Create(IntrinioApiSettings settings)
-        {
-            return new IntrinioSecurityApi(IntrinioConfiguration.Create(settings));
         }
     }
 }

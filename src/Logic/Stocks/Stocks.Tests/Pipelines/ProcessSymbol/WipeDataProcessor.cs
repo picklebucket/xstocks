@@ -18,7 +18,7 @@ namespace Stocks.Tests.Pipelines.ProcessSymbol
 
         public override async Task ExecuteAsync(ProcessSymbolPipelineArgs args)
         {
-            await _priceHistoryRepository.DeleteAsync(args.Symbol).ConfigureAwait(false);
+            await _priceHistoryRepository.DeleteAsync(args.PriceHistoryRequest.Symbol).ConfigureAwait(false);
         }
     }
 }

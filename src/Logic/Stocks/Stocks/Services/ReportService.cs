@@ -1,4 +1,5 @@
-﻿using Stocks.Data.Entities;
+﻿using Stocks.Common.Helpers;
+using Stocks.Data.Entities;
 using Stocks.Data.Repositories.Interfaces;
 using Stocks.Helpers;
 using Stocks.Models;
@@ -93,7 +94,7 @@ namespace Stocks.Services
             {
                 candles.Add(new CandleItem()
                 {
-                    Date = DateTimeOffset.FromUnixTimeMilliseconds(candle.DateTimeUnixEpochMilliseconds),
+                    Date = DateHelper.GetDateTimeOffsetFromUnixTimeMilliseconds(candle.DateTimeUnixEpochMilliseconds),
                     Open = candle.Open,
                     Close = candle.Close,
                     High = candle.High,

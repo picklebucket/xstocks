@@ -7,7 +7,7 @@ namespace Stocks.Models
     public class AtrItem
     {
         public DateTimeOffset? Date { get; set; }
-        public double? TR { get; set; }
-        public double? ATR { get; set; }
+        public decimal? TR { get; set; }
+        public decimal? ATR { get; set; }
     }
 }

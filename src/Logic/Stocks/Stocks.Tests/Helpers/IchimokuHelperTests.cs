@@ -109,7 +109,8 @@ namespace Stocks.Tests.Helpers
     {
         public int Number { get; set; }
 
-        public IchimokuItemWrapper(int number, DateTimeOffset date, double? tenkanSen, double? kijunSen, double? chikouSpan, double? senkouSpanA, double? senkouSpanB) :
+        public IchimokuItemWrapper(int number, DateTimeOffset date, decimal? tenkanSen, decimal? kijunSen, decimal? chikouSpan,
+            decimal? senkouSpanA, decimal? senkouSpanB) :
             base(date, tenkanSen, kijunSen, chikouSpan, senkouSpanA, senkouSpanB)
         {
             Number = number;
