@@ -9,11 +9,11 @@ using Stocks.Intrinio.Wrappers;
 
 namespace Stocks.Intrinio.Services
 {
-    public class FundementalsService : IFundementalsService
+    public class IntrinioFundementalsService : IIntrinioFundementalsService
     {
         private readonly IntrinioFundamentalsApi _intrinioFundamentalsApi;
 
-        public FundementalsService(IntrinioFundamentalsApi intrinioFundamentalsApi)
+        public IntrinioFundementalsService(IntrinioFundamentalsApi intrinioFundamentalsApi)
         {
             _intrinioFundamentalsApi = intrinioFundamentalsApi;
         }

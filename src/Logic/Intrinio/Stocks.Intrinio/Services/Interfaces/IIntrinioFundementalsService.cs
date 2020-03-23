@@ -1,7 +1,7 @@
 ﻿using System;
 namespace Stocks.Intrinio.Services.Interfaces
 {
-    public interface IFundementalsService
+    public interface IIntrinioFundementalsService
     {
         string GetTestSignal(string ticker);
         string GetFundementalByTicker(string ticker);
