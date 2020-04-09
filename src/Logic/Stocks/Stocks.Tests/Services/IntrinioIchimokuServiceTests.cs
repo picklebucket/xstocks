@@ -10,6 +10,7 @@ using Stocks.Intrinio.Services.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using Stocks.Models.Api.Ichimoku;
 using Stocks.Models.Api;
+using System.Linq;
 
 namespace Stocks.Tests.Helpers
 {
@@ -29,9 +30,14 @@ namespace Stocks.Tests.Helpers
         [Fact]
         public async Task BuildIchimokuCloud()
         {
-            var request = new IchimokuRequest("AAPL", new DateTime(2018, 1, 1), new DateTime(2019, 1, 1), FrequencyType.Daily);
+            var startDate = new DateTime(2018, 1, 1);
+            var endDate = new DateTime(2019, 1, 1);
+            var request = new IchimokuRequest("AAPL", startDate, endDate, FrequencyType.Daily);
             var serviceResponse = await _ichimokuService.BuildIchimokuCloudAsync(request).ConfigureAwait(false);
             Assert.True(serviceResponse.IsSuccess, serviceResponse.ErrorMessage);
+            var ordered = serviceResponse.Content.Items.OrderBy(x => x.Date).ToList();
+            var lastDate = endDate.AddDays(-1);
+            Assert.Equal(lastDate, ordered.Last().Date.Value.DateTime);
             var cloudItems = IchimokuItemWrapper.Create(serviceResponse.Content.Items);
             _testOutputHelper.WriteLine(JsonSerializer.Serialize(cloudItems, new JsonSerializerOptions() { WriteIndented = true}));            
         }

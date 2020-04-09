@@ -28,21 +28,36 @@ namespace Stocks.Services.Ichimoku
             }
 
             var intrinioIchimokuRequest = new IntrinioIchimokuRequest(request.Symbol, request.StartDate, request.EndDate);
-            var response = await _intrinioSecuritiesService.GetIchimokuAsync(intrinioIchimokuRequest).ConfigureAwait(false);
-            if(response.IsSuccess)
+            List<IchimokuItem> items = new List<IchimokuItem>();
+            do
             {
-                List<IchimokuItem> items = response.Content.Technicals.Select(x => new IchimokuItem()
+                var response = await _intrinioSecuritiesService.GetIchimokuAsync(intrinioIchimokuRequest).ConfigureAwait(false);
+                if (response.IsSuccess)
                 {
-                    Date = x.Date,
-                    ChikouSpan = x.ChikouSpan,
-                    KijunSen = x.KijunSen,
-                    SenkouSpanA = x.SenkouSpanA,
-                    SenkouSpanB = x.SenkouSpanB,
-                    TenkanSen = x.TenkanSen
-                }).ToList();
-                return ServiceResponse<IchimokuResponse>.Success(new IchimokuResponse(items));
-            }
-            return ServiceResponse<IchimokuResponse>.Error(response.ErrorMessage);
+                    items.AddRange(response.Content.Technicals.Select(x => new IchimokuItem()
+                    {
+                        Date = x.Date,
+                        ChikouSpan = x.ChikouSpan,
+                        KijunSen = x.KijunSen,
+                        SenkouSpanA = x.SenkouSpanA,
+                        SenkouSpanB = x.SenkouSpanB,
+                        TenkanSen = x.TenkanSen
+                    })); 
+                    if(response.Content.NextPage != null)
+                    {
+                        intrinioIchimokuRequest.NextPage = response.Content.NextPage;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+                else
+                {
+                    return ServiceResponse<IchimokuResponse>.Error(response.ErrorMessage);
+                }
+            } while (true);
+            return ServiceResponse<IchimokuResponse>.Success(new IchimokuResponse(items));            
         }
     }
 }

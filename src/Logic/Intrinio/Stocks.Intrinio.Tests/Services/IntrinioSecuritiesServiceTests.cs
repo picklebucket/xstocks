@@ -7,6 +7,7 @@ using Stocks.Intrinio.Tests.Fixtures;
 using Stocks.Intrinio.Wrappers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -31,10 +32,19 @@ namespace Stocks.Intrinio.Tests.Services
         public async Task GetIchimoku()
         {
             var request = new IntrinioIchimokuRequest("AAPL", new DateTime(2018, 1, 1), new DateTime(2019, 1, 1));
-            var response = await _securitiesService.GetIchimokuAsync(request).ConfigureAwait(false);
-            Assert.True(response.IsSuccess, response.ErrorMessage);
-            Assert.NotEmpty(response.Content.Technicals);
-            _testOutputHelper.WriteLine(response.Content.ToPrettyJson());
+            var firstPageResponse = await _securitiesService.GetIchimokuAsync(request).ConfigureAwait(false);
+            Assert.True(firstPageResponse.IsSuccess, firstPageResponse.ErrorMessage);
+            Assert.NotEmpty(firstPageResponse.Content.Technicals);
+            Assert.NotNull(firstPageResponse.Content.NextPage);
+            _testOutputHelper.WriteLine(firstPageResponse.Content.ToPrettyJson());
+
+            request.NextPage = firstPageResponse.Content.NextPage;
+            var secondPageResponse = await _securitiesService.GetIchimokuAsync(request).ConfigureAwait(false);
+            Assert.True(secondPageResponse.IsSuccess, secondPageResponse.ErrorMessage);
+            Assert.NotEmpty(secondPageResponse.Content.Technicals);
+            Assert.NotNull(secondPageResponse.Content.NextPage);
+            Assert.NotEqual(firstPageResponse.Content.Technicals.First().Date, secondPageResponse.Content.Technicals.First().Date);
+
         }
 
         [Fact]

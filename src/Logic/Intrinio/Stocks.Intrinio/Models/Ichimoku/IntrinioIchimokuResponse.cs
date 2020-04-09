@@ -20,5 +20,6 @@ namespace Stocks.Intrinio.Models.Ichimoku
     public class IntrinioIchimokuResponse
     {
         public IEnumerable<IchimokuTechnical> Technicals { get; set; }
+        public string NextPage { get; set; }
     }
 }

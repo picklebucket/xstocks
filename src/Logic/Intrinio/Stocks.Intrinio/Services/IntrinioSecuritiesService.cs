@@ -86,7 +86,8 @@ namespace Stocks.Intrinio.Services
                         SenkouSpanB = ToDecimal(x.SenkouSpanB),
                         TenkanSen = ToDecimal(x.TenkanSen),
                         Date = DateHelper.GetDateTimeOffsetFromDateTime(x.DateTime)
-                    })
+                    }),
+                    NextPage = apiResponse.NextPage
                 };
                 return ServiceResponse<IntrinioIchimokuResponse>.Success(result);
             }
