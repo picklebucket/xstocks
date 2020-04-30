@@ -3,6 +3,7 @@ using Stocks.Ameritrade.Services.Interfaces;
 using Stocks.Common.Models;
 using Stocks.Data.Entities;
 using Stocks.Data.Repositories.Interfaces;
+using Stocks.Models;
 using Stocks.Models.Api;
 using Stocks.Models.Api.PriceHistory;
 using System;
@@ -11,18 +12,45 @@ using System.Threading.Tasks;
 
 namespace Stocks.Services.Collecting
 {
-    public class AmeritradeCollectingService : CollectingService<PriceHistoryResponse>
+    public class AmeritradePriceHistoryService : IPriceHistoryService
     {
         private readonly IAmeritradeApiService _ameritradeApiService;
 
-        public AmeritradeCollectingService(IAmeritradeApiService ameritradeApiService, IPriceHistoryRepository priceHistoryRepository)
-            : base(priceHistoryRepository)
+        public AmeritradePriceHistoryService(IAmeritradeApiService ameritradeApiService)
         {
             _ameritradeApiService = ameritradeApiService;
         }
 
+        public async Task<ServiceResponse<PriceHistoryResponse>> GetPriceHistoryAsync(PriceHistoryRequest priceHistoryRequest)
+        {
+            if (priceHistoryRequest == null)
+            {
+                throw new ArgumentNullException(nameof(priceHistoryRequest));
+            }
+
+            var response = await MakeRequestAsync(priceHistoryRequest).ConfigureAwait(false);
+            if (response.IsSuccess)
+            {
+                var candles = response.Content.Candles.Select(x => new CandleItem()
+                {
+                    Open = x.Open,
+                    Close = x.Close,
+                    High = x.High,
+                    Low = x.Low,
+                    Volume = x.Volume,
+                    Date = DateTimeOffset.FromUnixTimeMilliseconds(x.DateTimeUnixEpochMilliseconds)
+                });
+                var priceHistory = new PriceHistoryResponse(response.Content.Symbol, response.Content.Empty, candles.ToList());
+                return ServiceResponse<PriceHistoryResponse>.Success(priceHistory);
+            }
+            else
+            {
+                return ServiceResponse<PriceHistoryResponse>.Error(response.ErrorMessage);
+            }
+        }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1062:Validate arguments of public methods", Justification = "<Pending>")]
-        protected override async Task<ServiceResponse<PriceHistoryResponse>> GetPriceHistoryAsync(PriceHistoryRequest priceHistoryRequest)
+        protected async Task<ServiceResponse<AmeritradePriceHistoryResponse>> MakeRequestAsync(PriceHistoryRequest priceHistoryRequest)
         {
             var ameritradeRequest = new AmeritradePriceHistoryRequest()
             {
@@ -46,26 +74,6 @@ namespace Stocks.Services.Collecting
             };
             var apiResponse = await _ameritradeApiService.GetPriceHistoryAsync(priceHistoryRequest.Symbol, ameritradeRequest).ConfigureAwait(false);
             return apiResponse;
-        }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1062:Validate arguments of public methods", Justification = "<Pending>")]
-        protected override PriceHistory MapToEntity(ServiceResponse<PriceHistoryResponse> response)
-        {
-            var priceHistory = new PriceHistory()
-            {
-                Symbol = response.Content.Symbol,
-                Empty = response.Content.Empty,
-                Candles = response.Content.Candles.Select(x => new Candle()
-                {
-                    Open = x.Open,
-                    Close = x.Close,
-                    High = x.High,
-                    Low = x.Low,
-                    Volume = x.Volume,
-                    DateTimeUnixEpochMilliseconds = x.DateTimeUnixEpochMilliseconds
-                }).ToList()
-            };
-            return priceHistory;
-        }
+        }       
     }
 }

@@ -46,7 +46,7 @@ namespace Stocks.Ameritrade.Tests.Services
                 FrequencyType = AmeritradeFrequencyType.Daily,
                 Period = 12
             };
-            ServiceResponse<PriceHistoryResponse> response = await _ameritradeApiService.GetPriceHistoryAsync(symbol, priceHistoryRequest).ConfigureAwait(false);
+            ServiceResponse<AmeritradePriceHistoryResponse> response = await _ameritradeApiService.GetPriceHistoryAsync(symbol, priceHistoryRequest).ConfigureAwait(false);
             Assert.False(response.IsSuccess);
             Assert.NotEmpty(response.ErrorMessage);
             Assert.Null(response.Content);
@@ -63,8 +63,8 @@ namespace Stocks.Ameritrade.Tests.Services
                 FrequencyType = AmeritradeFrequencyType.Daily,
                 Period = 1
             };
-            ServiceResponse<PriceHistoryResponse> response = await _ameritradeApiService.GetPriceHistoryAsync(symbol, priceHistoryRequest).ConfigureAwait(false);
-            Assert.True(response.IsSuccess);
+            ServiceResponse<AmeritradePriceHistoryResponse> response = await _ameritradeApiService.GetPriceHistoryAsync(symbol, priceHistoryRequest).ConfigureAwait(false);
+            Assert.True(response.IsSuccess, response.ErrorMessage);
             Assert.Null(response.ErrorMessage);
             Assert.NotNull(response.Content);
             Assert.NotNull(response.Content.Candles);

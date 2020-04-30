@@ -14,12 +14,10 @@ namespace Stocks.Helpers
             {
                 throw new ArgumentNullException(nameof(ichimokuItems));
             }
-
             if (candles == null)
             {
                 throw new ArgumentNullException(nameof(candles));
             }
-
 
             var signalTypes = new List<SignalType>();
             for (int i = 0; i < ichimokuItems.Count; i++)
@@ -27,7 +25,7 @@ namespace Stocks.Helpers
                 SignalType signalType = SignalType.None;
                 int count = 0;
                 int j = i;
-                while(CanBeBuySignal(ichimokuItems[j], candles[j]))
+                while(j <= i && CanBeBuySignal(ichimokuItems[j], candles[j]))
                 {
                     count++;
                     j++;

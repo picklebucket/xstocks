@@ -18,5 +18,6 @@ namespace Stocks.Intrinio.Models.PriceHistory
     {
         public string Ticker { get; set; }
         public IEnumerable<PriceSummary> StockPrices { get; set; }
+        public string NextPage { get; set; }
     }
 }

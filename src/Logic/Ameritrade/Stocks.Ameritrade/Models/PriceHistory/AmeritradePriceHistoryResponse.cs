@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace Stocks.Ameritrade.Models.PriceHistory
 {
-    public class PriceHistoryResponse
+    public class AmeritradePriceHistoryResponse
     {
         [JsonPropertyName("empty")]
         public bool Empty { get; set; }

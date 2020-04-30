@@ -4,7 +4,7 @@
     <processor type="Stocks.Tests.Pipelines.ProcessSymbol.WipeDataProcessor, Stocks.Tests" async="true" resolve="true"></processor>
     <processor type="Stocks.Tests.Pipelines.ProcessSymbol.CollectDataProcessor, Stocks.Tests" async="true" resolve="true"></processor>
     <processor type="Stocks.Tests.Pipelines.ProcessSymbol.ReadDataProcessor, Stocks.Tests" async="true" resolve="true"></processor>
-    <processor type="Stocks.Tests.Pipelines.ProcessSymbol.BuildReportProcessor, Stocks.Tests" async="false" resolve="true"></processor>
+    <processor type="Stocks.Tests.Pipelines.ProcessSymbol.BuildReportProcessor, Stocks.Tests" async="true" resolve="true"></processor>
     <processor type="Stocks.Tests.Pipelines.ProcessSymbol.ExportToIndicatorCsv, Stocks.Tests" async="false" resolve="true"></processor>
     <processor type="Stocks.Tests.Pipelines.ProcessSymbol.ExportToTradeCsv, Stocks.Tests" async="false" resolve="true"></processor>
   </processSymbol>

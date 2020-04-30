@@ -11,6 +11,7 @@ using System.Text.Json;
 using Stocks.Tests.Pipelines.ProcessSymbol;
 using Stocks.Models.Api.PriceHistory;
 using Stocks.Models.Api;
+using System;
 
 namespace Stocks.Tests.Pipelines
 {
@@ -33,8 +34,8 @@ namespace Stocks.Tests.Pipelines
         {
             var args = new ProcessSymbolPipelineArgs()
             {
-                PriceHistoryRequest = new PriceHistoryRequest("NFLX", PeriodType.Year, 1, FrequencyType.Daily)                
-            };
+                PriceHistoryRequest = new PriceHistoryRequest("AAPL", new DateTime(2018, 1, 1), new DateTime(2019, 1, 1), FrequencyType.Daily)
+        };
             await _pipelineManagerService.RunAsync("processSymbol", args).ConfigureAwait(false);
 
             PriceHistory priceHistory = await _priceHistoryRepository.GetAsync(args.PriceHistoryRequest.Symbol).ConfigureAwait(false);

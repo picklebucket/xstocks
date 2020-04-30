@@ -3,6 +3,10 @@ using Stocks.Data.Entities;
 using Stocks.Data.Repositories.Interfaces;
 using Stocks.Helpers;
 using Stocks.Models;
+using Stocks.Models.Api;
+using Stocks.Models.Api.Ichimoku;
+using Stocks.Models.Api.PriceHistory;
+using Stocks.Services.Collecting;
 using Stocks.Services.Ichimoku;
 using Stocks.Services.Interfaces;
 using System;
@@ -17,37 +21,48 @@ namespace Stocks.Services
     public class ReportService : IReportService
     {
         private readonly IIchimokuService _ichimokuService;
+        private readonly IPriceHistoryService _priceHistoryService;
 
-        public ReportService(IIchimokuService ichimokuService)
+        public ReportService(IIchimokuService ichimokuService, IPriceHistoryService priceHistoryService)
         {
             _ichimokuService = ichimokuService;
+            _priceHistoryService = priceHistoryService;
         }
 
-        public IEnumerable<ReportItem> BuildReport(string symbol, List<CandleItem> candleItems)
+        public async Task<IEnumerable<ReportItem>> BuildReportAsync(string symbol, DateTime startDate, DateTime endDate, FrequencyType frequencyType)
+        {
+            var ichimokuRequest = new IchimokuRequest(symbol, startDate, endDate, frequencyType);
+            var ichimokuResponse = await _ichimokuService.BuildIchimokuCloudAsync(ichimokuRequest).ConfigureAwait(false);
+            var ichimokuItems = ichimokuResponse.Content.Items;
+
+            var priceHistoryRequest = new PriceHistoryRequest(symbol, startDate, endDate, frequencyType);
+            var priceHistoryResponse = await _priceHistoryService.GetPriceHistoryAsync(priceHistoryRequest).ConfigureAwait(false);
+            var candles = priceHistoryResponse.Content.CandleItems;
+
+            var reportItems = BuildReport(symbol, ichimokuItems, candles);
+            return reportItems;
+        }
+
+        public IEnumerable<ReportItem> BuildReport(string symbol, List<IchimokuItem> ichimokuItems, List<CandleItem> candleItems)
         {
             var reportItems = new List<ReportItem>();
-            return null;
-            //TODO::Uncomment this and fix this method to return data 
-
-            //var ichimokuItems = _ichimokuService.BuildIchimokuCloud(candleItems);
-            //var signals = SignalHelper.GetSignals(ichimokuItems, candleItems);
-            //var atrItems = AtrHelper.CalculateATR(candleItems);
-            //var indicatorItems = IndicatorHelper.Calculate(atrItems, candleItems);
-            //for (int i = 0; i < candleItems.Count; i++)
-            //{
-            //    reportItems.Add(new ReportItem()
-            //    {
-            //        CandleItem = candleItems[i],
-            //        IchimokuItem = ichimokuItems[i],
-            //        AtrItem = atrItems[i],
-            //        IndicatorItem = indicatorItems[i],
-            //        Symbol = symbol,
-            //        SignalType = signals[i]
-            //    });
-            //}
-
-            //return reportItems;
-        }
+            var signals = SignalHelper.GetSignals(ichimokuItems, candleItems);
+            var atrItems = AtrHelper.CalculateATR(candleItems);
+            var indicatorItems = IndicatorHelper.Calculate(atrItems, candleItems);
+            for (int i = 0; i < candleItems.Count; i++)
+            {
+                reportItems.Add(new ReportItem()
+                {
+                    CandleItem = candleItems[i],
+                    IchimokuItem = ichimokuItems[i],
+                    AtrItem = atrItems[i],
+                    IndicatorItem = indicatorItems[i],
+                    Symbol = symbol,
+                    SignalType = signals[i]
+                });
+            }
+            return reportItems;
+        }       
 
         public byte[] ExportToIndicatorCsv(IEnumerable<ReportItem> reportItems)
         {

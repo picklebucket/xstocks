@@ -1,4 +1,5 @@
 ﻿using Stocks.Models;
+using Stocks.Models.Api;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,7 +9,8 @@ namespace Stocks.Services.Interfaces
 {
     public interface IReportService
     {
-        IEnumerable<ReportItem> BuildReport(string symbol, List<CandleItem> candleItems);
+        Task<IEnumerable<ReportItem>> BuildReportAsync(string symbol, DateTime startDate, DateTime endDate, FrequencyType frequencyType);
+        IEnumerable<ReportItem> BuildReport(string symbol, List<IchimokuItem> ichimokuItems, List<CandleItem> candleItems);
         byte[] ExportToIndicatorCsv(IEnumerable<ReportItem> reportItems);
         byte[] ExportToTradeCsv(IEnumerable<ReportItem> reportItems);
     }

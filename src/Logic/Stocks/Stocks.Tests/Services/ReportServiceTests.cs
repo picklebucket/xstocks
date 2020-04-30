@@ -7,6 +7,12 @@ using System.Threading.Tasks;
 using System.Text;
 using Xunit.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
+using Stocks.Services.Collecting;
+using System;
+using Stocks.Models.Api.Ichimoku;
+using Stocks.Models.Api;
+using Stocks.Models.Api.PriceHistory;
+using Stocks.Services.Ichimoku;
 
 namespace Stocks.Tests.Services
 {
@@ -14,12 +20,10 @@ namespace Stocks.Tests.Services
     public class ReportServiceTests : BaseTests
     {
         private readonly IReportService _reportService;
-        private readonly IPriceHistoryService _priceHistoryService;
         private readonly ITestOutputHelper _testOutputHelper;
 
         public ReportServiceTests(StocksFixture stocksFixture, ITestOutputHelper testOutputHelper) : base(stocksFixture)
         {
-            _priceHistoryService = new PriceHistoryService(new FilePriceHistoryRepository());
             _reportService = ServiceProvider.GetService<IReportService>();
             _testOutputHelper = testOutputHelper;
         }
@@ -27,9 +31,7 @@ namespace Stocks.Tests.Services
         [Fact]
         public async Task BuildReport()
         {
-            string symbol = "NFLX";
-            var candles = await _priceHistoryService.GetCollectedCandlesAsync(symbol).ConfigureAwait(false);
-            var reportItems = _reportService.BuildReport(symbol, candles);
+            var reportItems = await _reportService.BuildReportAsync("AAPL", new DateTime(2018, 1, 1), new DateTime(2019, 1, 1), FrequencyType.Daily).ConfigureAwait(false);
             Assert.NotNull(reportItems);
             Assert.NotEmpty(reportItems);
             foreach (var reportItem in reportItems)
@@ -41,14 +43,12 @@ namespace Stocks.Tests.Services
                 Assert.NotNull(reportItem.IchimokuItem);
                 Assert.NotNull(reportItem.IndicatorItem);
             }
-        }
+        }        
 
         [Fact]
         public async Task ExportToIndicatorCsv()
         {
-            string symbol = "NFLX";
-            var candles = await _priceHistoryService.GetCollectedCandlesAsync(symbol).ConfigureAwait(false);
-            var reportItems = _reportService.BuildReport(symbol, candles);
+            var reportItems = await _reportService.BuildReportAsync("AAPL", new DateTime(2018, 1, 1), new DateTime(2019, 1, 1), FrequencyType.Daily).ConfigureAwait(false);
             var csvContent = _reportService.ExportToTradeCsv(reportItems);
             string output = Encoding.Default.GetString(csvContent);
             _testOutputHelper.WriteLine(output);
@@ -57,9 +57,7 @@ namespace Stocks.Tests.Services
         [Fact]
         public async Task ExportToTradeCsv()
         {
-            string symbol = "NFLX";
-            var candles = await _priceHistoryService.GetCollectedCandlesAsync(symbol).ConfigureAwait(false);
-            var reportItems = _reportService.BuildReport(symbol, candles);
+            var reportItems = await _reportService.BuildReportAsync("AAPL", new DateTime(2018, 1, 1), new DateTime(2019, 1, 1), FrequencyType.Daily).ConfigureAwait(false);
             var csvContent = _reportService.ExportToTradeCsv(reportItems);
             string output = Encoding.Default.GetString(csvContent);
             _testOutputHelper.WriteLine(output);

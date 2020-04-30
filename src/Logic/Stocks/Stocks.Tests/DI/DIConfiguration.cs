@@ -17,6 +17,7 @@ using Stocks.Pipelines.Services;
 using Stocks.Pipelines.Services.Interfaces;
 using Stocks.Services;
 using Stocks.Services.Collecting;
+using Stocks.Services.Ichimoku;
 using Stocks.Services.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -67,8 +68,10 @@ namespace Stocks.Tests.DI
             serviceCollection.AddTransient<IAmeritradeApiService, AmeritradeApiService>();
             serviceCollection.AddTransient<IIntrinioSecuritiesService, IntrinioSecuritiesService>();
             serviceCollection.AddTransient<IPriceHistoryRepository, PriceHistoryRepository>();
-            serviceCollection.AddTransient<ICollectingService, IntrinioCollectingService>();
+            serviceCollection.AddTransient<IPriceHistoryService, IntrinioPriceHistoryService>();
             serviceCollection.AddTransient<IReportService, ReportService>();
+            serviceCollection.AddTransient<IIchimokuService, IntrinioIchimokuService>();
+            serviceCollection.AddTransient<IPriceHistoryDataService, PriceHistoryDataService>();
 
             serviceCollection.AddTransient<IPipelineManagerService, PipelineManagerService>();
             serviceCollection.AddPipelineProcessors(pipelineSettings);
