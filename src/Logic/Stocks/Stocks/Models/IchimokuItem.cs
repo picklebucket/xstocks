@@ -7,7 +7,14 @@ namespace Stocks.Models
     public class IchimokuItem
     {
         public DateTimeOffset? Date { get; set; }
+
+        /// <summary>
+        /// Conversion (turning) line
+        /// </summary>
         public decimal? TenkanSen { get; set; }
+        /// <summary>
+        /// Base line
+        /// </summary>
         public decimal? KijunSen { get; set; }
         /// <summary>
         /// Lagging line

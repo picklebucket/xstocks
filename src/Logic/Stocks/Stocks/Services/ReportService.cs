@@ -88,13 +88,21 @@ namespace Stocks.Services
             using var stream = new MemoryStream();
             using StreamWriter streamWriter = new StreamWriter(stream);
             streamWriter.WriteLine("Symbol, Trades taken, Number of losses, Number of wins, Average win %");
-            
-            var groupedReports = reportItems.Where(x => x.SignalType == SignalType.BuySignal).GroupBy(x => x.Symbol);
+
+            var groupedReports = reportItems.Where(x => x.SignalType != SignalType.None).GroupBy(x => x.Symbol);
             foreach (IGrouping<string, ReportItem> groupedReport in groupedReports)
             {
                 string symbol = groupedReport.Key;
                 int tradesTaken = groupedReport.Count();
-                int numberOfLosses = groupedReport.Count(x => x.IndicatorItem.PriceResult == PriceResult.StopLossReached);
+                int numberOfLosses = 0;
+                foreach (ReportItem reportItem in groupedReport)
+                {
+                    if((reportItem.IndicatorItem.PriceResult == PriceResult.StopLossReached) && 
+                        (reportItem.SignalType == SignalType.BullishStrong || reportItem.SignalType == SignalType.BullishWeak))
+                    {
+                        numberOfLosses++;
+                    }
+                }
                 int numberOfWins = tradesTaken - numberOfLosses;
                 double winAverage = (numberOfWins / (double)tradesTaken) * 100;
                 streamWriter.WriteLine($"{symbol}, {tradesTaken}, {numberOfLosses}, {numberOfWins}, {winAverage}");

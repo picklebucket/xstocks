@@ -7,6 +7,8 @@ namespace Stocks.Models
     public enum SignalType
     {
         None,
-        BuySignal
+        BullishStrong,
+        BullishWeak,
+        Bearish
     }
 }
