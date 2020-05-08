@@ -46,7 +46,8 @@ namespace Stocks.Services
         public IEnumerable<ReportItem> BuildReport(string symbol, List<IchimokuItem> ichimokuItems, List<CandleItem> candleItems)
         {
             var reportItems = new List<ReportItem>();
-            var signals = SignalHelper.GetSignals(ichimokuItems, candleItems);
+            var emaItems = EmaHelper.CalculateEma(candleItems);
+            var signals = SignalHelper.GetSignals(ichimokuItems, candleItems, emaItems);
             var atrItems = AtrHelper.CalculateATR(candleItems);
             var indicatorItems = IndicatorHelper.Calculate(atrItems, candleItems);
             for (int i = 0; i < candleItems.Count; i++)
