@@ -7,6 +7,7 @@ using Stocks.Data;
 using Stocks.Data.Models;
 using Stocks.Data.Repositories;
 using Stocks.Data.Repositories.Interfaces;
+using Stocks.Helpers;
 using Stocks.Intrinio.Models;
 using Stocks.Intrinio.Services;
 using Stocks.Intrinio.Services.Interfaces;
@@ -52,6 +53,7 @@ namespace Stocks.Tests.DI
             intrinioSection.Bind(intrinioApiSettings);
             serviceCollection.AddSingleton(intrinioApiSettings);
             serviceCollection.AddSingleton<IntrinioSecurityApi>();
+            serviceCollection.AddSingleton<IntrinioFundamentalsApi>();
 
             var connectionStringsSection = configuration.GetSection("ConnectionStrings");
             var connectionStrings = new ConnectionStrings();
@@ -67,11 +69,13 @@ namespace Stocks.Tests.DI
 
             serviceCollection.AddTransient<IAmeritradeApiService, AmeritradeApiService>();
             serviceCollection.AddTransient<IIntrinioSecuritiesService, IntrinioSecuritiesService>();
+            serviceCollection.AddTransient<IIntrinioFundementalsService, IntrinioFundementalsService>();
             serviceCollection.AddTransient<IPriceHistoryRepository, PriceHistoryRepository>();
             serviceCollection.AddTransient<IPriceHistoryService, IntrinioPriceHistoryService>();
             serviceCollection.AddTransient<IReportService, ReportService>();
             serviceCollection.AddTransient<IIchimokuService, IntrinioIchimokuService>();
             serviceCollection.AddTransient<IPriceHistoryDataService, PriceHistoryDataService>();
+            serviceCollection.AddTransient<IIntrinsicValueService, IntrinsicValueService>();
 
             serviceCollection.AddTransient<IPipelineManagerService, PipelineManagerService>();
             serviceCollection.AddPipelineProcessors(pipelineSettings);

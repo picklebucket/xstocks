@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Intrinio.SDK.Api;
 using Intrinio.SDK.Client;
 using Intrinio.SDK.Model;
+using Stocks.Common.Models;
 using Stocks.Intrinio.Models;
 using Stocks.Intrinio.Services.Interfaces;
 using Stocks.Intrinio.Wrappers;
@@ -20,14 +22,18 @@ namespace Stocks.Intrinio.Services
         public string GetTestSignal(string ticker)
         {
             var identifier = ticker;  // string | A Company identifier (Ticker, CIK, LEI, Intrinio ID)
-            var statementCode = "income_statement";  // string | The statement code
+            var statementCode = "cash_flow_statement";  // string | The statement code
             var fiscalYear = 2017;  // int? | The fiscal year
             var fiscalPeriod = "FY";  // string | The fiscal period
 
             try
             {
-                Fundamental result = _intrinioFundamentalsApi.LookupFundamental(identifier, statementCode, fiscalYear, fiscalPeriod);
-                return result.ToString();
+                string response = null;
+                var a = _intrinioFundamentalsApi.GetFundamentalStandardizedFinancials("AAPL-balance_sheet_statement-2018-Q1");
+                response = a.ToJson();
+                //Fundamental result = _intrinioFundamentalsApi.LookupFundamental(identifier, statementCode, fiscalYear, fiscalPeriod);
+                //response = result.ToString();
+                return response;
             }
             catch (Exception e)
             {
@@ -86,19 +92,41 @@ namespace Stocks.Intrinio.Services
         /// </summary>
         /// <param name="valueString">should look like AAPL-income_statement-2018-Q1</param>
         /// <returns></returns>
-        public string GetStandardizedFundementals(string valueString)
+        public async Task<ServiceResponse<ApiResponseStandardizedFinancials>> GetStandardizedFundementalsAsync(string ticker, StatementCode statement, int year, FiscalPeriod fiscalPeriod)
         {
-            var fundamentalsApi = new FundamentalsApi();
-            var id = valueString;  // string | The Intrinio ID or lookup code (ticker-statement-year-period) for the Fundamental
+            string statementString;
+            switch (statement)
+            {
+                case StatementCode.CashflowStatement:
+                    statementString = "cash_flow_statement";
+                    break;
+                case StatementCode.BalanceSheetStatement:
+                    statementString = "balance_sheet_statement";
+                    break;
+                default:
+                    throw new ArgumentException("Unknown statement", nameof(statement));
+            }
+
+            string fiscalPeriodString;
+            switch (fiscalPeriod)
+            {
+                case FiscalPeriod.Q1:
+                    fiscalPeriodString = "Q1";
+                    break;
+                default:
+                    throw new ArgumentException("Unknown fiscal period", nameof(fiscalPeriod));
+            }
+            
+            var id = string.Join("-", ticker, statementString, year, fiscalPeriodString);  // string | The Intrinio ID or lookup code (ticker-statement-year-period) for the Fundamental
 
             try
             {
-                ApiResponseStandardizedFinancials result = fundamentalsApi.GetFundamentalStandardizedFinancials(id);
-                return result.ToJson();
+                ApiResponseStandardizedFinancials result = await _intrinioFundamentalsApi.GetFundamentalStandardizedFinancialsAsync(id).ConfigureAwait(false);
+                return ServiceResponse<ApiResponseStandardizedFinancials>.Success(result);
             }
             catch (Exception e)
             {
-                return e.Message;
+                return ServiceResponse<ApiResponseStandardizedFinancials>.Error(e.Message);
             }
         }
         public string GetFundementalsByCompany(string ticker)
