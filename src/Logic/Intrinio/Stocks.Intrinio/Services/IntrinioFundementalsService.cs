@@ -19,28 +19,7 @@ namespace Stocks.Intrinio.Services
         {
             _intrinioFundamentalsApi = intrinioFundamentalsApi;
         }
-        public string GetTestSignal(string ticker)
-        {
-            var identifier = ticker;  // string | A Company identifier (Ticker, CIK, LEI, Intrinio ID)
-            var statementCode = "cash_flow_statement";  // string | The statement code
-            var fiscalYear = 2017;  // int? | The fiscal year
-            var fiscalPeriod = "FY";  // string | The fiscal period
-
-            try
-            {
-                string response = null;
-                var a = _intrinioFundamentalsApi.GetFundamentalStandardizedFinancials("AAPL-balance_sheet_statement-2018-Q1");
-                response = a.ToJson();
-                //Fundamental result = _intrinioFundamentalsApi.LookupFundamental(identifier, statementCode, fiscalYear, fiscalPeriod);
-                //response = result.ToString();
-                return response;
-            }
-            catch (Exception e)
-            {
-                return e.Message;
-            }
-
-        }
+        
         /// <summary>
         /// 
         /// </summary>
@@ -102,6 +81,12 @@ namespace Stocks.Intrinio.Services
                     break;
                 case StatementCode.BalanceSheetStatement:
                     statementString = "balance_sheet_statement";
+                    break;
+                case StatementCode.Calculations:
+                    statementString = "calculations";
+                    break;
+                case StatementCode.IncomeStatement:
+                    statementString = "income_statement";
                     break;
                 default:
                     throw new ArgumentException("Unknown statement", nameof(statement));

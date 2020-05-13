@@ -8,6 +8,6 @@ namespace Stocks.Services.Interfaces
 {
     public interface IIntrinsicValueService
     {
-        Task Calculate(string ticker, int year, FiscalPeriod fiscalPeriod);
+        Task<decimal?> CalculateIntrinsicValueAsync(string ticker, int year, FiscalPeriod fiscalPeriod);
     }
 }

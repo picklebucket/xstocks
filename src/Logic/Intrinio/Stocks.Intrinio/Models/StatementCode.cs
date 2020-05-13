@@ -8,6 +8,8 @@ namespace Stocks.Intrinio.Models
     {
         Undefined,
         CashflowStatement,
-        BalanceSheetStatement
+        BalanceSheetStatement,
+        Calculations,
+        IncomeStatement
     }
 }

@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace Stocks.Tests.Services
 {
@@ -18,16 +19,20 @@ namespace Stocks.Tests.Services
     public class IntrinsicValueServiceTests : BaseTests
     {
         private readonly IIntrinsicValueService _intrinsicValueService;
+        private readonly ITestOutputHelper _testOutputHelper;
 
-        public IntrinsicValueServiceTests(StocksFixture stocksFixture) : base(stocksFixture)
+        public IntrinsicValueServiceTests(StocksFixture stocksFixture, ITestOutputHelper testOutputHelper) : base(stocksFixture)
         {
             _intrinsicValueService = stocksFixture.ServiceProvider.GetService<IIntrinsicValueService>();
+            _testOutputHelper = testOutputHelper;
         }
 
         [Fact]
         public async Task Calculate()
         {
-            await _intrinsicValueService.Calculate("AAPL", 2018, FiscalPeriod.Q1).ConfigureAwait(false);
+            var value = await _intrinsicValueService.CalculateIntrinsicValueAsync("AAPL", 2018, FiscalPeriod.Q1).ConfigureAwait(false);
+            Assert.NotNull(value);
+            _testOutputHelper.WriteLine(value.ToString());
         }
     }
 }
