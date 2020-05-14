@@ -89,5 +89,14 @@ namespace Stocks.Tests.Services
             string output = Encoding.Default.GetString(csvContent);
             _testOutputHelper.WriteLine(output);
         }
+
+        [Fact]
+        public async Task ExportToGoodCompaniesCsv()
+        {
+            var reportItems = await _reportService.BuildReportBasedOnIntrinsicValue().ConfigureAwait(false);
+            var csvContent = _reportService.ExportGoodPriceCompaniesToCsv(reportItems);
+            string output = Encoding.Default.GetString(csvContent);
+            _testOutputHelper.WriteLine(output);
+        }
     }
 }

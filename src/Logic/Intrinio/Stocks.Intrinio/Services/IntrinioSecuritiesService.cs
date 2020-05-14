@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Intrinio.SDK.Model;
 using Stocks.Common.Helpers;
 using Stocks.Common.Models;
+using Stocks.Intrinio.Models;
 using Stocks.Intrinio.Models.Ichimoku;
 using Stocks.Intrinio.Models.PriceHistory;
 using Stocks.Intrinio.Services.Interfaces;
@@ -94,6 +95,37 @@ namespace Stocks.Intrinio.Services
             catch (Exception e)
             {
                 return ServiceResponse<IntrinioIchimokuResponse>.Error(e.Message);
+            }
+        }
+
+        public async Task<ServiceResponse<RealtimePriceResponse>> GetRealtimeStockPriceAsync(string identifier)
+        {
+            try
+            {
+                RealtimeStockPrice intrinioResponse = await _intrinioSecurityApi.GetSecurityRealtimePriceAsync(identifier)
+                    .ConfigureAwait(false);
+                var result = new RealtimePriceResponse
+                {
+                    AskPrice = intrinioResponse.AskPrice,
+                    AskSize = intrinioResponse.AskSize,
+                    BidPrice = intrinioResponse.BidPrice,
+                    BidSize = intrinioResponse.BidSize,
+                    ExchangeVolume = intrinioResponse.ExchangeVolume,
+                    HighPrice = intrinioResponse.HighPrice,
+                    LastPrice = intrinioResponse.LastPrice,
+                    LastTime = intrinioResponse.LastTime,
+                    LowPrice = intrinioResponse.LowPrice,
+                    MarketVolume = intrinioResponse.MarketVolume,
+                    OpenPrice = intrinioResponse.OpenPrice,
+                    Source = intrinioResponse.Source,
+                    UpdatedOn = intrinioResponse.UpdatedOn
+                };
+
+                return ServiceResponse<RealtimePriceResponse>.Success(result);
+            }
+            catch (Exception ex)
+            {
+                return ServiceResponse<RealtimePriceResponse>.Error(ex.Message);
             }
         }
 

@@ -75,7 +75,9 @@ namespace Stocks.Tests.DI
             serviceCollection.AddTransient<IReportService, ReportService>();
             serviceCollection.AddTransient<IIchimokuService, IntrinioIchimokuService>();
             serviceCollection.AddTransient<IPriceHistoryDataService, PriceHistoryDataService>();
-            serviceCollection.AddTransient<IIntrinsicValueService, IntrinsicValueService>();
+            serviceCollection.AddTransient<IGoodPriceCompaniesRepository, GoodPriceCompaniesRepository>();
+            serviceCollection.AddTransient<ICalculateIIntrinsicValueService, CalculateIIntrinsicValueService>();
+            serviceCollection.AddTransient<ISymbolAnalyzerService, SymbolAnalyzerService>();
 
             serviceCollection.AddTransient<IPipelineManagerService, PipelineManagerService>();
             serviceCollection.AddPipelineProcessors(pipelineSettings);

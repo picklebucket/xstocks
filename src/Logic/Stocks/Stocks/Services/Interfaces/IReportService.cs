@@ -1,4 +1,5 @@
-﻿using Stocks.Models;
+﻿using Stocks.Data.Entities;
+using Stocks.Models;
 using Stocks.Models.Api;
 using System;
 using System.Collections.Generic;
@@ -13,5 +14,7 @@ namespace Stocks.Services.Interfaces
         IEnumerable<ReportItem> BuildReport(string symbol, List<IchimokuItem> ichimokuItems, List<CandleItem> candleItems);
         byte[] ExportToIndicatorCsv(IEnumerable<ReportItem> reportItems);
         byte[] ExportToTradeCsv(IEnumerable<ReportItem> reportItems);
+        Task<IReadOnlyCollection<GoodPriceCompany>> BuildReportBasedOnIntrinsicValue(DateTime? startDate = null, DateTime? endDate = null);
+        byte[] ExportGoodPriceCompaniesToCsv(IReadOnlyCollection<GoodPriceCompany> goodPriceCompanies);
     }
 }

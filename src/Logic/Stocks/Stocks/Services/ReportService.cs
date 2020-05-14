@@ -22,11 +22,14 @@ namespace Stocks.Services
     {
         private readonly IIchimokuService _ichimokuService;
         private readonly IPriceHistoryService _priceHistoryService;
+        private readonly IGoodPriceCompaniesRepository _goodPriceCompaniesRepository;
 
-        public ReportService(IIchimokuService ichimokuService, IPriceHistoryService priceHistoryService)
+        public ReportService(IIchimokuService ichimokuService, IPriceHistoryService priceHistoryService,
+            IGoodPriceCompaniesRepository goodPriceCompaniesRepository)
         {
             _ichimokuService = ichimokuService;
             _priceHistoryService = priceHistoryService;
+            _goodPriceCompaniesRepository = goodPriceCompaniesRepository;
         }
 
         public async Task<IEnumerable<ReportItem>> BuildReportAsync(string symbol, DateTime startDate, DateTime endDate, FrequencyType frequencyType)
@@ -63,7 +66,32 @@ namespace Stocks.Services
                 });
             }
             return reportItems;
-        }       
+        }
+
+        public async Task<IReadOnlyCollection<GoodPriceCompany>> BuildReportBasedOnIntrinsicValue(DateTime? startDate = null, DateTime? endDate = null)
+        {
+            var result = await _goodPriceCompaniesRepository.GetForPeriod(startDate, endDate).ConfigureAwait(false);
+            return result;
+        }
+
+        public byte[] ExportGoodPriceCompaniesToCsv(IReadOnlyCollection<GoodPriceCompany> goodPriceCompanies)
+        {
+            if (goodPriceCompanies == null)
+            {
+                throw new ArgumentNullException(nameof(goodPriceCompanies));
+            }
+
+            using var stream = new MemoryStream();
+            using StreamWriter streamWriter = new StreamWriter(stream);
+            streamWriter.WriteLine("Symbol, Intrinsic Value, Last Trade Price, Last Trade Time, Analysis Date");
+            foreach (var reportItem in goodPriceCompanies)
+            {
+                streamWriter.WriteLine($"{reportItem.Symbol}, {reportItem.IntrinsicValue}, {reportItem.LastTradePrice}, {reportItem.LastTradeTime}, {reportItem.DateTime}");
+            }
+            streamWriter.Flush();
+            byte[] content = stream.ToArray();
+            return content;
+        }
 
         public byte[] ExportToIndicatorCsv(IEnumerable<ReportItem> reportItems)
         {
@@ -98,7 +126,7 @@ namespace Stocks.Services
                 int numberOfLosses = 0;
                 foreach (ReportItem reportItem in groupedReport)
                 {
-                    if((reportItem.IndicatorItem.PriceResult == PriceResult.StopLossReached) && 
+                    if ((reportItem.IndicatorItem.PriceResult == PriceResult.StopLossReached) &&
                         (reportItem.SignalType == SignalType.BullishStrong || reportItem.SignalType == SignalType.BullishWeak))
                     {
                         numberOfLosses++;
@@ -111,6 +139,6 @@ namespace Stocks.Services
             streamWriter.Flush();
             byte[] content = stream.ToArray();
             return content;
-        }        
+        }
     }
 }

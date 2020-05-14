@@ -10,14 +10,13 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Stocks.Helpers
+namespace Stocks.Services
 {
-    public class IntrinsicValueService : IIntrinsicValueService
+    public class CalculateIIntrinsicValueService : ICalculateIIntrinsicValueService
     {
         private readonly IIntrinioFundementalsService _intrinioFundementalsService;
 
-
-        public IntrinsicValueService(IIntrinioFundementalsService intrinioFundementalsService)
+        public CalculateIIntrinsicValueService(IIntrinioFundementalsService intrinioFundementalsService)
         {
             _intrinioFundementalsService = intrinioFundementalsService;
         }
