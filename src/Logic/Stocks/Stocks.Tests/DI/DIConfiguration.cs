@@ -54,6 +54,7 @@ namespace Stocks.Tests.DI
             serviceCollection.AddSingleton(intrinioApiSettings);
             serviceCollection.AddSingleton<IntrinioSecurityApi>();
             serviceCollection.AddSingleton<IntrinioFundamentalsApi>();
+            serviceCollection.AddSingleton<IntrinioForexCurrencyApi>();
 
             var connectionStringsSection = configuration.GetSection("ConnectionStrings");
             var connectionStrings = new ConnectionStrings();
@@ -66,7 +67,6 @@ namespace Stocks.Tests.DI
             pipelinesSection.Bind(pipelineSettings);
             serviceCollection.AddSingleton(pipelineSettings);
 
-
             serviceCollection.AddTransient<IAmeritradeApiService, AmeritradeApiService>();
             serviceCollection.AddTransient<IIntrinioSecuritiesService, IntrinioSecuritiesService>();
             serviceCollection.AddTransient<IIntrinioFundementalsService, IntrinioFundementalsService>();
@@ -78,6 +78,9 @@ namespace Stocks.Tests.DI
             serviceCollection.AddTransient<IGoodPriceCompaniesRepository, GoodPriceCompaniesRepository>();
             serviceCollection.AddTransient<ICalculateIIntrinsicValueService, CalculateIIntrinsicValueService>();
             serviceCollection.AddTransient<ISymbolAnalyzerService, SymbolAnalyzerService>();
+            serviceCollection.AddTransient<IIntrinioForexCurrencyService, IntrinioForexCurrencyService>();
+            serviceCollection.AddTransient<ICurrencyDataRepository, CurrencyDataRepository>();
+            serviceCollection.AddTransient<ICurrencyDataService, CurrencyDataService>();
 
             serviceCollection.AddTransient<IPipelineManagerService, PipelineManagerService>();
             serviceCollection.AddPipelineProcessors(pipelineSettings);

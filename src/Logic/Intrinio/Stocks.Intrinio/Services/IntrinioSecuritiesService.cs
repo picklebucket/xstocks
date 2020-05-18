@@ -3,6 +3,7 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Intrinio.SDK.Model;
+using Stocks.Common.Extensions;
 using Stocks.Common.Helpers;
 using Stocks.Common.Models;
 using Stocks.Intrinio.Models;
@@ -81,11 +82,11 @@ namespace Stocks.Intrinio.Services
                 {
                     Technicals = apiResponse.Technicals.Select(x => new IchimokuTechnical()
                     {
-                        ChikouSpan = ToDecimal(x.ChikouSpan),
-                        KijunSen = ToDecimal(x.KijunSen),
-                        SenkouSpanA = ToDecimal(x.SenkouSpanA),
-                        SenkouSpanB = ToDecimal(x.SenkouSpanB),
-                        TenkanSen = ToDecimal(x.TenkanSen),
+                        ChikouSpan = x.ChikouSpan.ToDecimal(),
+                        KijunSen = x.KijunSen.ToDecimal(),
+                        SenkouSpanA = x.SenkouSpanA.ToDecimal(),
+                        SenkouSpanB = x.SenkouSpanB.ToDecimal(),
+                        TenkanSen = x.TenkanSen.ToDecimal(),
                         Date = DateHelper.GetDateTimeOffsetFromDateTime(x.DateTime)
                     }),
                     NextPage = apiResponse.NextPage
@@ -127,15 +128,6 @@ namespace Stocks.Intrinio.Services
             {
                 return ServiceResponse<RealtimePriceResponse>.Error(ex.Message);
             }
-        }
-
-        private decimal? ToDecimal(float? number)
-        {
-            if(number.HasValue)
-            {
-                return Convert.ToDecimal(number.Value, CultureInfo.InvariantCulture);
-            }
-            return null;
         }
     }
 }
