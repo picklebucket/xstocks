@@ -9,7 +9,6 @@ using Xunit.Abstractions;
 namespace Stocks.Tests.Services
 {
     [Collection(Constants.CollectionName)]
-
     public class CalculateIIntrinsicValueServiceTests : BaseTests
     {
         private readonly ICalculateIIntrinsicValueService _intrinsicValueService;

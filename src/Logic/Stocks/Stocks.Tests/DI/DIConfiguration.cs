@@ -12,6 +12,8 @@ using Stocks.Intrinio.Models;
 using Stocks.Intrinio.Services;
 using Stocks.Intrinio.Services.Interfaces;
 using Stocks.Intrinio.Wrappers;
+using Stocks.NewsApi.Models;
+using Stocks.NewsApi.Services;
 using Stocks.Pipelines.DI;
 using Stocks.Pipelines.Models;
 using Stocks.Pipelines.Services;
@@ -42,6 +44,11 @@ namespace Stocks.Tests.DI
                 .AddJsonFile("appsettings.json")
                 .AddJsonFile("appsettings.json.user", true)
                 .Build();
+
+            var newsApiSettings = new NewsApiConfiguration();
+            var newsConfigSection = configuration.GetSection("NewsApi");
+            newsConfigSection.Bind(newsApiSettings);
+            serviceCollection.AddSingleton(newsApiSettings);
 
             var ameritradeSection = configuration.GetSection("Ameritrade");
             var ameritradeApiSettings = new AmeritradeApiSettings();
@@ -81,6 +88,9 @@ namespace Stocks.Tests.DI
             serviceCollection.AddTransient<IIntrinioForexCurrencyService, IntrinioForexCurrencyService>();
             serviceCollection.AddTransient<ICurrencyDataRepository, CurrencyDataRepository>();
             serviceCollection.AddTransient<ICurrencyDataService, CurrencyDataService>();
+            serviceCollection.AddTransient<INewsDataService, NewsDataService>();
+            serviceCollection.AddTransient<INewsDetailsRepository, NewsDetailsRepository>();
+            serviceCollection.AddTransient<INewsApiService, NewsApiService>();
 
             serviceCollection.AddTransient<IPipelineManagerService, PipelineManagerService>();
             serviceCollection.AddPipelineProcessors(pipelineSettings);

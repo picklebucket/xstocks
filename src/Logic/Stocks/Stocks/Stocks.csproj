@@ -16,6 +16,7 @@
     <ProjectReference Include="..\..\..\Data\Data\Stocks.Data\Stocks.Data.csproj" />
     <ProjectReference Include="..\..\Ameritrade\Stocks.Ameritrade\Stocks.Ameritrade.csproj" />
     <ProjectReference Include="..\..\Intrinio\Stocks.Intrinio\Stocks.Intrinio.csproj" />
+    <ProjectReference Include="..\..\NewsApi\Stocks.NewsApi\Stocks.NewsApi.csproj" />
   </ItemGroup>
 
 </Project>

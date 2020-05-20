@@ -2,15 +2,12 @@
 using Intrinio.SDK.Model;
 using Stocks.Intrinio.Models;
 using Stocks.Intrinio.Services.Interfaces;
-using Stocks.Services.Interfaces;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace Stocks.Services
+namespace Stocks.Services.Interfaces
 {
     public class CalculateIIntrinsicValueService : ICalculateIIntrinsicValueService
     {
