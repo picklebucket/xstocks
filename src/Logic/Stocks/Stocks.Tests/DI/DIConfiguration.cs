@@ -12,6 +12,7 @@ using Stocks.Intrinio.Models;
 using Stocks.Intrinio.Services;
 using Stocks.Intrinio.Services.Interfaces;
 using Stocks.Intrinio.Wrappers;
+using Stocks.ML.SentimentAnalysis;
 using Stocks.NewsApi.Models;
 using Stocks.NewsApi.Services;
 using Stocks.Pipelines.DI;
@@ -22,9 +23,6 @@ using Stocks.Services;
 using Stocks.Services.Collecting;
 using Stocks.Services.Ichimoku;
 using Stocks.Services.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Stocks.Tests.DI
 {
@@ -91,6 +89,8 @@ namespace Stocks.Tests.DI
             serviceCollection.AddTransient<INewsDataService, NewsDataService>();
             serviceCollection.AddTransient<INewsDetailsRepository, NewsDetailsRepository>();
             serviceCollection.AddTransient<INewsApiService, NewsApiService>();
+
+            serviceCollection.AddSingleton<ISentimentAnalysisService, SentimentAnalysisService>();
 
             serviceCollection.AddTransient<IPipelineManagerService, PipelineManagerService>();
             serviceCollection.AddPipelineProcessors(pipelineSettings);

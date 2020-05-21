@@ -23,12 +23,16 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Common\Common\Stocks.Common.Tests\Stocks.Common.Tests.csproj" />
+    <ProjectReference Include="..\..\ML\Stocks.ML.SentimentAnalysis\Stocks.ML.SentimentAnalysis.csproj" />
     <ProjectReference Include="..\..\Pipelines\Stocks.Pipelines\Stocks.Pipelines.csproj" />
     <ProjectReference Include="..\Stocks\Stocks.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <None Update="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\yelp_labelled.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="pipelines.xml">
