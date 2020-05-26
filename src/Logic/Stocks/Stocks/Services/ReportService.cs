@@ -49,10 +49,15 @@ namespace Stocks.Services
         public IEnumerable<ReportItem> BuildReport(string symbol, List<IchimokuItem> ichimokuItems, List<CandleItem> candleItems)
         {
             var reportItems = new List<ReportItem>();
+
+            //data comes in descending order
+            candleItems.Reverse();
+            ichimokuItems.Reverse();
+
             var emaItems = EmaHelper.CalculateEma(candleItems);
-            var signals = SignalHelper.GetSignals(ichimokuItems, candleItems, emaItems);
             var atrItems = AtrHelper.CalculateATR(candleItems);
-            var indicatorItems = IndicatorHelper.Calculate(atrItems, candleItems);
+            var signals = SignalHelper.GetSignals(ichimokuItems, candleItems, emaItems);
+            var indicatorItems = IndicatorHelper.Calculate(atrItems, candleItems, signals);
             for (int i = 0; i < candleItems.Count; i++)
             {
                 reportItems.Add(new ReportItem()
@@ -102,11 +107,43 @@ namespace Stocks.Services
 
             using var stream = new MemoryStream();
             using StreamWriter streamWriter = new StreamWriter(stream);
-            streamWriter.WriteLine("Symbol, Date, Signal, Entry Price, Stop Loss, Take Profit, Result");
+            streamWriter.WriteLine("Symbol, Date, Signal, Candle Low, Candle High, Entry Price, Stop Loss, Take Profit, ATR, Hit SL or TP, State, Reached Date");
+            var previousSignal = SignalType.None;
             foreach (var reportItem in reportItems)
             {
-                streamWriter.WriteLine($"{reportItem.Symbol}, {reportItem.CandleItem.Date}, {reportItem.SignalType}, {reportItem.IndicatorItem.EntryPrice}, {reportItem.IndicatorItem.StopLoss}, {reportItem.IndicatorItem.TakeProfit}, {reportItem.IndicatorItem.PriceResult}");
+                //if ((reportItem.SignalType != previousSignal && reportItem.SignalType != SignalType.None) || reportItem.IndicatorItem.PriceResult != PriceResult.None)
+                if (reportItem.IndicatorItem.PriceResult != PriceResult.None && reportItem.SignalType != SignalType.None)
+                {
+                    streamWriter.WriteLine($"{reportItem.Symbol}, {reportItem.CandleItem.Date}, {reportItem.SignalType}, " +
+                        $"{reportItem.CandleItem.Low}, {reportItem.CandleItem.High}, {reportItem.IndicatorItem.EntryPrice}, " +
+                        $"{reportItem.IndicatorItem.StopLoss}, {reportItem.IndicatorItem.TakeProfit}, {reportItem.AtrItem.ATR}, " +
+                        $"{reportItem.IndicatorItem.PriceResult}, {reportItem.IndicatorItem.State}, " +
+                        $"{reportItem.IndicatorItem.ReachedDate}");
+                    previousSignal = reportItem.SignalType;
+                }
             }
+            streamWriter.WriteLine("");
+            streamWriter.WriteLine("");
+            streamWriter.WriteLine("Symbol, Trades taken, Number of losses, Number of wins, Average win %");
+            var groupedReports = reportItems.Where(x => x.SignalType != SignalType.None).GroupBy(x => x.Symbol);
+            foreach (IGrouping<string, ReportItem> groupedReport in groupedReports)
+            {
+                string symbol = groupedReport.Key;
+                int tradesTaken = groupedReport.Count();
+                int numberOfLosses = 0;
+                foreach (ReportItem reportItem in groupedReport)
+                {
+                    if ((reportItem.IndicatorItem.PriceResult == PriceResult.StopLossReached) &&
+                        (reportItem.SignalType == SignalType.BullishStrong || reportItem.SignalType == SignalType.BullishWeak))
+                    {
+                        numberOfLosses++;
+                    }
+                }
+                int numberOfWins = tradesTaken - numberOfLosses;
+                double winAverage = (numberOfWins / (double)tradesTaken) * 100;
+                streamWriter.WriteLine($"{symbol}, {tradesTaken}, {numberOfLosses}, {numberOfWins}, {winAverage}");
+            }
+
             streamWriter.Flush();
             byte[] content = stream.ToArray();
             return content;
@@ -126,8 +163,9 @@ namespace Stocks.Services
                 int numberOfLosses = 0;
                 foreach (ReportItem reportItem in groupedReport)
                 {
-                    if ((reportItem.IndicatorItem.PriceResult == PriceResult.StopLossReached) &&
-                        (reportItem.SignalType == SignalType.BullishStrong || reportItem.SignalType == SignalType.BullishWeak))
+                    //if ((reportItem.IndicatorItem.PriceResult == PriceResult.StopLossReached) &&
+                    //    (reportItem.SignalType == SignalType.BullishStrong || reportItem.SignalType == SignalType.BullishWeak))
+                    if (reportItem.IndicatorItem.State == IndicatorState.Lose)
                     {
                         numberOfLosses++;
                     }

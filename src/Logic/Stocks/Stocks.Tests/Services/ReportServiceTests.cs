@@ -16,6 +16,7 @@ using Stocks.Services.Ichimoku;
 using System.Linq;
 using Stocks.Models;
 using Stocks.Common.Tests;
+using System.IO;
 
 namespace Stocks.Tests.Services
 {
@@ -75,9 +76,10 @@ namespace Stocks.Tests.Services
         [Fact]
         public async Task ExportToIndicatorCsv()
         {
-            var reportItems = await _reportService.BuildReportAsync("AAPL", new DateTime(2018, 1, 1), new DateTime(2019, 1, 1), FrequencyType.Daily).ConfigureAwait(false);
+            var reportItems = await _reportService.BuildReportAsync("MSFT", new DateTime(2018, 5, 22), new DateTime(2020, 5, 24), FrequencyType.Daily).ConfigureAwait(false);
             var csvContent = _reportService.ExportToIndicatorCsv(reportItems);
             string output = Encoding.Default.GetString(csvContent);
+            File.WriteAllText(@"d:\test.csv", output);
             _testOutputHelper.WriteLine(output);
         }
 
@@ -87,6 +89,7 @@ namespace Stocks.Tests.Services
             var reportItems = await _reportService.BuildReportAsync("AAPL", new DateTime(2018, 1, 1), new DateTime(2019, 1, 1), FrequencyType.Daily).ConfigureAwait(false);
             var csvContent = _reportService.ExportToTradeCsv(reportItems);
             string output = Encoding.Default.GetString(csvContent);
+            File.WriteAllText(@"d:\test2.csv", output);
             _testOutputHelper.WriteLine(output);
         }
 

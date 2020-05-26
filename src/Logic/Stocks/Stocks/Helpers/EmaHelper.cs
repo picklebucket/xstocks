@@ -7,6 +7,7 @@ namespace Stocks.Helpers
 {
     /// <summary>
     /// Calculates EMA (Exponential moving average)
+    /// https://school.stockcharts.com/doku.php?id=technical_indicators:moving_averages
     /// </summary>
     public static class EmaHelper
     {
@@ -20,22 +21,30 @@ namespace Stocks.Helpers
             var emaList = new List<EmaItem>();
             if(candles.Count >= periods)
             {
+                //multiplier = 2/(N + 1) where N number of days in given period
                 decimal multiplier = 2M / (periods + 1);
-                decimal? sma = 0;//simple moving average
+
+                //simple moving average SMA = (c1 + c2 + ... + cn)/n  
+                decimal? sma = 0;
                 for (int i = 0; i < periods - 1; i++)
                 {
+                    //add empty EMA for first N days
                     emaList.Add(new EmaItem(candles[i].Date));
                     sma += candles[i].Close / periods;
                 }
-                sma += candles[periods - 1].Close;
+                sma += candles[periods - 1].Close / periods;
+
+                //initial EMA is equal to SMA
                 emaList.Add(new EmaItem(candles[periods - 1].Date, sma));
                 var emaPrev = sma;
-                for (int i = periods - 1; i < candles.Count; i++)
+                for (int i = periods; i < candles.Count; i++)
                 {
+                    //EMA = multiplier * (current close price - previous EMA) + previous EMA
                     emaPrev = multiplier * (candles[i].Close - emaPrev) + emaPrev;
                     emaList.Add(new EmaItem(candles[i].Date, emaPrev));
                 }
             }
+
             return emaList;
         }
     }

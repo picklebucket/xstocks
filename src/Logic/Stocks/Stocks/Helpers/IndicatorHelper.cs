@@ -8,7 +8,7 @@ namespace Stocks.Helpers
 {
     public static class IndicatorHelper
     {
-        public static List<IndicatorItem> Calculate(List<AtrItem> atrItems, List<CandleItem> candles)
+        public static List<IndicatorItem> Calculate(List<AtrItem> atrItems, List<CandleItem> candles, List<SignalType> signals)
         {
             if (atrItems == null)
             {
@@ -18,8 +18,7 @@ namespace Stocks.Helpers
             {
                 throw new ArgumentNullException(nameof(candles));
             }
-
-
+            
             var indicatorItems = new List<IndicatorItem>()
             {
                 new IndicatorItem()
@@ -29,23 +28,41 @@ namespace Stocks.Helpers
                 decimal? atr = atrItems[i].ATR;
                 var indicatorItem = new IndicatorItem
                 {
-                    EntryPrice = candles[i - 1].Close
+                    Id = Guid.NewGuid(),
+                    //magic 0.08
+                    EntryPrice = candles[i - 1].Close + 0.08M
                 };
-                indicatorItem.StopLoss = indicatorItem.EntryPrice - atr;
-                indicatorItem.TakeProfit = indicatorItem.EntryPrice + atr * atr;
-
-                decimal? price = candles[i].Close;
-                if(price <= indicatorItem.StopLoss)
-                {
-                    indicatorItem.PriceResult = PriceResult.StopLossReached;
-                }
-                else if(price >= indicatorItem.TakeProfit)
-                {
-                    indicatorItem.PriceResult = PriceResult.TakeProfitReached;
-                }
-
+                decimal? coefficient = 1.5M * atr;
+                //SL = entry price - 1.5ATR
+                indicatorItem.StopLoss = indicatorItem.EntryPrice - coefficient;
+                //TP = entry price + 1.5ATR * 1.5ATR
+                indicatorItem.TakeProfit = indicatorItem.EntryPrice + 2 * coefficient;
                 indicatorItems.Add(indicatorItem);
+
+                if (indicatorItem.StopLoss.HasValue && indicatorItem.TakeProfit.HasValue)
+                {
+                    for (var j = 1; j <= i; j++)
+                    {
+                        if (signals[j] != SignalType.None && indicatorItems[j].PriceResult == PriceResult.None)
+                        {
+                            if (candles[i].Low <= indicatorItems[j].StopLoss)
+                            {
+                                indicatorItems[j].PriceResult = PriceResult.StopLossReached;
+                                indicatorItems[j].State = IndicatorState.Lose;
+                                indicatorItems[j].ReachedDate = atrItems[i].Date;
+                            }
+                            else if (candles[i].High >= indicatorItems[j].TakeProfit)
+                            {
+                                indicatorItems[j].PriceResult = PriceResult.TakeProfitReached;
+                                indicatorItems[j].State = IndicatorState.Win;
+                                indicatorItems[j].ReachedDate = atrItems[i].Date;
+                            }
+                        }
+                    }
+                }                
+
             }
+
             return indicatorItems;
         }
     }
