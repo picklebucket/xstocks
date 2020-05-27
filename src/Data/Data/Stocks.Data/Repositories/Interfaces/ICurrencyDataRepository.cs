@@ -6,7 +6,7 @@ namespace Stocks.Data.Repositories.Interfaces
 {
     public interface ICurrencyDataRepository : IBaseRepository<CurrencyData>
     {
-        Task<List<CurrencyData>> GetPairData(string pair);
+        Task<CurrencyData> GetPairData(string pair);
 
         Task WipeData(string pair);
     }

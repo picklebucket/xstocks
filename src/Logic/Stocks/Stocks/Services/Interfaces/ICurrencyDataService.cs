@@ -9,6 +9,10 @@ namespace Stocks.Services.Interfaces
     {
         Task<ServiceResponse<CurrencyData>> SyncDataFor7days15minsInterval(string pairCode);
 
-        Task<ServiceResponse<List<CurrencyData>>> GetPairData(string pairData);
+        Task<ServiceResponse<CurrencyData>> GetPairData(string pairData);
+
+        Task ReportToExcel(string pairCode);
+
+        Task ReportToExcel(List<string> pairCodes);
     }
 }

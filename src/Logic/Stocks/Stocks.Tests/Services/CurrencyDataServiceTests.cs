@@ -38,14 +38,9 @@ namespace Stocks.Tests.Services
         }
 
         [Fact]
-        public async Task GetData()
+        public async Task ReportROC()
         {
-            foreach (var pair in _currencyPairs)
-            {
-                var value = await _currencyDataService.GetPairData(pair).ConfigureAwait(false);
-                Assert.NotNull(value);
-                _testOutputHelper.WriteLine(value.ToString());
-            }
+            await _currencyDataService.ReportToExcel(_currencyPairs).ConfigureAwait(false);
         }
     }
 }

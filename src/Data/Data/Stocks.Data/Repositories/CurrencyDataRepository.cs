@@ -15,11 +15,11 @@ namespace Stocks.Data.Repositories
 
         }
 
-        public async Task<List<CurrencyData>> GetPairData(string pair)
+        public async Task<CurrencyData> GetPairData(string pair)
         {
             IMongoCollection<CurrencyData> collection = Context.GetCollection<CurrencyData>(CollectionName);
             var filter = Builders<CurrencyData>.Filter.Eq(x => x.PairCode, pair);
-            return await collection.Find(filter).ToListAsync().ConfigureAwait(false);
+            return await collection.Find(filter).FirstOrDefaultAsync().ConfigureAwait(false);
         }
 
         public async Task WipeData(string pair)
