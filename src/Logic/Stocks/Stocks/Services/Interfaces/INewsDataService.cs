@@ -5,6 +5,6 @@ namespace Stocks.Services
 {
     public interface INewsDataService
     {
-        Task<ServiceResponse> SyncNews(string country);
+        Task<ServiceResponse> SyncNews(string query);
     }
 }

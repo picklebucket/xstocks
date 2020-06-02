@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Common\Common\Stocks.Common.Tests\Stocks.Common.Tests.csproj" />
+    <ProjectReference Include="..\..\BI\Stocks.BI\Stocks.BI.csproj" />
     <ProjectReference Include="..\..\ML\Stocks.ML.SentimentAnalysis\Stocks.ML.SentimentAnalysis.csproj" />
     <ProjectReference Include="..\..\Pipelines\Stocks.Pipelines\Stocks.Pipelines.csproj" />
     <ProjectReference Include="..\Stocks\Stocks.csproj" />

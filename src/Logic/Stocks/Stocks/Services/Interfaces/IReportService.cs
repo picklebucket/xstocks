@@ -16,5 +16,7 @@ namespace Stocks.Services.Interfaces
         byte[] ExportToTradeCsv(IEnumerable<ReportItem> reportItems);
         Task<IReadOnlyCollection<GoodPriceCompany>> BuildReportBasedOnIntrinsicValue(DateTime? startDate = null, DateTime? endDate = null);
         byte[] ExportGoodPriceCompaniesToCsv(IReadOnlyCollection<GoodPriceCompany> goodPriceCompanies);
+        Task<List<Ema50ReportItem>> Build50EmaReportAsync(string symbol, DateTime startDate, DateTime endDate, FrequencyType frequencyType);
+        Task Build50EmaCSVReportAsync(string symbol, DateTime startDate, DateTime endDate, FrequencyType frequencyType);
     }
 }

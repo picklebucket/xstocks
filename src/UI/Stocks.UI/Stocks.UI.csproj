@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Logic\ML\Stocks.ML.SentimentAnalysis\Stocks.ML.SentimentAnalysis.csproj" />
+    <ProjectReference Include="..\..\Logic\Stocks\Stocks\Stocks.csproj" />
+  </ItemGroup>
+
+
+</Project>

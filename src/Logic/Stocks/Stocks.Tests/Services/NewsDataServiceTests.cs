@@ -22,7 +22,7 @@ namespace Stocks.Tests.Services
         [Fact]
         public async Task SyncNews()
         {
-            var value = await _newsDataService.SyncNews("us").ConfigureAwait(false);
+            var value = await _newsDataService.SyncNews("twitter").ConfigureAwait(false);
             Assert.NotNull(value);
             _testOutputHelper.WriteLine(value.ToString());
         }

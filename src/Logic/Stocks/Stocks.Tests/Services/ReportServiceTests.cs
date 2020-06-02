@@ -17,6 +17,7 @@ using System.Linq;
 using Stocks.Models;
 using Stocks.Common.Tests;
 using System.IO;
+using Stocks.BI;
 
 namespace Stocks.Tests.Services
 {
@@ -100,6 +101,20 @@ namespace Stocks.Tests.Services
             var csvContent = _reportService.ExportGoodPriceCompaniesToCsv(reportItems);
             string output = Encoding.Default.GetString(csvContent);
             _testOutputHelper.WriteLine(output);
+        }
+
+        [Fact]
+        public async Task ReportEMA50()
+        {
+            await _reportService.Build50EmaCSVReportAsync("MSFT", new DateTime(2018, 1, 1), new DateTime(2020, 5, 25), FrequencyType.Daily).ConfigureAwait(false);
+            
+        }
+
+        [Fact]
+        public async Task BIReportEMA50()
+        {
+            var biservice = new BIDataProvider(_reportService);
+            await biservice.SendEMA50DataToBI().ConfigureAwait(false);
         }
     }
 }

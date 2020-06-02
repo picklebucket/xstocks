@@ -73,6 +73,67 @@ namespace Stocks.Services
             return reportItems;
         }
 
+        public async Task<List<Ema50ReportItem>> Build50EmaReportAsync(string symbol, DateTime startDate, DateTime endDate, FrequencyType frequencyType)
+        {
+            var priceHistoryRequest = new PriceHistoryRequest(symbol, startDate, endDate, frequencyType);
+            var priceHistoryResponse = await _priceHistoryService.GetPriceHistoryAsync(priceHistoryRequest).ConfigureAwait(false);
+            var candleItems = priceHistoryResponse.Content.CandleItems;
+
+            var result = new List<Ema50ReportItem>();
+            candleItems.Reverse();
+            var emaItems = EmaHelper.CalculateEma(candleItems);
+            int possiblySignle = -1;
+            for (int i = 0; i < candleItems.Count; i++)
+            {
+                var ema = emaItems[i];
+                var candle = candleItems[i];
+                var reportItem = new Ema50ReportItem
+                {
+                    Open = candle.Open,
+                    Close = candle.Close,
+                    Date = candle.Date.Value.DateTime,
+                    Ticks = (Int32)(candle.Date.Value.DateTime.Subtract(new DateTime(1970, 1, 1))).TotalSeconds,
+                    Ema = ema.Ema.GetValueOrDefault(0)
+                };
+                
+                if (possiblySignle != -1)
+                {
+                    if (ema.Ema >= candle.Close)
+                    {
+                        result[possiblySignle].IsEma50 = true;
+                    }
+
+                    possiblySignle = -1;
+                }
+
+                if ((ema.Ema >= candle.Open && ema.Ema <= candle.Close) || (ema.Ema >= candle.Close && ema.Ema <= candle.Open))
+                {
+                    possiblySignle = i;
+                }
+
+                result.Add(reportItem);
+            }
+
+            return result;
+        }
+
+        public async Task Build50EmaCSVReportAsync(string symbol, DateTime startDate, DateTime endDate, FrequencyType frequencyType)
+        {
+            var data = await this.Build50EmaReportAsync(symbol, startDate, endDate, frequencyType).ConfigureAwait(false);
+            using var stream = new MemoryStream();
+            using StreamWriter streamWriter = new StreamWriter(stream);
+            streamWriter.WriteLine("Candle Open, Candle Close, Date, EMA, EMA Signle");
+            foreach (var reportItem in data)
+            {
+                streamWriter.WriteLine($"{reportItem.Open}, {reportItem.Close}, {reportItem.Date}, {reportItem.Ema}, {(reportItem.IsEma50 ? "Signal" : "")}");
+            }
+
+            streamWriter.Flush();
+            byte[] content = stream.ToArray();
+            string output = Encoding.Default.GetString(content);
+            File.WriteAllText(@"d:\ema50.csv", output);
+        }
+
         public async Task<IReadOnlyCollection<GoodPriceCompany>> BuildReportBasedOnIntrinsicValue(DateTime? startDate = null, DateTime? endDate = null)
         {
             var result = await _goodPriceCompaniesRepository.GetForPeriod(startDate, endDate).ConfigureAwait(false);

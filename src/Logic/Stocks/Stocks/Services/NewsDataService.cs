@@ -19,11 +19,11 @@ namespace Stocks.Services
             this._newsDetailsRepository = newsDetailsRepository;
         }
 
-        public async Task<ServiceResponse> SyncNews(string country)
+        public async Task<ServiceResponse> SyncNews(string query)
         {
             try
             {
-                var serviceResponse = await _newsApiService.GetNews(country).ConfigureAwait(false);
+                var serviceResponse = await _newsApiService.GetNews(query).ConfigureAwait(false);
                 if (serviceResponse.IsSuccess)
                 {
                     var newsData = serviceResponse.Content.Select(n => new NewsDetails()

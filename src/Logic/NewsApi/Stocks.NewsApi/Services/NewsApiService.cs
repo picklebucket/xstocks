@@ -12,7 +12,7 @@ namespace Stocks.NewsApi.Services
 {
     public interface INewsApiService
     {
-        Task<ServiceResponse<List<NewsDetailsModel>>> GetNews(string country, string query = null, int count = 10);
+        Task<ServiceResponse<List<NewsDetailsModel>>> GetNews(string query, string country = null, int count = 10);
     }
 
     public class NewsApiService : INewsApiService
@@ -24,9 +24,15 @@ namespace Stocks.NewsApi.Services
             _newsApiClient = new NewsApiClient(apiConfiguration.GetKey());
         }
 
-        public async Task<ServiceResponse<List<NewsDetailsModel>>> GetNews(string country, string query = null, int count = 10)
+        public async Task<ServiceResponse<List<NewsDetailsModel>>> GetNews(string query, string country = null, int count = 10)
         {
-            var request = new TopHeadlinesRequest() { PageSize = count, Q = query, Country = ResolveCountry(country) };
+            var request = new TopHeadlinesRequest() { Q = query };
+            if (!string.IsNullOrEmpty(country))
+            {
+                NewsAPI.Constants.Countries countryParam = this.ResolveCountry(country);
+                request.Country = countryParam;
+            }
+
             var response = await _newsApiClient.GetTopHeadlinesAsync(request);
             if (response.Status == NewsAPI.Constants.Statuses.Error)
             {
