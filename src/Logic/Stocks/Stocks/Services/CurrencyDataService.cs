@@ -87,10 +87,10 @@ namespace Stocks.Services
             ReportToCsv(rocs);
         }
 
-        public async Task ReportToExcel(string pairCode)
+        public async Task<CurrencyROCResult> GetROCReport(string pairCode)
         {
             var roc = await GetROC(pairCode).ConfigureAwait(false);
-            ReportToCsv(new List<CurrencyROCResult> { roc });
+            return roc;
         }
 
         private async Task<CurrencyROCResult> GetROC(string pairCode)

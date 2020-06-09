@@ -7,10 +7,12 @@ import { EmaReportModule } from './reports/ema-report/ema-report.module';
 import { SharedModule } from './shared/shared.module';
 import { CoreModule } from './core/core.module';
 import { HttpClientModule } from '@angular/common/http';
+import { RocReportComponent } from './reports/roc-report/roc-report.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    RocReportComponent
   ],
   imports: [
     BrowserModule,

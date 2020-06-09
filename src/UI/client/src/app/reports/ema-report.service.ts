@@ -6,7 +6,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
   providedIn: 'root'
 })
 export class EmaReportService {
-  baseUrl = 'https://localhost:44323/api/';
+  baseUrl = 'http://localhost:11813/api/';
 
   constructor(private http: HttpClient) { 
   }

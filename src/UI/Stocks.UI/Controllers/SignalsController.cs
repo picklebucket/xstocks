@@ -25,5 +25,11 @@ namespace Stocks.UI.Controllers
         {
             return Ok(await _reportService.Build50EmaReportAsync(symbol, start, end, FrequencyType.Daily));
         }
+
+        //[HttpGet("roc")]
+        //public async Task<ActionResult<List<Ema50ReportItem>>> GetRocReport(string symbol, DateTime start, DateTime end)
+        //{
+        //    return Ok(await _reportService.R(symbol, start, end, FrequencyType.Daily));
+        //}
     }
 }

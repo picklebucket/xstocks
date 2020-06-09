@@ -1,5 +1,6 @@
 ﻿using Stocks.Common.Models;
 using Stocks.Data.Entities;
+using Stocks.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -11,7 +12,7 @@ namespace Stocks.Services.Interfaces
 
         Task<ServiceResponse<CurrencyData>> GetPairData(string pairData);
 
-        Task ReportToExcel(string pairCode);
+        Task<CurrencyROCResult> GetROCReport(string pairCode);
 
         Task ReportToExcel(List<string> pairCodes);
     }
