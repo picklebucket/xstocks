@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EmaReportComponent } from './ema-report.component';
+import { EmaBearReportComponent } from './ema-bear-report.component';
 
-describe('EmaReportComponent', () => {
-  let component: EmaReportComponent;
-  let fixture: ComponentFixture<EmaReportComponent>;
+describe('EmaBearReportComponent', () => {
+  let component: EmaBearReportComponent;
+  let fixture: ComponentFixture<EmaBearReportComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EmaReportComponent ]
+      declarations: [ EmaBearReportComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EmaReportComponent);
+    fixture = TestBed.createComponent(EmaBearReportComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -23,4 +23,3 @@ describe('EmaReportComponent', () => {
     expect(component).toBeTruthy();
   });
 });
- 

@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { EmaReportComponent } from './reports/ema-report/ema-report.component';
-import { RocReportComponent } from './reports/roc-report/roc-report.component';
+import { EmaBullReportComponent } from './reports/ema-bull-report/ema-bull-report.component';
+import { EmaBearReportComponent } from './reports/ema-bear-report/ema-bear-report.component';
 
 
 const routes: Routes = [
-  {path: 'ema-report', component: EmaReportComponent},
-  {path: 'roc-report', component: RocReportComponent},
-  {path: '**', redirectTo: '/ema-report'}
+  {path: 'ema-bull-report', component: EmaBullReportComponent},
+  {path: 'ema-bear-report', component: EmaBearReportComponent},
+  {path: '**', redirectTo: '/ema-bull-report'}
 ];
 
 @NgModule({

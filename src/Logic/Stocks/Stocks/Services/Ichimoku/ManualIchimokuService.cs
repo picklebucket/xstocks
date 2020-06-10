@@ -42,7 +42,7 @@ namespace Stocks.Services.Ichimoku
                 {
                     Open = x.Open,
                     Close = x.Close,
-                    Date = DateHelper.GetDateTimeOffsetFromUnixTimeMilliseconds(x.DateTimeUnixEpochMilliseconds),
+                    Date =  x.Date,
                     High = x.High,
                     Low = x.Low,
                     Volume = x.Volume
@@ -65,7 +65,7 @@ namespace Stocks.Services.Ichimoku
             if (initialCandlesCount > 0)
             {
                 var lastCandle = candles.Last();
-                DateTimeOffset dateTime = lastCandle.Date.Value;
+                DateTime dateTime = lastCandle.Date.Value;
                 for (int i = 0; i < IchimokuConstants.MediumShiftSize; i++)
                 {
                     dateTime = dateTime.AddDays(1);

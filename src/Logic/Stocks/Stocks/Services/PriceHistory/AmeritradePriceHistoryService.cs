@@ -38,7 +38,7 @@ namespace Stocks.Services.Collecting
                     High = x.High,
                     Low = x.Low,
                     Volume = x.Volume,
-                    Date = DateTimeOffset.FromUnixTimeMilliseconds(x.DateTimeUnixEpochMilliseconds)
+                    Date = DateTimeOffset.FromUnixTimeMilliseconds(x.DateTimeUnixEpochMilliseconds).DateTime
                 });
                 var priceHistory = new PriceHistoryResponse(response.Content.Symbol, response.Content.Empty, candles.ToList());
                 return ServiceResponse<PriceHistoryResponse>.Success(priceHistory);

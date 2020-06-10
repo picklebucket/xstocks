@@ -4,11 +4,11 @@ import { EmaReportService } from '../ema-report.service';
 import { EmaReportItem } from 'src/app/shared/models/emaReport/emaResponse';
 
 @Component({
-  selector: 'app-ema-report',
-  templateUrl: './ema-report.component.html',
-  styleUrls: ['./ema-report.component.scss']
+  selector: 'app-ema-bull-report',
+  templateUrl: './ema-bull-report.component.html',
+  styleUrls: ['./ema-bull-report.component.scss']
 })
-export class EmaReportComponent implements OnInit {
+export class EmaBullReportComponent implements OnInit {
   bsRangeValue: Date[] = [];
   selected: string = '';
   Highcharts: typeof Highcharts = Highcharts;
@@ -29,7 +29,12 @@ export class EmaReportComponent implements OnInit {
   emaData: number[][] = [];
   emaReport: EmaReportItem[] = [];
   
-  constructor(private emaService: EmaReportService) { }
+  constructor(private emaService: EmaReportService) {
+    let today = new Date();
+    let start = new Date();
+    start.setDate(today.getDate() - 365);
+    this.bsRangeValue = [start, today];
+   }
 
   ngOnInit(): void {
   }
@@ -39,10 +44,11 @@ export class EmaReportComponent implements OnInit {
   }
 
   buildChart(symbol: string, start: Date, end: Date) {
-    this.emaService.getInitialEmaReport(symbol, start, end).subscribe(r => {
+    this.emaService.get50EmaBullReport(symbol, start, end).subscribe(r => {
       this.openData = [];
       this.closeData = [];
       this.emaData = [];
+      this.emaReport = [];
       r.forEach(e => {
         this.openData.push([e.ticks * 1000, e.open]);
         this.closeData.push([e.ticks * 1000, e.close]);
@@ -51,7 +57,7 @@ export class EmaReportComponent implements OnInit {
           this.emaReport.push(e);
         }
       });
-      this.chartOptions.title.text = symbol + ' 50 EMA Report';
+      this.chartOptions.title.text = symbol + ' 50 EMA Bull Report';
       this.chartOptions.series = [
         {
           type: 'line',
@@ -79,5 +85,3 @@ export class EmaReportComponent implements OnInit {
     });
   }
 }
-
- 

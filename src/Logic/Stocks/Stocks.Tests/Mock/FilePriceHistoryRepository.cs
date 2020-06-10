@@ -13,6 +13,11 @@ namespace Stocks.Tests.Mock
 {
     public class FilePriceHistoryRepository : IPriceHistoryRepository
     {
+        public Task AddToSymbol(string symbol, List<Candle> candles)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task CreateAsync(PriceHistory entity)
         {
             throw new NotImplementedException();

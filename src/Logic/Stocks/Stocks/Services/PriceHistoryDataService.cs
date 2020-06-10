@@ -1,4 +1,5 @@
-﻿using Stocks.Common.Helpers;
+﻿using Stocks.Common.Extensions;
+using Stocks.Common.Helpers;
 using Stocks.Data.Entities;
 using Stocks.Data.Repositories.Interfaces;
 using Stocks.Models;
@@ -33,10 +34,25 @@ namespace Stocks.Services
                     High = x.High,
                     Low = x.Low,
                     Volume = x.Volume,
-                    DateTimeUnixEpochMilliseconds = x.Date.HasValue ? (long?)x.Date.Value.ToUnixTimeMilliseconds() : null
+                    Date = x.Date
                 }).ToList()
             };
             await _priceHistoryRepository.CreateAsync(priceHistory).ConfigureAwait(false);
+        }
+
+        public async Task AddToSymbol(string symbol, IEnumerable<CandleItem> candles)
+        {
+            var candlesDb = candles.Select(x => new Candle()
+            {
+                Open = x.Open,
+                Close = x.Close,
+                High = x.High,
+                Low = x.Low,
+                Volume = x.Volume,
+                Date = x.Date
+            }).ToList();
+
+            await _priceHistoryRepository.AddToSymbol(symbol, candlesDb).ConfigureAwait(false);
         }
 
         public async Task<List<CandleItem>> GetCandlesAsync(string symbol)
@@ -47,7 +63,7 @@ namespace Stocks.Services
             {
                 candles.Add(new CandleItem()
                 {
-                    Date = DateHelper.GetDateTimeOffsetFromUnixTimeMilliseconds(candle.DateTimeUnixEpochMilliseconds),
+                    Date = candle.Date,
                     Open = candle.Open,
                     Close = candle.Close,
                     High = candle.High,
@@ -56,6 +72,29 @@ namespace Stocks.Services
                 });
             }
             return candles;
+        }
+
+        public async Task<List<CandleItem>> GetCandlesAsync(string symbol, DateTime start, DateTime end)
+        {
+            PriceHistory priceHistory = await _priceHistoryRepository.GetAsync(symbol).ConfigureAwait(false);
+            var candles = new List<CandleItem>();
+            if (priceHistory != null)
+            {
+                foreach (var candle in priceHistory.Candles.Where(c => c.Date >= start && c.Date <= end))
+                {
+                    candles.Add(new CandleItem()
+                    {
+                        Date = candle.Date,
+                        Open = candle.Open,
+                        Close = candle.Close,
+                        High = candle.High,
+                        Low = candle.Low,
+                        Volume = candle.Volume
+                    });
+                }
+            }
+
+            return candles.OrderBy(x => x.Date).ToList();
         }
     }
 }

@@ -10,14 +10,14 @@ namespace Stocks.Models
         public decimal? Close { get; set; }
         public decimal? High { get; set; }
         public decimal? Low { get; set; }
-        public DateTimeOffset? Date { get; set; }
+        public DateTime? Date { get; set; }
         public decimal? Volume { get; set; }
 
         public CandleItem()
         {
         }
 
-        public CandleItem(DateTimeOffset date)
+        public CandleItem(DateTime date)
         {
             Date = date;
         }

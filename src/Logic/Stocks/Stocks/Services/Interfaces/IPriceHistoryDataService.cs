@@ -10,5 +10,7 @@ namespace Stocks.Services.Interfaces
     {
         Task CreateAsync(string symbol, bool empty, IEnumerable<CandleItem> candles);
         Task<List<CandleItem>> GetCandlesAsync(string symbol);
+        Task<List<CandleItem>> GetCandlesAsync(string symbol, DateTime start, DateTime end);
+        Task AddToSymbol(string symbol, IEnumerable<CandleItem> candles);
     }
 }

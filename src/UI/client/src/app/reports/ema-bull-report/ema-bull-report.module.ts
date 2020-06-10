@@ -1,14 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { EmaReportComponent } from './ema-report.component';
+import { EmaBullReportComponent } from './ema-bull-report.component';
 import { HighchartsChartModule } from 'highcharts-angular';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { FormsModule } from '@angular/forms'; 
 import { ReactiveFormsModule } from '@angular/forms';
 
+
 @NgModule({
-  declarations: [EmaReportComponent],
+  declarations: [EmaBullReportComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -18,7 +19,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     BsDatepickerModule.forRoot()
   ],
   exports: [
-    EmaReportComponent
+    EmaBullReportComponent
   ]
 })
 export class EmaReportModule { }

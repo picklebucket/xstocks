@@ -1,7 +1,6 @@
 ﻿using Stocks.Data.Entities;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Stocks.Data.Repositories.Interfaces
@@ -10,5 +9,6 @@ namespace Stocks.Data.Repositories.Interfaces
     {
         Task DeleteAsync(string symbol);
         Task<PriceHistory> GetAsync(string symbol);
+        Task AddToSymbol(string symbol, List<Candle> candles);
     }
 }

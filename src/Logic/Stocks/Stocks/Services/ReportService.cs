@@ -22,14 +22,17 @@ namespace Stocks.Services
     {
         private readonly IIchimokuService _ichimokuService;
         private readonly IPriceHistoryService _priceHistoryService;
+        private readonly IPriceHistoryDataService _priceHistoryDataService;
+
         private readonly IGoodPriceCompaniesRepository _goodPriceCompaniesRepository;
 
         public ReportService(IIchimokuService ichimokuService, IPriceHistoryService priceHistoryService,
-            IGoodPriceCompaniesRepository goodPriceCompaniesRepository)
+            IPriceHistoryDataService priceHistoryDataService, IGoodPriceCompaniesRepository goodPriceCompaniesRepository)
         {
             _ichimokuService = ichimokuService;
             _priceHistoryService = priceHistoryService;
             _goodPriceCompaniesRepository = goodPriceCompaniesRepository;
+            _priceHistoryDataService = priceHistoryDataService;
         }
 
         public async Task<IEnumerable<ReportItem>> BuildReportAsync(string symbol, DateTime startDate, DateTime endDate, FrequencyType frequencyType)
@@ -73,14 +76,59 @@ namespace Stocks.Services
             return reportItems;
         }
 
-        public async Task<List<Ema50ReportItem>> Build50EmaReportAsync(string symbol, DateTime startDate, DateTime endDate, FrequencyType frequencyType)
+        private async Task<List<CandleItem>> GetPriceHistory(string symbol, DateTime startDate, DateTime endDate, FrequencyType frequencyType)
         {
-            var priceHistoryRequest = new PriceHistoryRequest(symbol, startDate, endDate, frequencyType);
-            var priceHistoryResponse = await _priceHistoryService.GetPriceHistoryAsync(priceHistoryRequest).ConfigureAwait(false);
-            var candleItems = priceHistoryResponse.Content.CandleItems;
+            var result = await this._priceHistoryDataService.GetCandlesAsync(symbol, startDate, endDate).ConfigureAwait(false);
+            if (result != null && result.Count > 0)
+            {
+                DateTime lastSyncedDate = result.LastOrDefault().Date.Value.Date.AddDays(1);
+                DateTime firstSyncedDate = result.FirstOrDefault().Date.Value.Date.AddDays(-1);
+                if (lastSyncedDate < endDate)
+                {
+                    var priceHistoryRequest = new PriceHistoryRequest(symbol, lastSyncedDate, endDate, frequencyType);
+                    var priceHistoryResponse = await _priceHistoryService.GetPriceHistoryAsync(priceHistoryRequest).ConfigureAwait(false);
+
+                    var responseCandles = priceHistoryResponse.Content.CandleItems;
+                    responseCandles.Reverse();
+
+                    await this._priceHistoryDataService.AddToSymbol(symbol, responseCandles).ConfigureAwait(false);
+                    result.AddRange(responseCandles);
+                } 
+
+                if (firstSyncedDate > startDate)
+                {
+                    var priceHistoryRequest = new PriceHistoryRequest(symbol, startDate, firstSyncedDate, frequencyType);
+                    var priceHistoryResponse = await _priceHistoryService.GetPriceHistoryAsync(priceHistoryRequest).ConfigureAwait(false);
+
+                    var responseCandles = priceHistoryResponse.Content.CandleItems;
+                    responseCandles.Reverse();
+
+                    await this._priceHistoryDataService.AddToSymbol(symbol, responseCandles).ConfigureAwait(false);
+                    result.AddRange(responseCandles);
+                }
+
+                result = result.OrderBy(x => x.Date).ToList();
+            }
+            else
+            {
+                var priceHistoryRequest = new PriceHistoryRequest(symbol, startDate, endDate, frequencyType);
+                var priceHistoryResponse = await _priceHistoryService.GetPriceHistoryAsync(priceHistoryRequest).ConfigureAwait(false);
+
+                var responseCandles = priceHistoryResponse.Content.CandleItems;
+                responseCandles.Reverse();
+
+                await this._priceHistoryDataService.CreateAsync(symbol, false, responseCandles).ConfigureAwait(false);
+                result = responseCandles;
+            }
+
+            return result;
+        }
+
+        public async Task<List<Ema50ReportItem>> Build50EmaBullReportAsync(string symbol, DateTime startDate, DateTime endDate, FrequencyType frequencyType)
+        {
+            var candleItems = await GetPriceHistory(symbol, startDate, endDate, frequencyType).ConfigureAwait(false);
 
             var result = new List<Ema50ReportItem>();
-            candleItems.Reverse();
             var emaItems = EmaHelper.CalculateEma(candleItems);
             int possiblySignle = -1;
             for (int i = 0; i < candleItems.Count; i++)
@@ -91,8 +139,8 @@ namespace Stocks.Services
                 {
                     Open = candle.Open,
                     Close = candle.Close,
-                    Date = candle.Date.Value.DateTime,
-                    Ticks = (Int32)(candle.Date.Value.DateTime.Subtract(new DateTime(1970, 1, 1))).TotalSeconds,
+                    Date = candle.Date.Value,
+                    Ticks = (Int32)(candle.Date.Value.Subtract(new DateTime(1970, 1, 1))).TotalSeconds,
                     Ema = ema.Ema.GetValueOrDefault(0)
                 };
                 
@@ -117,9 +165,50 @@ namespace Stocks.Services
             return result;
         }
 
+        public async Task<List<Ema50ReportItem>> Build50EmaBearReportAsync(string symbol, DateTime startDate, DateTime endDate, FrequencyType frequencyType)
+        {
+            var candleItems = await GetPriceHistory(symbol, startDate, endDate, frequencyType).ConfigureAwait(false);
+
+            var result = new List<Ema50ReportItem>();
+            var emaItems = EmaHelper.CalculateEma(candleItems);
+            int possiblySignle = -1;
+            for (int i = 0; i < candleItems.Count; i++)
+            {
+                var ema = emaItems[i];
+                var candle = candleItems[i];
+                var reportItem = new Ema50ReportItem
+                {
+                    Open = candle.Open,
+                    Close = candle.Close,
+                    Date = candle.Date.Value,
+                    Ticks = (Int32)(candle.Date.Value.Subtract(new DateTime(1970, 1, 1))).TotalSeconds,
+                    Ema = ema.Ema.GetValueOrDefault(0)
+                };
+
+                if (possiblySignle != -1)
+                {
+                    if (ema.Ema < candle.Close)
+                    {
+                        result[possiblySignle].IsEma50 = true;
+                    }
+
+                    possiblySignle = -1;
+                }
+
+                if ((ema.Ema >= candle.Open && ema.Ema <= candle.Close) || (ema.Ema >= candle.Close && ema.Ema <= candle.Open))
+                {
+                    possiblySignle = i;
+                }
+
+                result.Add(reportItem);
+            }
+
+            return result;
+        }
+
         public async Task Build50EmaCSVReportAsync(string symbol, DateTime startDate, DateTime endDate, FrequencyType frequencyType)
         {
-            var data = await this.Build50EmaReportAsync(symbol, startDate, endDate, frequencyType).ConfigureAwait(false);
+            var data = await this.Build50EmaBullReportAsync(symbol, startDate, endDate, frequencyType).ConfigureAwait(false);
             using var stream = new MemoryStream();
             using StreamWriter streamWriter = new StreamWriter(stream);
             streamWriter.WriteLine("Candle Open, Candle Close, Date, EMA, EMA Signle");

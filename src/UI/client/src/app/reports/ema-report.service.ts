@@ -6,20 +6,16 @@ import { HttpClient, HttpParams } from '@angular/common/http';
   providedIn: 'root'
 })
 export class EmaReportService {
-  baseUrl = 'https://localhost:5001/api/';
+  baseUrl = 'http://localhost:11813/api/signals/';
 
   constructor(private http: HttpClient) { 
   }
 
-  getInitialEmaReport(symbol: string, start: Date, end: Date) {
-    return this.http.get<EmaReportItem[]>(this.baseUrl + "signals?symbol=" + symbol + "&start=" + start.toLocaleString() + "&end=" + end.toLocaleString());
+  get50EmaBullReport(symbol: string, start: Date, end: Date) {
+    return this.http.get<EmaReportItem[]>(this.baseUrl + "Get50EMABullReport?symbol=" + symbol + "&start=" + start.toLocaleString() + "&end=" + end.toLocaleString());
   }
 
-  getInitialEmaReportAny() {
-    return this.http.get(this.baseUrl + "signals");
-  }
-
-  getTestData(url: string) {
-    return this.http.get<number[][]>(url);
+  get50EmaBearReport(symbol: string, start: Date, end: Date) {
+    return this.http.get<EmaReportItem[]>(this.baseUrl + "Get50EMABearReport?symbol=" + symbol + "&start=" + start.toLocaleString() + "&end=" + end.toLocaleString());
   }
 }

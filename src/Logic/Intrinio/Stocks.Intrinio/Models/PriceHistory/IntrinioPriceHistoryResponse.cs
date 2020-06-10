@@ -11,7 +11,7 @@ namespace Stocks.Intrinio.Models.PriceHistory
         public decimal? High { get; set; }
         public decimal? Low { get; set; }
         public decimal? Volume { get; set; }
-        public long? DateTimeUnixEpochMilliseconds { get; set; }
+        public DateTime? Date { get; set; }
     }
 
     public class IntrinioPriceHistoryResponse

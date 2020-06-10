@@ -45,7 +45,7 @@ namespace Stocks.Services.Collecting
                     High = x.High,
                     Low = x.Low,
                     Volume = x.Volume,
-                    Date = x.DateTimeUnixEpochMilliseconds.HasValue ? new DateTimeOffset?(DateTimeOffset.FromUnixTimeMilliseconds(x.DateTimeUnixEpochMilliseconds.Value)) : null
+                    Date = x.Date
                 }).ToList();
                 while(!string.IsNullOrEmpty(response.Content.NextPage))
                 {
@@ -60,7 +60,7 @@ namespace Stocks.Services.Collecting
                             High = x.High,
                             Low = x.Low,
                             Volume = x.Volume,
-                            Date = x.DateTimeUnixEpochMilliseconds.HasValue ? new DateTimeOffset?(DateTimeOffset.FromUnixTimeMilliseconds(x.DateTimeUnixEpochMilliseconds.Value)) : null
+                            Date = x.Date
                         }));
                     }
                     else

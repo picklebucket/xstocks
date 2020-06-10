@@ -11,6 +11,13 @@ namespace Stocks.UI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    public class SyncController : ControllerBase
+    {
+
+    }
+
+    [ApiController]
+    [Route("api/[controller]")]
     public class SignalsController : ControllerBase
     {
         private readonly IReportService _reportService;
@@ -20,10 +27,16 @@ namespace Stocks.UI.Controllers
             this._reportService = reportService;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<List<Ema50ReportItem>>> GetSignalsReport(string symbol, DateTime start, DateTime end)
+        [HttpGet("Get50EMABullReport")]
+        public async Task<ActionResult<List<Ema50ReportItem>>> Get50EMABullReport(string symbol, DateTime start, DateTime end)
         {
-            return Ok(await _reportService.Build50EmaReportAsync(symbol, start, end, FrequencyType.Daily));
+            return Ok(await _reportService.Build50EmaBullReportAsync(symbol, start, end, FrequencyType.Daily));
+        }
+
+        [HttpGet("Get50EMABearReport")]
+        public async Task<ActionResult<List<Ema50ReportItem>>> Get50EMABearReport(string symbol, DateTime start, DateTime end)
+        {
+            return Ok(await _reportService.Build50EmaBearReportAsync(symbol, start, end, FrequencyType.Daily));
         }
 
         //[HttpGet("roc")]

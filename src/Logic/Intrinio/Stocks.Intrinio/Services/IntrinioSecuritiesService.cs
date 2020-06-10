@@ -40,6 +40,7 @@ namespace Stocks.Intrinio.Services
                     .GetSecurityStockPricesAsync(priceHistoryRequest.Identifier, priceHistoryRequest.StartDate,
                         priceHistoryRequest.EndDate, frequency, priceHistoryRequest.PageSize, priceHistoryRequest.NextPage)
                     .ConfigureAwait(false);
+                
                 var result = new IntrinioPriceHistoryResponse()
                 {
                     Ticker = apiResponse.Security.Ticker,
@@ -51,8 +52,8 @@ namespace Stocks.Intrinio.Services
                             High = x.High,
                             Low = x.Low,
                             Volume = x.Volume,
-                            DateTimeUnixEpochMilliseconds = DateHelper.GetDateTimeUnixEpochMilliseconds(x.Date)
-                        }),
+                            Date = DateTime.SpecifyKind(x.Date.Value, DateTimeKind.Utc)
+                        }).ToList(),
                     NextPage = apiResponse.NextPage
                 };
 
