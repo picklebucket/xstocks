@@ -7,6 +7,6 @@ export class EmaReportItem {
     close: number;
     date: Date;
     ticks: number;
-    ema: number;
-    isEma50: boolean;
+    indicator: number;
+    isSignal: boolean;
 }

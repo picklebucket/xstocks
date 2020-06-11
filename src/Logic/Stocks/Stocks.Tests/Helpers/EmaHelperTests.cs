@@ -34,11 +34,11 @@ namespace Stocks.Tests.Helpers
             Assert.NotNull(emaList);
             for (int i = 0; i < periods - 1; i++)
             {
-                Assert.Equal(default, emaList[i].Ema);
+                Assert.Equal(default, emaList[i].Value);
             }
             for (int i = periods - 1; i < candles.Count; i++)
             {
-                Assert.NotEqual(default, emaList[i].Ema);
+                Assert.NotEqual(default, emaList[i].Value);
             }
 
             string json = JsonSerializer.Serialize(emaList, new JsonSerializerOptions() { WriteIndented = true });

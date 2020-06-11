@@ -28,21 +28,27 @@ namespace Stocks.UI.Controllers
         }
 
         [HttpGet("Get50EMABullReport")]
-        public async Task<ActionResult<List<Ema50ReportItem>>> Get50EMABullReport(string symbol, DateTime start, DateTime end)
+        public async Task<ActionResult<List<SignalReportItem>>> Get50EMABullReport(string symbol, DateTime start, DateTime end)
         {
             return Ok(await _reportService.Build50EmaBullReportAsync(symbol, start, end, FrequencyType.Daily));
         }
 
         [HttpGet("Get50EMABearReport")]
-        public async Task<ActionResult<List<Ema50ReportItem>>> Get50EMABearReport(string symbol, DateTime start, DateTime end)
+        public async Task<ActionResult<List<SignalReportItem>>> Get50EMABearReport(string symbol, DateTime start, DateTime end)
         {
             return Ok(await _reportService.Build50EmaBearReportAsync(symbol, start, end, FrequencyType.Daily));
         }
 
-        //[HttpGet("roc")]
-        //public async Task<ActionResult<List<Ema50ReportItem>>> GetRocReport(string symbol, DateTime start, DateTime end)
-        //{
-        //    return Ok(await _reportService.R(symbol, start, end, FrequencyType.Daily));
-        //}
+        [HttpGet("Get100SMABearReport")]
+        public async Task<ActionResult<List<SignalReportItem>>> Get100SMABearReport(string symbol, DateTime start, DateTime end)
+        {
+            return Ok(await _reportService.Build100SmaBearReportAsync(symbol, start, end, FrequencyType.Daily));
+        }
+
+        [HttpGet("Get100SMABullReport")]
+        public async Task<ActionResult<List<SignalReportItem>>> Get100SMABullReport(string symbol, DateTime start, DateTime end)
+        {
+            return Ok(await _reportService.Build100SmaBullReportAsync(symbol, start, end, FrequencyType.Daily));
+        }
     }
 }

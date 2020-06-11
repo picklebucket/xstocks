@@ -8,7 +8,7 @@ namespace Stocks.Helpers
 {
     public static class SignalHelper
     {
-        public static List<SignalType> GetSignals(List<IchimokuItem> ichimokuItems, List<CandleItem> candles, List<EmaItem> emaItems)
+        public static List<SignalType> GetSignals(List<IchimokuItem> ichimokuItems, List<CandleItem> candles, List<SignalIndicatorItem> emaItems)
         {
             if (ichimokuItems == null)
             {
@@ -140,13 +140,13 @@ namespace Stocks.Helpers
 
         #region Ema bounce
 
-        private static SignalType EmaBounce(int index, List<CandleItem> candles, List<EmaItem> emaItems)
+        private static SignalType EmaBounce(int index, List<CandleItem> candles, List<SignalIndicatorItem> emaItems)
         {
             SignalType signalType = SignalType.None;
             int prevIndex = index - 1;
             if(prevIndex > 0)
             {
-                if((candles[prevIndex].Low <= emaItems[prevIndex].Ema && candles[prevIndex].High >= emaItems[prevIndex].Ema)
+                if((candles[prevIndex].Low <= emaItems[prevIndex].Value && candles[prevIndex].High >= emaItems[prevIndex].Value)
                     && candles[index].Close > candles[prevIndex].Close)
                 {
                     signalType = SignalType.BullishStrong;

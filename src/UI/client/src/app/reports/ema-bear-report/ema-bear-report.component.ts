@@ -50,10 +50,10 @@ export class EmaBearReportComponent implements OnInit {
       this.emaData = [];
       this.emaReport = [];
       r.forEach(e => {
-        this.openData.push([e.ticks * 1000, e.open]);
-        this.closeData.push([e.ticks * 1000, e.close]);
-        this.emaData.push([e.ticks * 1000, e.ema]);
-        if (e.isEma50) {
+        this.openData.push([e.ticks, e.open]);
+        this.closeData.push([e.ticks, e.close]);
+        this.emaData.push([e.ticks, e.indicator]);
+        if (e.isSignal) {
           this.emaReport.push(e);
         }
       });

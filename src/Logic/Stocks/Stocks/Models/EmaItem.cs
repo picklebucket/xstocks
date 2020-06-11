@@ -1,23 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Stocks.Models
 {
-    public class EmaItem
+    public class SignalIndicatorItem
     {
         public DateTimeOffset? Date { get; set; }
-        public decimal? Ema { get; set; }
+        public decimal? Value { get; set; }
 
-        public EmaItem(DateTimeOffset? date)
+        public SignalIndicatorItem(DateTimeOffset? date)
         {
             Date = date;
         }
 
-        public EmaItem(DateTimeOffset? date, decimal? ema)
+        public SignalIndicatorItem(DateTimeOffset? date, decimal? value)
             : this(date)
         {
-            Ema = ema;
+            Value = value;
         }
     }
 }

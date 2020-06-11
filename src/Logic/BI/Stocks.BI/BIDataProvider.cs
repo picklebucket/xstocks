@@ -22,7 +22,7 @@ namespace Stocks.BI
 
         public async Task SendEMA50DataToBI()
         {
-            List<Ema50ReportItem> data = await _reportService.Build50EmaReportAsync("MSFT", new DateTime(2018, 1, 1), new DateTime(2020, 5, 25),
+            List<SignalReportItem> data = await _reportService.Build50EmaBullReportAsync("MSFT", new DateTime(2018, 1, 1), new DateTime(2020, 5, 25),
                 FrequencyType.Daily);
 
             int index = 0;

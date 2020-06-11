@@ -11,14 +11,14 @@ namespace Stocks.Helpers
     /// </summary>
     public static class EmaHelper
     {
-        public static List<EmaItem> CalculateEma(List<CandleItem> candles, int periods = 50)
+        public static List<SignalIndicatorItem> CalculateEma(List<CandleItem> candles, int periods = 50)
         {
             if(candles == null)
             {
                 throw new ArgumentNullException(nameof(candles));
             }
 
-            var emaList = new List<EmaItem>();
+            var emaList = new List<SignalIndicatorItem>();
             if(candles.Count >= periods)
             {
                 //multiplier = 2/(N + 1) where N number of days in given period
@@ -29,19 +29,19 @@ namespace Stocks.Helpers
                 for (int i = 0; i < periods - 1; i++)
                 {
                     //add empty EMA for first N days
-                    emaList.Add(new EmaItem(candles[i].Date));
+                    emaList.Add(new SignalIndicatorItem(candles[i].Date));
                     sma += candles[i].Close / periods;
                 }
                 sma += candles[periods - 1].Close / periods;
 
                 //initial EMA is equal to SMA
-                emaList.Add(new EmaItem(candles[periods - 1].Date, sma));
+                emaList.Add(new SignalIndicatorItem(candles[periods - 1].Date, sma));
                 var emaPrev = sma;
                 for (int i = periods; i < candles.Count; i++)
                 {
                     //EMA = multiplier * (current close price - previous EMA) + previous EMA
                     emaPrev = multiplier * (candles[i].Close - emaPrev) + emaPrev;
-                    emaList.Add(new EmaItem(candles[i].Date, emaPrev));
+                    emaList.Add(new SignalIndicatorItem(candles[i].Date, emaPrev));
                 }
             }
 

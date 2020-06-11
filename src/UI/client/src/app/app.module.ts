@@ -7,9 +7,9 @@ import { EmaReportModule } from './reports/ema-bull-report/ema-bull-report.modul
 import { SharedModule } from './shared/shared.module';
 import { CoreModule } from './core/core.module';
 import { HttpClientModule } from '@angular/common/http';
-import { RocReportComponent } from './reports/roc-report/roc-report.component';
-import { EmaBearReportComponent } from './reports/ema-bear-report/ema-bear-report.component';
 import { EmaBearReportModule } from './reports/ema-bear-report/ema-bear-report.module';
+import { SmaBearReportModule } from './reports/sma-bear-report/sma-bear-report.module';
+import { SmaBullReportModule } from './reports/sma-bull-report/sma-bull-report.module';
 
 @NgModule({
   declarations: [
@@ -22,7 +22,9 @@ import { EmaBearReportModule } from './reports/ema-bear-report/ema-bear-report.m
     EmaReportModule,
     EmaBearReportModule,
     CoreModule,
-    SharedModule
+    SharedModule,
+    SmaBearReportModule,
+    SmaBullReportModule
   ],
   providers: [],
   bootstrap: [AppComponent]
