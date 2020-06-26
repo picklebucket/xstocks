@@ -9,6 +9,6 @@ namespace Stocks.Models
         None,
         BullishStrong,
         BullishWeak,
-        Bearish
+        BearishStrong
     }
 }

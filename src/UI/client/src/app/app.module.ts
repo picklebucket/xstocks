@@ -10,6 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { EmaBearReportModule } from './reports/ema-bear-report/ema-bear-report.module';
 import { SmaBearReportModule } from './reports/sma-bear-report/sma-bear-report.module';
 import { SmaBullReportModule } from './reports/sma-bull-report/sma-bull-report.module';
+import { IchiReportModule } from './reports/ichi-report/ichi-report.module';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { SmaBullReportModule } from './reports/sma-bull-report/sma-bull-report.m
     CoreModule,
     SharedModule,
     SmaBearReportModule,
-    SmaBullReportModule
+    SmaBullReportModule,
+    IchiReportModule
   ],
   providers: [],
   bootstrap: [AppComponent]

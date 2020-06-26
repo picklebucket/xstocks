@@ -77,7 +77,7 @@ namespace Stocks.Tests.Services
         [Fact]
         public async Task ExportToIndicatorCsv()
         {
-            var reportItems = await _reportService.BuildReportAsync("MSFT", new DateTime(2018, 5, 22), new DateTime(2020, 5, 24), FrequencyType.Daily).ConfigureAwait(false);
+            var reportItems = await _reportService.BuildReportAsync("SPY", new DateTime(2016, 5, 22), new DateTime(2018, 5, 24), FrequencyType.Daily).ConfigureAwait(false);
             var csvContent = _reportService.ExportToIndicatorCsv(reportItems);
             string output = Encoding.Default.GetString(csvContent);
             File.WriteAllText(@"d:\test.csv", output);

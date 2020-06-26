@@ -21,5 +21,8 @@ namespace Stocks.Services.Interfaces
         Task<List<SignalReportItem>> Build50EmaBearReportAsync(string symbol, DateTime startDate, DateTime endDate, FrequencyType frequencyType);
         Task<List<SignalReportItem>> Build100SmaBearReportAsync(string symbol, DateTime startDate, DateTime endDate, FrequencyType frequencyType);
         Task<List<SignalReportItem>> Build100SmaBullReportAsync(string symbol, DateTime startDate, DateTime endDate, FrequencyType frequencyType);
+
+        IchiReport BuildReportNew(string symbol, List<IchimokuItem> ichimokuItems, List<CandleItem> candleItems);
+        Task<IchiReport> BuildReportNewAsync(string symbol, DateTime startDate, DateTime endDate, FrequencyType frequencyType);
     }
 }

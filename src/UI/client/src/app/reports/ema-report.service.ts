@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { EmaReportResponse, EmaReportItem } from '../shared/models/emaReport/emaResponse';
+import { EmaReportResponse, EmaReportItem, IchiReport } from '../shared/models/emaReport/emaResponse';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
 @Injectable({
@@ -25,5 +25,9 @@ export class EmaReportService {
 
   get100SMABullReport(symbol: string, start: Date, end: Date) {
     return this.http.get<EmaReportItem[]>(this.baseUrl + "Get100SMABullReport?symbol=" + symbol + "&start=" + start.toLocaleString() + "&end=" + end.toLocaleString());
+  }
+
+  getIchiReport(symbol: string, start: Date, end: Date) {
+    return this.http.get<IchiReport>(this.baseUrl + "GetIchiReport?symbol=" + symbol + "&start=" + start.toLocaleString() + "&end=" + end.toLocaleString());
   }
 }

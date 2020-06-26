@@ -50,5 +50,11 @@ namespace Stocks.UI.Controllers
         {
             return Ok(await _reportService.Build100SmaBullReportAsync(symbol, start, end, FrequencyType.Daily));
         }
+
+        [HttpGet("GetIchiReport")]
+        public async Task<ActionResult<IchiReport>> GetIchiReport(string symbol, DateTime start, DateTime end)
+        {
+            return Ok(await _reportService.BuildReportNewAsync(symbol, start, end, FrequencyType.Daily));
+        }
     }
 }

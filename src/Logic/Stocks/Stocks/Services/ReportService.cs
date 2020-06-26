@@ -38,7 +38,7 @@ namespace Stocks.Services
 
         public async Task<IEnumerable<ReportItem>> BuildReportAsync(string symbol, DateTime startDate, DateTime endDate, FrequencyType frequencyType)
         {
-            var ichimokuRequest = new IchimokuRequest(symbol, startDate, endDate, frequencyType);
+            var ichimokuRequest = new IchimokuRequest(symbol, startDate.AddDays(-50), endDate, frequencyType);
             var ichimokuResponse = await _ichimokuService.BuildIchimokuCloudAsync(ichimokuRequest).ConfigureAwait(false);
             var ichimokuItems = ichimokuResponse.Content.Items;
 
@@ -47,7 +47,66 @@ namespace Stocks.Services
             var candles = priceHistoryResponse.Content.CandleItems;
 
             var reportItems = BuildReport(symbol, ichimokuItems, candles);
+
             return reportItems;
+        }
+
+        public async Task<IchiReport> BuildReportNewAsync(string symbol, DateTime startDate, DateTime endDate, FrequencyType frequencyType)
+        {
+            var ichimokuRequest = new IchimokuRequest(symbol, startDate.AddDays(-50), endDate, frequencyType);
+            var ichimokuResponse = await _ichimokuService.BuildIchimokuCloudAsync(ichimokuRequest).ConfigureAwait(false);
+            var ichimokuItems = ichimokuResponse.Content.Items;
+
+            var priceHistoryRequest = new PriceHistoryRequest(symbol, startDate, endDate, frequencyType);
+            var priceHistoryResponse = await _priceHistoryService.GetPriceHistoryAsync(priceHistoryRequest).ConfigureAwait(false);
+            var candles = priceHistoryResponse.Content.CandleItems;
+
+            var reportItems = BuildReportNew(symbol, ichimokuItems, candles);
+
+            return reportItems;
+        }
+
+        public IchiReport BuildReportNew(string symbol, List<IchimokuItem> ichimokuItems, List<CandleItem> candleItems)
+        {
+            var result = new IchiReport();
+            //data comes in descending order
+            candleItems.Reverse();
+            ichimokuItems.Reverse();
+
+            var emaItems = EmaHelper.CalculateEma(candleItems);
+            var atrItems = AtrHelper.CalculateATR(candleItems);
+            ichimokuItems = ichimokuItems.Skip(ichimokuItems.Count - (candleItems.Count + 27)).ToList();
+            var signals = SignalHelper.GetSignals(ichimokuItems, candleItems, emaItems);
+
+            ichimokuItems = ichimokuItems.Skip(ichimokuItems.Count - candleItems.Count).ToList();
+
+            var indicatorItems = IndicatorHelper.Calculate(atrItems, candleItems, signals);
+            for (int i = 0; i < candleItems.Count; i++)
+            {
+                result.Candles.Add(new CandleIchiReport()
+                {
+                    Date = candleItems[i].Date,
+                    Ticks = candleItems[i].Date.Value.ToUnix(),
+                    High = candleItems[i].High,
+                    Low = candleItems[i].Low,
+                    Close = candleItems[i].Close,
+                    Open = candleItems[i].Open,
+                    SignalType = signals[i]
+                });
+            }
+
+            result.Symbol = symbol;
+            result.IchiItems = ichimokuItems.Select(i => new IchiReportItem() {
+                Date = i.Date.Value.DateTime,
+                Ticks = i.Date.Value.DateTime.ToUnix(),
+                ChikouSpan = i.ChikouSpan,
+                KijunSen = i.KijunSen,
+                SenkouSpanA = i.SenkouSpanA,
+                SenkouSpanB = i.SenkouSpanB,
+                TenkanSen = i.TenkanSen
+            }).ToList();
+
+            return result;
         }
 
         public IEnumerable<ReportItem> BuildReport(string symbol, List<IchimokuItem> ichimokuItems, List<CandleItem> candleItems)
@@ -60,7 +119,11 @@ namespace Stocks.Services
 
             var emaItems = EmaHelper.CalculateEma(candleItems);
             var atrItems = AtrHelper.CalculateATR(candleItems);
+            ichimokuItems = ichimokuItems.Skip(ichimokuItems.Count - (candleItems.Count + 27)).ToList();
             var signals = SignalHelper.GetSignals(ichimokuItems, candleItems, emaItems);
+
+            ichimokuItems = ichimokuItems.Skip(ichimokuItems.Count - candleItems.Count).ToList();
+
             var indicatorItems = IndicatorHelper.Calculate(atrItems, candleItems, signals);
             for (int i = 0; i < candleItems.Count; i++)
             {
